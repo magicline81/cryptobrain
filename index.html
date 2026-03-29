@@ -296,10 +296,35 @@ const META = {
 };
 
 const CHANCE_RISK_DERIVATION = [
-  "Chance: aus historischen Erholungen nach Extreme-Fear-Phasen plus aktiven Katalysatoren und institutionellen Zufluessen abgeleitet.",
-  "Risiko: als Referenzverlust von 1.0x aus typischen Drawdowns in Risk-Off-Phasen mit hoher BTC-Dominanz, hawkisher Fed und geopolitischem Stress.",
-  "Verhaeltnis: Chance geteilt durch Risiko. Aus 2.1x potenzieller Upside und 1.0x Referenzrisiko ergibt sich 2.1:1."
+  "Chance: aus einem gewichteten Bullish-Composite aus Sentiment, Katalysatoren, institutionellen Flows, On-Chain-Adoption und Regulierung abgeleitet.",
+  "Risiko: aus einem gewichteten Stress-Composite aus BTC-Dominanz, Fed, Geopolitik und Exchange-Flows abgeleitet.",
+  "Verhaeltnis: Upside-Multiple geteilt durch Risk-Multiple. Beide Groessen werden begrenzt, damit das Modell nicht unkontrolliert nach oben oder unten ausreisst."
 ];
+
+const MARKET_SIGNAL_COMPONENTS = [
+  { name:"Fear & Greed Index", score:80, weight:15 },
+  { name:"BTC Dominanz", score:22, weight:15 },
+  { name:"Fed & Zinspolitik", score:25, weight:12 },
+  { name:"Upgrade-Katalysatoren", score:78, weight:10 },
+  { name:"Geopolitik / Kriege", score:18, weight:8 },
+  { name:"Exchange Flows", score:35, weight:8 },
+  { name:"Regulierung / ETFs", score:65, weight:7 },
+  { name:"Institutionelle ETF Flows", score:82, weight:8 },
+  { name:"Funding Rates", score:65, weight:5 },
+  { name:"Globale Liquiditaet M2", score:50, weight:4 },
+  { name:"On-Chain Adressen", score:73, weight:4 },
+  { name:"TVL Trend (DeFi)", score:50, weight:4 },
+];
+
+const MARKET_BREAKDOWN_GROUPS = {
+  "Sentiment F&G":["Fear & Greed Index"],
+  "BTC Dominanz":["BTC Dominanz"],
+  "On-Chain":["Exchange Flows","Funding Rates","On-Chain Adressen","TVL Trend (DeFi)"],
+  "Katalysatoren":["Upgrade-Katalysatoren","Regulierung / ETFs"],
+  "Fed & Zinsen":["Fed & Zinspolitik"],
+  "Geopolitik":["Geopolitik / Kriege","Globale Liquiditaet M2"],
+  "Inst. Flows":["Institutionelle ETF Flows"],
+};
 
 // Sub-Score Kategorien pro Coin — 6 Dimensionen
 const COIN_MODELS = [
@@ -431,8 +456,37 @@ function parsePriceValue(value) {
   return parseFloat(String(value).replace(/,/g, "").replace(/[^0-9.]/g, "")) || 0;
 }
 
-function getMarketComponentScores(meta) {
-  const scoreMap = Object.fromEntries(meta.breakdownBars.map(item => [item.name, item.score]));
+function getWeightedScore(items) {
+  const totalWeight = items.reduce((sum, item) => sum + item.weight, 0) || 1;
+  const weightedValue = items.reduce((sum, item) => sum + item.score * item.weight, 0) / totalWeight;
+  return clampScore(weightedValue);
+}
+
+function getMarketVerdict(score) {
+  if (score >= 70) return "AKKUMULIEREN";
+  if (score >= 55) return "VORSICHTIG KAUFEN";
+  if (score >= 40) return "ABWARTEN";
+  if (score >= 25) return "DEFENSIV";
+  return "MEIDEN";
+}
+
+function buildMarketBreakdownBars(baseBars, components) {
+  const componentMap = Object.fromEntries(components.map(component => [component.name, component]));
+  return baseBars.map(bar => {
+    const groupMembers = MARKET_BREAKDOWN_GROUPS[bar.name] || [];
+    const groupComponents = groupMembers
+      .map(member => componentMap[member])
+      .filter(Boolean);
+    if (!groupComponents.length) return bar;
+    return {
+      ...bar,
+      score: getWeightedScore(groupComponents),
+    };
+  });
+}
+
+function getMarketComponentScores(breakdownBars) {
+  const scoreMap = Object.fromEntries(breakdownBars.map(item => [item.name, item.score]));
   return {
     "Fear & Greed Index": scoreMap["Sentiment F&G"] || 50,
     "BTC Dominanz": scoreMap["BTC Dominanz"] || 50,
@@ -441,6 +495,34 @@ function getMarketComponentScores(meta) {
     "Fed & Zinspolitik": scoreMap["Fed & Zinsen"] || 50,
     "Geopolitik / Kriege": scoreMap["Geopolitik"] || 50,
     "Institutionelle Flows": scoreMap["Inst. Flows"] || 50,
+  };
+}
+
+function getChanceRiskProfile(components, marketScore) {
+  const componentMap = Object.fromEntries(components.map(component => [component.name, component.score]));
+  const upsideComposite = getWeightedScore([
+    { score: componentMap["Fear & Greed Index"] || 50, weight:25 },
+    { score: componentMap["Upgrade-Katalysatoren"] || 50, weight:25 },
+    { score: componentMap["Institutionelle ETF Flows"] || 50, weight:25 },
+    { score: componentMap["On-Chain Adressen"] || 50, weight:15 },
+    { score: componentMap["Regulierung / ETFs"] || 50, weight:10 },
+  ]);
+  const downsidePressure = getWeightedScore([
+    { score: 100 - (componentMap["BTC Dominanz"] || 50), weight:30 },
+    { score: 100 - (componentMap["Fed & Zinspolitik"] || 50), weight:25 },
+    { score: 100 - (componentMap["Geopolitik / Kriege"] || 50), weight:25 },
+    { score: 100 - (componentMap["Exchange Flows"] || 50), weight:20 },
+  ]);
+  const contrarianBoost = Math.max(0, 55 - marketScore) / 100;
+  const upside = Math.max(0.8, Math.min(3.5, 0.9 + (upsideComposite / 100) * 1.6 + contrarianBoost));
+  const risk = Math.max(0.8, Math.min(2.5, 0.8 + (downsidePressure / 100) * 1.2));
+  const ratio = upside / risk;
+  return {
+    upside: Math.round(upside * 10) / 10,
+    risk: Math.round(risk * 10) / 10,
+    ratio: Math.round(ratio * 100) / 100,
+    upsideComposite,
+    downsidePressure,
   };
 }
 
@@ -566,13 +648,21 @@ function getDynamicSubScore(baseScore, label, marketScores, dynamicDiscountScore
     ? (baseScore * 0.35) + (dynamicDiscountScore * 0.65)
     : baseScore;
 
+  const marketTilt = (weightedMarketScore - 50) / 50;
+  const headroom = marketTilt >= 0 ? (100 - adjustedBase) : adjustedBase;
+  const regimeAdjustment = headroom * marketTilt * sensitivity;
+  const finalScore = clampScore(adjustedBase + regimeAdjustment);
+
   return {
-    score: clampScore(adjustedBase + ((weightedMarketScore - 50) * sensitivity)),
+    score: finalScore,
     components: marketComponents.map(component => ({
       ...component,
       sourceScore: marketScores[component.label] || 50,
     })),
     weightedMarketScore: Math.round(weightedMarketScore),
+    adjustedBase: Math.round(adjustedBase * 10) / 10,
+    regimeAdjustment: Math.round(regimeAdjustment * 10) / 10,
+    marketTilt: Math.round(marketTilt * 100) / 100,
   };
 }
 
@@ -583,7 +673,11 @@ function getCoinSignal(score) {
   return "BEOBACHTEN";
 }
 
-const MARKET_COMPONENT_SCORES = getMarketComponentScores(META);
+const MARKET_BREAKDOWN_BARS = buildMarketBreakdownBars(META.breakdownBars, MARKET_SIGNAL_COMPONENTS);
+const MARKET_TOTAL_SCORE = getWeightedScore(MARKET_SIGNAL_COMPONENTS);
+const MARKET_VERDICT = getMarketVerdict(MARKET_TOTAL_SCORE);
+const CHANCE_RISK_PROFILE = getChanceRiskProfile(MARKET_SIGNAL_COMPONENTS, MARKET_TOTAL_SCORE);
+const MARKET_COMPONENT_SCORES = getMarketComponentScores(MARKET_BREAKDOWN_BARS);
 
 const COINS = COIN_MODELS.map((coinModel) => {
   const discountPct = clampScore((1 - (parsePriceValue(coinModel.price) / parsePriceValue(coinModel.ath))) * 100);
@@ -594,7 +688,10 @@ const COINS = COIN_MODELS.map((coinModel) => {
       score: dynamicSubScore.score,
       components: dynamicSubScore.components,
       weightedMarketScore: dynamicSubScore.weightedMarketScore,
-      calculationNote: `Coin-Basis ${subScore.score} Punkte, Markt-Overlay ${dynamicSubScore.weightedMarketScore}/100, Ergebnis ${dynamicSubScore.score}/100.`,
+      adjustedBase: dynamicSubScore.adjustedBase,
+      regimeAdjustment: dynamicSubScore.regimeAdjustment,
+      marketTilt: dynamicSubScore.marketTilt,
+      calculationNote: `Coin-Basis ${dynamicSubScore.adjustedBase} Punkte, Markt-Overlay ${dynamicSubScore.weightedMarketScore}/100, Regime-Effekt ${dynamicSubScore.regimeAdjustment >= 0 ? "+" : ""}${dynamicSubScore.regimeAdjustment}, Ergebnis ${dynamicSubScore.score}/100.`,
     };
   });
   const overallScore = clampScore(subScores.reduce((sum, item) => sum + item.score, 0) / subScores.length);
@@ -649,6 +746,10 @@ function getSubScoreCompositionText(subScore) {
   const parts = getSubScoreComponents(subScore);
   if (!parts.length) return `Dieser Teilscore wird aktuell aus Coin-Basisdaten und Marktsignalen berechnet und ergibt ${subScore.score} Punkte.`;
   return `${subScore.calculationNote || `Dieser Teilscore setzt sich aus ${parts.map(part => `${part.label} ${part.weight}%`).join(", ")} zusammen und ergibt ${subScore.score} Punkte.`}`;
+}
+
+function getSubScoreReasoning(coin, subScore) {
+  return `${coin.name} bekommt hier ${subScore.score} von 100 Punkten. Das ist ${getScoreBandText(subScore.score)}. Die Rechnung nutzt eine coin-spezifische Basisbewertung von ${subScore.adjustedBase ?? subScore.score} Punkten und ein Markt-Overlay von aktuell ${subScore.weightedMarketScore || 50}/100. Daraus entsteht ein Regime-Effekt von ${subScore.regimeAdjustment >= 0 ? "+" : ""}${subScore.regimeAdjustment || 0} Punkten. Grundlage dafuer ist: ${subScore.note}. ${getScoreBandReason(subScore.score)}`;
 }
 
 function buildAnalystExplanation(coin) {
@@ -878,7 +979,7 @@ function App() {
   const sigCol= {AKKUMULIEREN:"#00875a",KAUFEN:"#4a8a00",HALTEN:"#b06a00",BEOBACHTEN:"#888"};
   const sigBg = {AKKUMULIEREN:"#e6f7f0",KAUFEN:"#f0f7e6",HALTEN:"#fff8e6",BEOBACHTEN:"#f7f8fc"};
 
-  const col = vCol[META.verdict] || "#888";
+  const col = vCol[MARKET_VERDICT] || "#888";
   
   useEffect(() => {
     const updateCoinGridColumns = () => {
@@ -938,7 +1039,7 @@ function App() {
               <div className="frost-card soft-hover" style={{ borderRadius:20, padding:"16px 18px", background:"linear-gradient(135deg, rgba(23,86,200,.10), rgba(91,79,207,.10))" }}>
                 <div style={{ ...mono, fontSize:9, color:"#5b4fcf", letterSpacing:2, textTransform:"uppercase", marginBottom:8 }}>Stand</div>
                 <div style={{ fontSize:14, fontWeight:700, color:"#1a1e2e", marginBottom:3 }}>{META.date}</div>
-                <div style={{ fontSize:11, color:"#5a6282", lineHeight:1.6 }}>{vEmoji[META.verdict]} Gesamturteil {META.verdict} bei Score {META.totalScore}/100.</div>
+                <div style={{ fontSize:11, color:"#5a6282", lineHeight:1.6 }}>{vEmoji[MARKET_VERDICT]} Gesamturteil {MARKET_VERDICT} bei Markt-Score {MARKET_TOTAL_SCORE}/100.</div>
               </div>
               <div style={{ display:"flex", gap:10, flexWrap:"wrap" }}>
                 <div
@@ -951,11 +1052,11 @@ function App() {
                     <div style={{ fontSize:11, fontWeight:700, color:"#1756c8", lineHeight:1 }}>{openChanceRiskDetails ? "▲" : "▼"}</div>
                   </div>
                   <div style={{ display:"flex", alignItems:"baseline", gap:8, marginBottom:3 }}>
-                    <div style={{ fontFamily:"Georgia,serif", fontSize:24, fontWeight:900, color:"#00875a", lineHeight:1 }}>{META.chanceValue}</div>
+                    <div style={{ fontFamily:"Georgia,serif", fontSize:24, fontWeight:900, color:"#00875a", lineHeight:1 }}>{CHANCE_RISK_PROFILE.upside.toFixed(1)}x</div>
                     <div style={{ fontFamily:"Georgia,serif", fontSize:14, fontWeight:700, color:"#9aa0bc", lineHeight:1 }}>/</div>
-                    <div style={{ fontFamily:"Georgia,serif", fontSize:24, fontWeight:900, color:"#c0182a", lineHeight:1 }}>{META.riskValue}</div>
+                    <div style={{ fontFamily:"Georgia,serif", fontSize:24, fontWeight:900, color:"#c0182a", lineHeight:1 }}>{CHANCE_RISK_PROFILE.risk.toFixed(1)}x</div>
                   </div>
-                  <div style={{ fontSize:10, color:"#5a6282", lineHeight:1.6 }}>{META.chanceRatio} Chance zu Risiko.</div>
+                  <div style={{ fontSize:10, color:"#5a6282", lineHeight:1.6 }}>{CHANCE_RISK_PROFILE.ratio.toFixed(2)}:1 Chance zu Risiko.</div>
                   {openChanceRiskDetails && (
                     <div style={{ marginTop:10, paddingTop:10, borderTop:"1px solid #d8def0" }}>
                       <div style={{ ...mono, fontSize:9, color:"#1756c8", letterSpacing:1, marginBottom:6 }}>HERLEITUNG DER KENNZAHLEN</div>
@@ -1015,7 +1116,7 @@ function App() {
                 <span style={{ fontSize:18 }}>🤖</span>
                 <div style={{ flex:1, fontSize:12, color:"#5a6282", lineHeight:1.7 }}>
                   <strong style={{ color:"#5b4fcf" }}>Markt-Signal heute: </strong>
-                  <span style={{ color:col, fontWeight:700 }}>{vEmoji[META.verdict]} {META.verdict} · Score {META.totalScore}/100</span>
+                  <span style={{ color:col, fontWeight:700 }}>{vEmoji[MARKET_VERDICT]} {MARKET_VERDICT} · Markt-Score {MARKET_TOTAL_SCORE}/100</span>
                   {" · "}{META.aiReasoning.substring(0,120)}...
                 </div>
               </div>
@@ -1428,25 +1529,28 @@ function App() {
             <div className="signal-panel" style={{ position:"sticky", top:14 }}>
               <div className="frost-card soft-hover fade-up" style={{ ...card, textAlign:"center", animationDelay:".16s" }}>
                 <div style={{ ...mono, fontSize:10, letterSpacing:3, textTransform:"uppercase", color:"#9aa0bc", marginBottom:10 }}>🎯 Markt Signal Score</div>
-                <Gauge score={META.totalScore} color={col}/>
+                <Gauge score={MARKET_TOTAL_SCORE} color={col}/>
                 <div style={{ ...mono, fontSize:9, letterSpacing:2, color:"#9aa0bc", textTransform:"uppercase", marginBottom:8 }}>Gesamtsignal (0–100)</div>
                 <div style={{ fontFamily:"Georgia,serif", fontSize:19, fontWeight:700, marginBottom:5, color:col }}>
-                  {vEmoji[META.verdict]} {META.verdict}
+                  {vEmoji[MARKET_VERDICT]} {MARKET_VERDICT}
                 </div>
                 <div style={{ fontSize:12, color:"#5a6282", lineHeight:1.6, marginBottom:12 }}>
                   Makro-Risiken überwiegen kurzfristig. Gestaffelt akkumulieren — auf BTC Dom unter 52% warten.
+                </div>
+                <div style={{ fontSize:11, color:"#9aa0bc", lineHeight:1.6, marginBottom:12 }}>
+                  Markt-Signal = separates 12-Indikatoren-Modell. Coin-Scores = Basiswert plus Regime-Effekt.
                 </div>
                 {/* CHANCE / RISIKO with explanation */}
                 <div style={{ marginBottom:12 }}>
                   <div style={{ display:"flex", gap:8, marginBottom:8 }}>
                     <div style={{ flex:1, background:"#e6f7f0", border:"1.5px solid #80d4b0", borderRadius:8, padding:"10px 12px", textAlign:"center" }}>
                       <div style={{ ...mono, fontSize:9, letterSpacing:2, textTransform:"uppercase", color:"#00875a", marginBottom:2 }}>📈 Chance</div>
-                      <div style={{ fontFamily:"Georgia,serif", fontSize:26, fontWeight:900, color:"#00875a", lineHeight:1 }}>{META.chanceValue}</div>
+                      <div style={{ fontFamily:"Georgia,serif", fontSize:26, fontWeight:900, color:"#00875a", lineHeight:1 }}>{CHANCE_RISK_PROFILE.upside.toFixed(1)}x</div>
                       <div style={{ fontSize:10, color:"#00875a", marginTop:2, opacity:.8 }}>potenzieller Gewinn</div>
                     </div>
                     <div style={{ flex:1, background:"#ffeef0", border:"1.5px solid #f0b0b8", borderRadius:8, padding:"10px 12px", textAlign:"center" }}>
                       <div style={{ ...mono, fontSize:9, letterSpacing:2, textTransform:"uppercase", color:"#c0182a", marginBottom:2 }}>📉 Risiko</div>
-                      <div style={{ fontFamily:"Georgia,serif", fontSize:26, fontWeight:900, color:"#c0182a", lineHeight:1 }}>{META.riskValue}</div>
+                      <div style={{ fontFamily:"Georgia,serif", fontSize:26, fontWeight:900, color:"#c0182a", lineHeight:1 }}>{CHANCE_RISK_PROFILE.risk.toFixed(1)}x</div>
                       <div style={{ fontSize:10, color:"#c0182a", marginTop:2, opacity:.8 }}>möglicher Verlust</div>
                     </div>
                   </div>
@@ -1456,7 +1560,7 @@ function App() {
                     <div style={{ fontSize:12, color:"#5a6282", lineHeight:1.7, marginBottom:8 }}>{META.chanceRisikoInfo.erklärung}</div>
                     <div style={{ background:"#fff", border:"1px solid #e2e6f0", borderRadius:6, padding:"8px 10px", marginBottom:8 }}>
                       <div style={{ ...mono, fontSize:9, color:"#b06a00", letterSpacing:1, marginBottom:3 }}>📌 KONKRETES BEISPIEL</div>
-                      <div style={{ fontSize:12, color:"#1a1e2e", lineHeight:1.7 }}>{META.chanceRisikoInfo.beispiel}</div>
+                      <div style={{ fontSize:12, color:"#1a1e2e", lineHeight:1.7 }}>Bei {CHANCE_RISK_PROFILE.upside.toFixed(1)}x Chance zu {CHANCE_RISK_PROFILE.risk.toFixed(1)}x Risiko ergibt sich rechnerisch ein Verhaeltnis von {CHANCE_RISK_PROFILE.ratio.toFixed(2)}:1.</div>
                     </div>
                     <div
                       onClick={() => setOpenChanceRiskDetails(prev => !prev)}
@@ -1480,7 +1584,7 @@ function App() {
                       )}
                     </div>
                     <div style={{ fontSize:11, color:"#9aa0bc", lineHeight:1.6 }}>
-                      <span style={{ fontWeight:600 }}>Basis:</span> {META.chanceRisikoInfo.basis}
+                      <span style={{ fontWeight:600 }}>Basis:</span> Markt-Score {MARKET_TOTAL_SCORE}/100, bullische Treiber {CHANCE_RISK_PROFILE.upsideComposite}/100, Risikodruck {CHANCE_RISK_PROFILE.downsidePressure}/100.
                     </div>
                     <div style={{ fontSize:11, color:"#9aa0bc", lineHeight:1.6, marginTop:4 }}>
                       <span style={{ fontWeight:600 }}>Einordnung:</span> {META.chanceRisikoInfo.gut}
@@ -1521,7 +1625,7 @@ function App() {
               <div className="frost-card soft-hover fade-up" style={{ ...card, animationDelay:".26s" }}>
                 <div style={{ ...mono, fontSize:10, letterSpacing:3, textTransform:"uppercase", color:"#9aa0bc", marginBottom:6 }}>📊 Score Breakdown</div>
                 <div style={{ fontSize:11, color:"#9aa0bc", marginBottom:12 }}>👉 Klicke auf einen Balken für die Erklärung</div>
-                {META.breakdownBars.map((b,i)=>{
+                {MARKET_BREAKDOWN_BARS.map((b,i)=>{
                   const open = openBreakdown === i;
                   const scoreCol = b.score>=65?"#00875a":b.score>=40?"#b06a00":"#c0182a";
                   return (
