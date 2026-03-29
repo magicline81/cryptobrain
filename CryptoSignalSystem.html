@@ -797,8 +797,7 @@ function MiniGauge({ score, color }) {
         <path d={`M ${z3x} ${z3y} A 80 80 0 0 1 180 100`} fill="none" stroke="#a9e2bc" strokeWidth="16" strokeLinecap="round" opacity=".95"/>
         <path d={`M 20 100 A 80 80 0 0 1 ${ex} ${ey}`} fill="none" stroke={`url(#miniArcModern-${score})`} strokeWidth="16" strokeLinecap="round" filter={`url(#miniGlowModern-${score})`} className="gauge-value-arc" style={{ "--dash-end": dashEnd }} />
         <g className="gauge-needle" style={{ "--needle-rotation": needleRotation }}>
-          <line x1="100" y1="100" x2="100" y2="80" stroke="#1a1e2e" strokeOpacity=".72" strokeWidth="3.4" strokeLinecap="round"/>
-          <line x1="100" y1="80" x2="100" y2="52" stroke="#1a1e2e" strokeOpacity=".18" strokeWidth="3.4" strokeLinecap="round"/>
+          <line x1="100" y1="100" x2="100" y2="48" stroke="#1a1e2e" strokeOpacity=".38" strokeWidth="3.8" strokeLinecap="round"/>
           <circle cx="100" cy="100" r="7" fill="#fff" stroke={color} strokeWidth="3"/>
           <circle cx="100" cy="100" r="3.5" fill="#1a1e2e"/>
         </g>
@@ -1599,7 +1598,6 @@ document.getElementById('loading').style.display = 'none';
 
 </body>
 </html>
-
 
 
 
