@@ -1218,7 +1218,7 @@ function App() {
 
         {/* ── MARKT SIGNAL TAB ─────────────────────────────────────────────── */}
         {tab === "market" && (
-          <div className="main-grid fade-up" style={{ display:"grid", gridTemplateColumns:"minmax(0,0.9fr) minmax(380px,0.52fr)", gap:18, alignItems:"start", animationDelay:".12s" }}>
+          <div className="main-grid fade-up" style={{ display:"grid", gridTemplateColumns:"minmax(0,0.9fr) minmax(380px,0.52fr)", gap:18, alignItems:"stretch", animationDelay:".12s" }}>
 
             {/* LEFT */}
             <div>
@@ -1442,7 +1442,7 @@ function App() {
             </div>
 
             {/* RIGHT */}
-            <div className="signal-panel" style={{ position:"sticky", top:14 }}>
+            <div className="signal-panel" style={{ position:"sticky", top:14, alignSelf:"stretch", display:"flex", flexDirection:"column", gap:18, minHeight:"100%" }}>
               <div className="frost-card soft-hover fade-up" style={{ ...card, textAlign:"center", animationDelay:".16s" }}>
                 <div style={{ ...mono, fontSize:10, letterSpacing:3, textTransform:"uppercase", color:"#9aa0bc", marginBottom:10 }}>🎯 Markt Signal Score</div>
                 <Gauge score={MARKET_TOTAL_SCORE} color={col}/>
@@ -1538,7 +1538,7 @@ function App() {
               </div>
 
               {/* Breakdown bars */}
-              <div className="frost-card soft-hover fade-up" style={{ ...card, animationDelay:".26s" }}>
+              <div className="frost-card soft-hover fade-up" style={{ ...card, animationDelay:".26s", flex:1, display:"flex", flexDirection:"column" }}>
                 <div style={{ ...mono, fontSize:10, letterSpacing:3, textTransform:"uppercase", color:"#9aa0bc", marginBottom:6 }}>📊 Score Breakdown</div>
                 <div style={{ fontSize:11, color:"#9aa0bc", marginBottom:12 }}>👉 Klicke auf einen Balken für die Erklärung</div>
                 {MARKET_BREAKDOWN_BARS.map((b,i)=>{
@@ -1598,7 +1598,6 @@ document.getElementById('loading').style.display = 'none';
 
 </body>
 </html>
-
 
 
 
