@@ -259,7 +259,7 @@ const META = {
   chanceRisikoInfo: {
     erklärung: "Das Chance/Risiko-Verhältnis zeigt was du potenziell gewinnen kannst im Vergleich zu dem was du verlieren kannst.",
     beispiel: "Bei 2.1x Chance zu 1x Risiko: Wenn du €1.000 investierst und der Markt läuft gut — könntest du €2.100 Gewinn machen. Wenn der Markt schlecht läuft — riskierst du bis zu €1.000 Verlust. Das Verhältnis 2.1:1 gilt als akzeptabel. Profis kaufen oft erst ab 2:1 aufwärts.",
-    basis: "Berechnet aus: historischen Returns in vergleichbaren Marktphasen (Extreme Fear + institutionelle Akkumulation), gewichtetem Signal-Score (44/100), und typischen Drawdown-Szenarien bei aktuellen Makro-Bedingungen.",
+    basis: "Berechnet aus gewichteten Marktkomponenten, getrennt nach Aufwaertstreibern und Risikodruck, nicht mehr aus einem festen Beispielwert.",
     gut: "Über 3x = sehr attraktiv. 2–3x = gut. Unter 1.5x = zu riskant."
   },
   breakdownBars: [
@@ -1682,4 +1682,5 @@ document.getElementById('loading').style.display = 'none';
 
 </body>
 </html>
+
 
