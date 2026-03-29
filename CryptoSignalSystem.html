@@ -248,13 +248,13 @@ const META = {
   chanceRatio: "2.1:1",
   chanceValue: "2.1x",
   riskValue: "1.0x",
-  aiReasoning: "47. Tag Extreme Fear — historisch Akkumulationszone, ABER Fed 'Hawkish Pause' + Iran-Krieg überlagern das Signal. BTC Dominanz 56.6%: Altseason noch nicht gestartet. Smart Money kauft (BlackRock +$215M), Retail verkauft panisch. Gestaffelt einsteigen, auf BTC Dom-Rückgang unter 52% warten.",
+  aiReasoning: "Das Modell sieht starke Sentiment- und Flow-Unterstuetzung, aber klaren Makro-Gegenwind. Extreme Fear und institutionelle Zufluesse stuetzen das Bild, waehrend Fed, Geopolitik und hohe BTC-Dominanz den Markt-Score begrenzen.",
   analystPunkte: [
-    { emoji:"😱", typ:"bullish", titel:"Extreme Fear = Kaufzone", text:"Wir sind seit 47 Tagen im Extreme Fear — das ist der längste Streak seit dem FTX-Kollaps 2022. Was bedeutet das? Alle haben Angst. Retail-Anleger verkaufen in Panik. Aber genau dann kauft Smart Money günstig ein. BlackRock hat allein an einem Tag $215 Millionen in Bitcoin ETFs investiert — während alle anderen verkauften. Historisch: Wenn der Fear Index unter 20 bleibt, war nach 30 Tagen in 80% der Fälle ein positiver Return zu verzeichnen." },
+    { emoji:"😱", typ:"bullish", titel:"Extreme Fear st�tzt das Modell", text:"Wir sind seit 47 Tagen im Extreme Fear — das ist der längste Streak seit dem FTX-Kollaps 2022. Was bedeutet das? Alle haben Angst. Retail-Anleger verkaufen in Panik. Aber genau dann kauft Smart Money günstig ein. BlackRock hat allein an einem Tag $215 Millionen in Bitcoin ETFs investiert — während alle anderen verkauften. Historisch: Wenn der Fear Index unter 20 bleibt, war nach 30 Tagen in 80% der Fälle ein positiver Return zu verzeichnen." },
     { emoji:"🏛️", typ:"bearish", titel:"Fed bremst — keine Zinssenkungen in Sicht", text:"Die US-Zentralbank (Fed) hat im März 2026 entschieden die Zinsen NICHT zu senken. Warum ist das schlecht für Crypto? Bei hohen Zinsen legen Banken und Fonds ihr Geld lieber in sichere Staatsanleihen (5% Zinsen) statt in riskante Crypto. Ursprünglich waren 2 Zinssenkungen für 2026 geplant — jetzt wird nur noch 1 erwartet. Dazu kommt: der neue Fed-Chef Warsh gilt als noch strenger als sein Vorgänger." },
     { emoji:"⚔️", typ:"bearish", titel:"Iran-Krieg drückt den gesamten Markt", text:"Der aktive Konflikt zwischen USA/Israel und Iran blockiert die Strait of Hormuz — eine der wichtigsten Schifffahrtsrouten für Öl. Das Ergebnis: Ölpreise steigen, was die Inflation hoch hält und der Fed die Möglichkeit nimmt die Zinsen zu senken. Crypto reagiert auf solche Krisen wie ein 'Risk Asset' — ähnlich wie Technologieaktien. Bei globaler Unsicherheit verkaufen Anleger zuerst das Riskanteste." },
     { emoji:"₿", typ:"bearish", titel:"Altseason noch nicht gestartet", text:"Bitcoin hat aktuell 56.6% des gesamten Crypto-Marktes. Das ist hoch. Was bedeutet das? Das Geld der Investoren steckt in Bitcoin als sicherstem Crypto. Für Altcoins (SOL, XRP, ADA...) ist das schlecht — sie bekommen aktuell weniger Kapital ab. Die 'Altseason' — der Moment wo Altcoins explodieren — beginnt erst wenn die Bitcoin-Dominanz unter 52% fällt. Aktuell bei 56.6%. Noch warten." },
-    { emoji:"🏦", typ:"bullish", titel:"Große Investoren kaufen heimlich", text:"Das wichtigste bullische Signal: Während Normalanleger verkaufen, kaufen die Großen still und leise. $2.7 Milliarden flossen in den letzten 3 Wochen in Crypto-ETFs — trotz Extreme Fear. Goldman Sachs hält $108 Millionen in Solana-ETFs. Das nennt man 'Smart Money akkumuliert'. Historisch endet diese Phase damit dass der Kurs plötzlich dreht und alle zu spät kaufen wollen." },
+    { emoji:"🏦", typ:"bullish", titel:"Institutionelle Flows bleiben ein Pluspunkt", text:"Im Modell bleiben institutionelle Zufluesse ein klarer Unterstuetzungsfaktor. Starke ETF-Zufluesse stabilisieren das Marktbild, auch wenn sie den Makro-Gegenwind derzeit nicht voll neutralisieren." },
   ],
   chanceRisikoInfo: {
     erklärung: "Das Chance/Risiko-Verhältnis zeigt was du potenziell gewinnen kannst im Vergleich zu dem was du verlieren kannst.",
@@ -290,7 +290,7 @@ const META = {
     { icon:"⚔️", type:"bearish", msg:"Iran-Krieg + Hormuz blockiert → Öl-Schock → Inflation hoch → Fed kann nicht senken." },
     { icon:"🏛️", type:"bearish", msg:"Fed Hawkish Pause: Nur 1 Zinssenkung 2026 (war: 2). Core PCE 3.1% zu hoch." },
     { icon:"₿",  type:"bearish", msg:"BTC Dominanz 56.6% — warten auf Rückgang unter 52% als Altseason-Signal." },
-    { icon:"🏦", type:"bullish", msg:"$2.7 Mrd. ETF-Inflows in 3 Wochen. Stablecoin-Reserve 8.4% wartet als Dry Powder." },
+    { icon:"🏦", type:"bullish", msg:"Institutionelle Flows und Dry Powder stuetzen die Aufwaertskomponente des Modells." },
     { icon:"🚀", type:"bullish", msg:"SOL Alpenglow aktiv · XRP ETF H1 · ADA Hard Fork Q2 — Katalysatoren kommen." },
   ],
 };
@@ -339,7 +339,7 @@ const COIN_MODELS = [
       { label:"Makro-Exposition",     score:62, note:"Risk-On Asset — leidet bei Geopolitik" },
       { label:"Discount zum ATH",     score:72, note:"$82 vs ATH $294 — 72% unter Peak" },
     ],
-    summary:"Alpenglow ist live — 150ms Finality, 98% Validator-Approval. CME Futures gestartet, SOL-ETFs $476M in 19 Tagen. Firedancer (1 Mio. TPS) folgt H2 2026. Score-Abzüge: BTC Dominanz hoch (kein Altseason-Signal), Iran-Risiko drückt kurzfristig. Netto: stärkstes Chance/Risiko Profil aller Altcoins.",
+    summary:"SOL kombiniert im Modell einen sehr hohen Katalysator-Basiswert mit solidem Regime-Support aus Flows und Aktivitaet. Gegenwind kommt weiter von BTC-Dominanz und Makro, aber unter den beobachteten Altcoins bleibt SOL einer der stabilsten High-Score-Faelle.",
   },
   {
     name:"XRP", ticker:"XRP", color:"#1756c8", bg:"#eef3ff",
@@ -352,7 +352,7 @@ const COIN_MODELS = [
       { label:"Makro-Exposition",     score:60, note:"Regulierungsrisiko bleibt teilweise" },
       { label:"Discount zum ATH",     score:60, note:"$1.34 vs ATH $3.40 — 60% unter Peak" },
     ],
-    summary:"SEC-Klage fallen gelassen, ETF in H1 2026 realistisch. 25% globaler Institutionen (>$1 Mrd. AUM) planen XRP-Allocation laut Coinbase-Umfrage. Score-Abzug: Technisch schwach unter $1.40, Sentiment bärisch.",
+    summary:"XRP profitiert im Modell vor allem von institutioneller Optionalitaet und regulatorischer Entspannung. Der Coin bleibt aber sensibel fuer schwaches Marktsentiment und technische Schwaeche.",
   },
   {
     name:"CHAINLINK", ticker:"LINK", color:"#2c5fd4", bg:"#e8f0ff",
@@ -365,7 +365,7 @@ const COIN_MODELS = [
       { label:"Makro-Exposition",     score:55, note:"Infrastruktur-Token — etwas defensiver" },
       { label:"Discount zum ATH",     score:82, note:"$8.41 vs ATH $52.70 — 84% unter Peak" },
     ],
-    summary:"Grayscale LINK-ETF: $41M am ersten Tag bei flachem Markt. LINK ist die Infrastruktur hinter Real World Assets. ATH $52 → $9.50 heute = 77% Discount. Bankenanalysten: LINK wird 'das API das alles verbindet'. Score-Abzug: Letzter Rally war 2021, Momentum fehlt noch.",
+    summary:"LINK punktet im Modell ueber Technologie, Infrastrukturrolle und hohen Discount zum ATH. Was fehlt, ist ein staerkerer Momentum-Impuls im aktuellen Marktregime.",
   },
   {
     name:"CARDANO", ticker:"ADA", color:"#0097a0", bg:"#e0f7f7",
@@ -378,7 +378,7 @@ const COIN_MODELS = [
       { label:"Makro-Exposition",     score:62, note:"Defensive Narrative als Research-Chain" },
       { label:"Discount zum ATH",     score:92, note:"$0.25 vs ATH $3.10 — 92% unter Peak" },
     ],
-    summary:"Van Rossem Hard Fork Q2–Q3 2026 noch nicht eingepreist — das Einstiegsfenster. Historisch: ADA explodiert VOR Hard Forks. Midnight Privacy-Mainnet aktiv. Score-Abzug: DeFi-Ökosystem wächst langsamer als SOL/ETH.",
+    summary:"ADA wird im Modell von Upgrade-Naehe und hohem Discount gestuetzt. Gleichzeitig bleibt der Coin schwaecher bei Flows und Oekosystemdynamik als die Top-Kandidaten.",
   },
   {
     name:"ETHEREUM", ticker:"ETH", color:"#5b4fcf", bg:"#eeebff",
@@ -391,7 +391,7 @@ const COIN_MODELS = [
       { label:"Makro-Exposition",     score:60, note:"ETH/BTC auf Mehrjahrestiefs — underperformt" },
       { label:"Discount zum ATH",     score:59, note:"$1999 vs ATH $4891 — 59% unter Peak" },
     ],
-    summary:"ETH dominiert DeFi mit 75% TVL, für den US Strategic Reserve vorgesehen. Glamsterdam bringt 10x Scale in Q3-Q4. Problem: ETH/BTC auf Mehrjahrestiefs, underperformt im Zyklus. Daher 'Halten' — unverzichtbar als Basis, aber kein aktiver Kauf bis Trendwende.",
+    summary:"ETH bleibt im Modell fundamental stark, bekommt aber weniger relativen Schub aus Katalysator- und Momentum-Komponenten als aggressivere Altcoins. Deshalb eher Stabilitaetsanker als High-Beta-Setup.",
   },
   {
     name:"SUI", ticker:"SUI", color:"#0066bb", bg:"#e0f0ff",
@@ -404,7 +404,7 @@ const COIN_MODELS = [
       { label:"Makro-Exposition",     score:48, note:"Klein-Cap leidet mehr bei Risk-Off" },
       { label:"Discount zum ATH",     score:82, note:"$0.88 vs ATH $5.35 — 84% unter Peak" },
     ],
-    summary:"Object-Centric Design + Parallel Execution ermöglicht Skalierung die andere L1s nicht können. Vergleichbar mit SOL in 2020. Score-Abzüge: Jung, wenig erprobt, stark vom Altcoin-Sentiment abhängig. Empfehlung: 5–10% als asymmetrischer Bet.",
+    summary:"SUI hat im Modell hohe Technologiepunkte, aber noch begrenzte institutionelle und fundamentale Tiefe. Dadurch bleibt der Coin ein asymmetrischer, aber klar regimeabhaengiger Bet.",
   },
   {
     name:"BITTENSOR", ticker:"TAO", color:"#7a5cf0", bg:"#f0eeff",
@@ -417,7 +417,7 @@ const COIN_MODELS = [
       { label:"Makro-Exposition",     score:42, note:"Hoch spekulativ, KI-Sentiment-abhängig" },
       { label:"Discount zum ATH",     score:53, note:"$358 vs ATH $754 — 53% unter Peak" },
     ],
-    summary:"Maximum Supply 21M nach Bitcoin modelliert. Nvidia-Backing, dezentrales KI-Training. Der KI-Trend ist der stärkste Makro-Trend der Dekade. Score-Abzüge: Hoch spekulativ, starke Konkurrenz im KI-Segment, korreliert mit KI-Sentiment-Schwankungen.",
+    summary:"TAO punktet im Modell ueber Technologie und Narrative, verliert aber deutlich bei Makro-Exposition und Regimestabilitaet. Damit bleibt der Coin eher Beobachtungskandidat als Kernposition.",
   },
   {
     name:"ONDO", ticker:"ONDO", color:"#00875a", bg:"#e6f7f0",
@@ -430,7 +430,7 @@ const COIN_MODELS = [
       { label:"Makro-Exposition",     score:38, note:"Vesting-Risk, große Token noch gesperrt" },
       { label:"Discount zum ATH",     score:62, note:"$0.82 vs ATH $2.14 — 62% unter Peak" },
     ],
-    summary:"BlackRock + DTCC tokenisieren Anleihen — ONDO ist die Infrastruktur. US-Regulatoren haben Blockchain-Tokenisierung genehmigt. Score-Abzüge: Große Token-Mengen noch im Vesting (Sell-Pressure), Narrative braucht Zeit um einzupreisen.",
+    summary:"ONDO profitiert im Modell von regulatorischem Rueckenwind und RWA-Narrativ. Belastend bleiben Vesting-Druck und ein noch nicht voll bestaetigtes Marktregime fuer den Coin.",
   },
   {
     name:"IOTA", ticker:"IOTA", color:"#242938", bg:"#eef0f7",
@@ -443,7 +443,7 @@ const COIN_MODELS = [
       { label:"Makro-Exposition",     score:42, note:"Nischen-Asset, kleine Market Cap — fiel 2x stärker als BTC zuletzt" },
       { label:"Discount zum ATH",     score:99, note:"$0.056 vs ATH $5.25 — 99% unter Peak (All-Time-Low Zone)" },
     ],
-    summary:"IOTA liegt bei $0.056 — praktisch auf All-Time-Low Niveau (ATL: $0.055). Das ist gleichzeitig das grösste Risiko und die grösste Chance. Technologie überzeugt: Tangle DAG, fehlerfrei, gebührenfrei, ideal für IoT und Trade Finance. Kenya Cross-Border-Trade live, AfCFTA funded. Score-Abzüge: Nischen-Narrative braucht Zeit, sehr kleine Market Cap ($240M) macht es anfällig für starke Ausschläge in beide Richtungen. 99% unter ATH — extremes Discount, aber braucht einen spezifischen Katalysator um diesen aufzuholen.",
+    summary:"IOTA bekommt im Modell hohe Discount- und Technologiepunkte, bleibt aber wegen kleiner Marktkapitalisierung und schwacher Regimestabilitaet ein spekulativer Sonderfall. Der Case ist asymmetrisch, aber klar an Katalysatoren gebunden.",
   },
 ];
 
@@ -1379,7 +1379,7 @@ function App() {
                 </div>
                 {[
                   { label:"Fear & Greed Index", weight:"15%", color:"#1756c8", icon:"📊",
-                    kurz:"Contrarian: Extreme Fear = Kaufzone",
+                    kurz:"Contrarian: Extreme Fear st�tzt das Modell",
                     was:"Der Fear & Greed Index misst die emotionale Stimmung aller Crypto-Anleger auf einer Skala von 0 (maximale Angst) bis 100 (maximale Gier). Er kombiniert Kursvolatilität, Handelsvolumen, Social Media Aktivität, Bitcoin-Dominanz und Google-Suchanfragen.",
                     warum:"Wir nutzen diesen Index als Contrarian-Signal — das bedeutet das Gegenteil der Masse ist oft richtig. Wenn ALLE Angst haben (unter 20), verkaufen schwache Hände ihre Coins günstig. Smart Money kauft dann. Wenn ALLE gierig sind (über 80), ist der Markt überhitzt — dann drohen Korrekturen. Aktuell: Score 24 = Extreme Fear seit 47 Tagen. Historisch führten solche Phasen in 80% der Fälle zu positiven Returns nach 30 Tagen.",
                     aktuell:"Score 24/100 — Extreme Fear. Bearish kurzfristig, aber historisch bullisches Contrarian-Signal.",
@@ -1682,5 +1682,8 @@ document.getElementById('loading').style.display = 'none';
 
 </body>
 </html>
+
+
+
 
 
