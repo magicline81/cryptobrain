@@ -748,7 +748,7 @@ function getSubScoreCompositionText(subScore) {
   return `${subScore.calculationNote || `Dieser Teilscore setzt sich aus ${parts.map(part => `${part.label} ${part.weight}%`).join(", ")} zusammen und ergibt ${subScore.score} Punkte.`}`;
 }
 
-function getSubScoreReasoning(coin, subScore) {
+function getSubScoreReasoningV2(coin, subScore) {
   return `${coin.name} bekommt hier ${subScore.score} von 100 Punkten. Das ist ${getScoreBandText(subScore.score)}. Die Rechnung nutzt eine coin-spezifische Basisbewertung von ${subScore.adjustedBase ?? subScore.score} Punkten und ein Markt-Overlay von aktuell ${subScore.weightedMarketScore || 50}/100. Daraus entsteht ein Regime-Effekt von ${subScore.regimeAdjustment >= 0 ? "+" : ""}${subScore.regimeAdjustment || 0} Punkten. Grundlage dafuer ist: ${subScore.note}. ${getScoreBandReason(subScore.score)}`;
 }
 
@@ -1238,7 +1238,7 @@ function App() {
                                   </div>
                                   <div style={{ ...mono, fontSize:9, letterSpacing:1, textTransform:"uppercase", color:"#9aa0bc", marginBottom:5 }}>Warum genau diese Punktezahl?</div>
                                   <div style={{ fontSize:11, color:"#5a6282", lineHeight:1.7, marginBottom:8 }}>
-                                    {getSubScoreReasoning(c, s)}
+                                    {getSubScoreReasoningV2(c, s)}
                                   </div>
                                   <div style={{ fontSize:11, color:"#5a6282", lineHeight:1.7, padding:"8px 10px", background:"#f7f9fd", borderRadius:7, border:`1px solid ${c.color}22` }}>
                                     {getSubScoreCompositionText(s)}
@@ -1535,10 +1535,10 @@ function App() {
                   {vEmoji[MARKET_VERDICT]} {MARKET_VERDICT}
                 </div>
                 <div style={{ fontSize:12, color:"#5a6282", lineHeight:1.6, marginBottom:12 }}>
-                  Makro-Risiken überwiegen kurzfristig. Gestaffelt akkumulieren — auf BTC Dom unter 52% warten.
+                  Der Wert entsteht als gewichteter 12-Komponenten-Score. Hohe Makro-Belastung drueckt ihn, starke Sentiment- und Flow-Daten stuetzen ihn.
                 </div>
                 <div style={{ fontSize:11, color:"#9aa0bc", lineHeight:1.6, marginBottom:12 }}>
-                  Markt-Signal = separates 12-Indikatoren-Modell. Coin-Scores = Basiswert plus Regime-Effekt.
+                  Markt-Signal = gewichtetes 12-Indikatoren-Modell. Coin-Scores = Coin-Basiswert plus marktseitiger Regime-Effekt.
                 </div>
                 {/* CHANCE / RISIKO with explanation */}
                 <div style={{ marginBottom:12 }}>
@@ -1682,3 +1682,4 @@ document.getElementById('loading').style.display = 'none';
 
 </body>
 </html>
+
