@@ -243,18 +243,18 @@ const { useEffect, useRef, useState } = React;
 // ── DATEN ─────────────────────────────────────────────────────────────────────
 const META = {
   date: "29. März 2026 · 16:00 Uhr",
-  aiReasoning: "Das Modell sieht starke Sentiment- und Flow-Unterstuetzung, aber klaren Makro-Gegenwind. Extreme Fear und institutionelle Zufluesse stuetzen das Bild, waehrend Fed, Geopolitik und hohe BTC-Dominanz den Markt-Score begrenzen.",
+  aiReasoning: "Das Modell sieht starke Sentiment- und Flow-Unterst?tzung, aber klaren Makro-Gegenwind. Extreme Fear und institutionelle Zufl?sse st?tzen das Bild, w?hrend Fed, Geopolitik und hohe BTC-Dominanz den Markt-Score begrenzen.",
   analystPunkte: [
-    { emoji:"😱", typ:"bullish", titel:"Extreme Fear st�tzt das Modell", text:"Wir sind seit 47 Tagen im Extreme Fear — das ist der längste Streak seit dem FTX-Kollaps 2022. Was bedeutet das? Alle haben Angst. Retail-Anleger verkaufen in Panik. Aber genau dann kauft Smart Money günstig ein. BlackRock hat allein an einem Tag $215 Millionen in Bitcoin ETFs investiert — während alle anderen verkauften. Historisch: Wenn der Fear Index unter 20 bleibt, war nach 30 Tagen in 80% der Fälle ein positiver Return zu verzeichnen." },
+    { emoji:"😱", typ:"bullish", titel:"Extreme Fear stützt das Modell", text:"Wir sind seit 47 Tagen im Extreme Fear — das ist der längste Streak seit dem FTX-Kollaps 2022. Was bedeutet das? Alle haben Angst. Retail-Anleger verkaufen in Panik. Aber genau dann kauft Smart Money günstig ein. BlackRock hat allein an einem Tag $215 Millionen in Bitcoin ETFs investiert — während alle anderen verkauften. Historisch: Wenn der Fear Index unter 20 bleibt, war nach 30 Tagen in 80% der Fälle ein positiver Return zu verzeichnen." },
     { emoji:"🏛️", typ:"bearish", titel:"Fed bremst — keine Zinssenkungen in Sicht", text:"Die US-Zentralbank (Fed) hat im März 2026 entschieden die Zinsen NICHT zu senken. Warum ist das schlecht für Crypto? Bei hohen Zinsen legen Banken und Fonds ihr Geld lieber in sichere Staatsanleihen (5% Zinsen) statt in riskante Crypto. Ursprünglich waren 2 Zinssenkungen für 2026 geplant — jetzt wird nur noch 1 erwartet. Dazu kommt: der neue Fed-Chef Warsh gilt als noch strenger als sein Vorgänger." },
     { emoji:"⚔️", typ:"bearish", titel:"Iran-Krieg drückt den gesamten Markt", text:"Der aktive Konflikt zwischen USA/Israel und Iran blockiert die Strait of Hormuz — eine der wichtigsten Schifffahrtsrouten für Öl. Das Ergebnis: Ölpreise steigen, was die Inflation hoch hält und der Fed die Möglichkeit nimmt die Zinsen zu senken. Crypto reagiert auf solche Krisen wie ein 'Risk Asset' — ähnlich wie Technologieaktien. Bei globaler Unsicherheit verkaufen Anleger zuerst das Riskanteste." },
     { emoji:"₿", typ:"bearish", titel:"Altseason noch nicht gestartet", text:"Bitcoin hat aktuell 56.6% des gesamten Crypto-Marktes. Das ist hoch. Was bedeutet das? Das Geld der Investoren steckt in Bitcoin als sicherstem Crypto. Für Altcoins (SOL, XRP, ADA...) ist das schlecht — sie bekommen aktuell weniger Kapital ab. Die 'Altseason' — der Moment wo Altcoins explodieren — beginnt erst wenn die Bitcoin-Dominanz unter 52% fällt. Aktuell bei 56.6%. Noch warten." },
-    { emoji:"🏦", typ:"bullish", titel:"Institutionelle Flows bleiben ein Pluspunkt", text:"Im Modell bleiben institutionelle Zufluesse ein klarer Unterstuetzungsfaktor. Starke ETF-Zufluesse stabilisieren das Marktbild, auch wenn sie den Makro-Gegenwind derzeit nicht voll neutralisieren." },
+    { emoji:"🏦", typ:"bullish", titel:"Institutionelle Flows bleiben ein Pluspunkt", text:"Im Modell bleiben institutionelle Zufl?sse ein klarer Unterst?tzungsfaktor. Starke ETF-Zufl?sse stabilisieren das Marktbild, auch wenn sie den Makro-Gegenwind derzeit nicht voll neutralisieren." },
   ],
   chanceRisikoInfo: {
     erklärung: "Das Chance/Risiko-Verhältnis zeigt was du potenziell gewinnen kannst im Vergleich zu dem was du verlieren kannst.",
     beispiel: "Bei 2.1x Chance zu 1x Risiko: Wenn du €1.000 investierst und der Markt läuft gut — könntest du €2.100 Gewinn machen. Wenn der Markt schlecht läuft — riskierst du bis zu €1.000 Verlust. Das Verhältnis 2.1:1 gilt als akzeptabel. Profis kaufen oft erst ab 2:1 aufwärts.",
-    basis: "Berechnet aus gewichteten Marktkomponenten, getrennt nach Aufwaertstreibern und Risikodruck, nicht mehr aus einem festen Beispielwert.",
+    basis: "Berechnet aus gewichteten Marktkomponenten, getrennt nach Aufw?rtstreibern und Risikodruck, nicht mehr aus einem festen Beispielwert.",
     gut: "Über 3x = sehr attraktiv. 2–3x = gut. Unter 1.5x = zu riskant."
   },
   breakdownBars: [
@@ -285,7 +285,7 @@ const META = {
     { icon:"⚔️", type:"bearish", msg:"Iran-Krieg + Hormuz blockiert → Öl-Schock → Inflation hoch → Fed kann nicht senken." },
     { icon:"🏛️", type:"bearish", msg:"Fed Hawkish Pause: Nur 1 Zinssenkung 2026 (war: 2). Core PCE 3.1% zu hoch." },
     { icon:"₿",  type:"bearish", msg:"BTC Dominanz 56.6% — warten auf Rückgang unter 52% als Altseason-Signal." },
-    { icon:"🏦", type:"bullish", msg:"Institutionelle Flows und Dry Powder stuetzen die Aufwaertskomponente des Modells." },
+    { icon:"🏦", type:"bullish", msg:"Institutionelle Flows und Dry Powder st?tzen die Aufwaertskomponente des Modells." },
     { icon:"🚀", type:"bullish", msg:"SOL Alpenglow aktiv · XRP ETF H1 · ADA Hard Fork Q2 — Katalysatoren kommen." },
   ],
 };
@@ -373,7 +373,7 @@ const COIN_MODELS = [
       { label:"Makro-Exposition",     score:62, note:"Defensive Narrative als Research-Chain" },
       { label:"Discount zum ATH",     score:92, note:"$0.25 vs ATH $3.10 — 92% unter Peak" },
     ],
-    summary:"ADA wird im Modell von Upgrade-Naehe und hohem Discount gestuetzt. Gleichzeitig bleibt der Coin schwaecher bei Flows und Oekosystemdynamik als die Top-Kandidaten.",
+    summary:"ADA wird im Modell von Upgrade-N?he und hohem Discount gestuetzt. Gleichzeitig bleibt der Coin schw?cher bei Flows und ?kosystemdynamik als die Top-Kandidaten.",
   },
   {
     name:"ETHEREUM", ticker:"ETH", color:"#5b4fcf", bg:"#eeebff",
@@ -386,7 +386,7 @@ const COIN_MODELS = [
       { label:"Makro-Exposition",     score:60, note:"ETH/BTC auf Mehrjahrestiefs — underperformt" },
       { label:"Discount zum ATH",     score:59, note:"$1999 vs ATH $4891 — 59% unter Peak" },
     ],
-    summary:"ETH bleibt im Modell fundamental stark, bekommt aber weniger relativen Schub aus Katalysator- und Momentum-Komponenten als aggressivere Altcoins. Deshalb eher Stabilitaetsanker als High-Beta-Setup.",
+    summary:"ETH bleibt im Modell fundamental stark, bekommt aber weniger relativen Schub aus Katalysator- und Momentum-Komponenten als aggressivere Altcoins. Deshalb eher Stabilit?tsanker als High-Beta-Setup.",
   },
   {
     name:"SUI", ticker:"SUI", color:"#0066bb", bg:"#e0f0ff",
@@ -399,7 +399,7 @@ const COIN_MODELS = [
       { label:"Makro-Exposition",     score:48, note:"Klein-Cap leidet mehr bei Risk-Off" },
       { label:"Discount zum ATH",     score:82, note:"$0.88 vs ATH $5.35 — 84% unter Peak" },
     ],
-    summary:"SUI hat im Modell hohe Technologiepunkte, aber noch begrenzte institutionelle und fundamentale Tiefe. Dadurch bleibt der Coin ein asymmetrischer, aber klar regimeabhaengiger Bet.",
+    summary:"SUI hat im Modell hohe Technologiepunkte, aber noch begrenzte institutionelle und fundamentale Tiefe. Dadurch bleibt der Coin ein asymmetrischer, aber klar regimeabh?ngiger Bet.",
   },
   {
     name:"BITTENSOR", ticker:"TAO", color:"#7a5cf0", bg:"#f0eeff",
@@ -412,7 +412,7 @@ const COIN_MODELS = [
       { label:"Makro-Exposition",     score:42, note:"Hoch spekulativ, KI-Sentiment-abhängig" },
       { label:"Discount zum ATH",     score:53, note:"$358 vs ATH $754 — 53% unter Peak" },
     ],
-    summary:"TAO punktet im Modell ueber Technologie und Narrative, verliert aber deutlich bei Makro-Exposition und Regimestabilitaet. Damit bleibt der Coin eher Beobachtungskandidat als Kernposition.",
+    summary:"TAO punktet im Modell ueber Technologie und Narrative, verliert aber deutlich bei Makro-Exposition und Regimestabilit?t. Damit bleibt der Coin eher Beobachtungskandidat als Kernposition.",
   },
   {
     name:"ONDO", ticker:"ONDO", color:"#00875a", bg:"#e6f7f0",
@@ -425,7 +425,7 @@ const COIN_MODELS = [
       { label:"Makro-Exposition",     score:38, note:"Vesting-Risk, große Token noch gesperrt" },
       { label:"Discount zum ATH",     score:62, note:"$0.82 vs ATH $2.14 — 62% unter Peak" },
     ],
-    summary:"ONDO profitiert im Modell von regulatorischem Rueckenwind und RWA-Narrativ. Belastend bleiben Vesting-Druck und ein noch nicht voll bestaetigtes Marktregime fuer den Coin.",
+    summary:"ONDO profitiert im Modell von regulatorischem R?ckenwind und RWA-Narrativ. Belastend bleiben Vesting-Druck und ein noch nicht voll best?tigtes Marktregime f?r den Coin.",
   },
   {
     name:"IOTA", ticker:"IOTA", color:"#242938", bg:"#eef0f7",
@@ -438,7 +438,7 @@ const COIN_MODELS = [
       { label:"Makro-Exposition",     score:42, note:"Nischen-Asset, kleine Market Cap — fiel 2x stärker als BTC zuletzt" },
       { label:"Discount zum ATH",     score:99, note:"$0.056 vs ATH $5.25 — 99% unter Peak (All-Time-Low Zone)" },
     ],
-    summary:"IOTA bekommt im Modell hohe Discount- und Technologiepunkte, bleibt aber wegen kleiner Marktkapitalisierung und schwacher Regimestabilitaet ein spekulativer Sonderfall. Der Case ist asymmetrisch, aber klar an Katalysatoren gebunden.",
+    summary:"IOTA bekommt im Modell hohe Discount- und Technologiepunkte, bleibt aber wegen kleiner Marktkapitalisierung und schwacher Regimestabilit?t ein spekulativer Sonderfall. Der Case ist asymmetrisch, aber klar an Katalysatoren gebunden.",
   },
 ];
 
@@ -1295,7 +1295,7 @@ function App() {
                 </div>
                 {[
                   { label:"Fear & Greed Index", weight:"15%", color:"#1756c8", icon:"📊",
-                    kurz:"Contrarian: Extreme Fear st�tzt das Modell",
+                    kurz:"Contrarian: Extreme Fear stützt das Modell",
                     was:"Der Fear & Greed Index misst die emotionale Stimmung aller Crypto-Anleger auf einer Skala von 0 (maximale Angst) bis 100 (maximale Gier). Er kombiniert Kursvolatilität, Handelsvolumen, Social Media Aktivität, Bitcoin-Dominanz und Google-Suchanfragen.",
                     warum:"Wir nutzen diesen Index als Contrarian-Signal — das bedeutet das Gegenteil der Masse ist oft richtig. Wenn ALLE Angst haben (unter 20), verkaufen schwache Hände ihre Coins günstig. Smart Money kauft dann. Wenn ALLE gierig sind (über 80), ist der Markt überhitzt — dann drohen Korrekturen. Aktuell: Score 24 = Extreme Fear seit 47 Tagen. Historisch führten solche Phasen in 80% der Fälle zu positiven Returns nach 30 Tagen.",
                     aktuell:"Score 24/100 — Extreme Fear. Bearish kurzfristig, aber historisch bullisches Contrarian-Signal.",
@@ -1451,7 +1451,7 @@ function App() {
                   {vEmoji[MARKET_VERDICT]} {MARKET_VERDICT}
                 </div>
                 <div style={{ fontSize:12, color:"#5a6282", lineHeight:1.6, marginBottom:12 }}>
-                  Der Wert entsteht als gewichteter 12-Komponenten-Score. Hohe Makro-Belastung drueckt ihn, starke Sentiment- und Flow-Daten stuetzen ihn.
+                  Der Wert entsteht als gewichteter 12-Komponenten-Score. Hohe Makro-Belastung drueckt ihn, starke Sentiment- und Flow-Daten st?tzen ihn.
                 </div>
                 <div style={{ fontSize:11, color:"#9aa0bc", lineHeight:1.6, marginBottom:12 }}>
                   Markt-Signal = gewichtetes 12-Indikatoren-Modell. Coin-Scores = Coin-Basiswert plus marktseitiger Regime-Effekt.
@@ -1529,7 +1529,7 @@ function App() {
                     </div>
                   ))}
                   <div style={{ ...mono, fontSize:10, color:"#5b4fcf", marginTop:6, padding:"8px 10px", background:"rgba(91,79,207,.06)", borderRadius:6, lineHeight:1.6 }}>
-                    ⚖️ <strong>Fazit:</strong> Das Marktmodell sieht aktuell starke Stuetzen bei Sentiment und institutionellen Flows, aber mehrere harte Gegenwinde aus Makro und Dominanz. Deshalb bleibt der Markt-Score im Bereich ABWARTEN statt in eine klare Kaufzone zu kippen.
+                    ⚖️ <strong>Fazit:</strong> Das Marktmodell sieht aktuell starke St?tzen bei Sentiment und institutionellen Flows, aber mehrere harte Gegenwinde aus Makro und Dominanz. Deshalb bleibt der Markt-Score im Bereich ABWARTEN statt in eine klare Kaufzone zu kippen.
                   </div>
                 </div>
                 <div style={{ background:"#fff8e6", border:"1px solid #e8d080", borderRadius:6, padding:"8px 12px", fontSize:10, color:"#7a6020", ...mono, textAlign:"center" }}>
