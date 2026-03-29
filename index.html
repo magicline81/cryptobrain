@@ -759,77 +759,6 @@ function buildAnalystExplanation(coin) {
   ];
 }
 
-function LegacyMiniGauge({ score, color }) {
-  // cx=100 cy=100 r=80 — identische Koordinaten wie Haupt-Gauge
-  // Bogen läuft von links (20,100) im Uhrzeigersinn (sweep=1) nach rechts (180,100)
-  // largeArcFlag = immer 0, da der Bogen nie > 180° ist
-  const cx = 100, cy = 100, r = 80;
-  const rad = (1 - score / 100) * Math.PI; // score=0 → π (links), score=100 → 0 (rechts)
-  const ex = (cx + r * Math.cos(rad)).toFixed(2);
-  const ey = (cy - r * Math.sin(rad)).toFixed(2);
-  // Nadel
-  // Farbzonen-Trennpunkte bei 25 / 50 / 75 von 100
-  const z1x = (cx + r * Math.cos(Math.PI * 0.75)).toFixed(2); // Score 25
-  const z1y = (cy - r * Math.sin(Math.PI * 0.75)).toFixed(2);
-  const z2x = (cx + r * Math.cos(Math.PI * 0.50)).toFixed(2); // Score 50
-  const z2y = (cy - r * Math.sin(Math.PI * 0.50)).toFixed(2);
-  const z3x = (cx + r * Math.cos(Math.PI * 0.25)).toFixed(2); // Score 75
-  const z3y = (cy - r * Math.sin(Math.PI * 0.25)).toFixed(2);
-  return (
-    <div style={{ width:130, height:72, flexShrink:0, overflow:"hidden" }}>
-      <svg viewBox="0 0 200 104" width="130" height="72">
-        {/* Grauer Track */}
-        <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#e2e6f0" strokeWidth="14" strokeLinecap="round"/>
-        {/* Farbzonen — alle la=0 sweep=1 */}
-        <path d={`M 20 100 A 80 80 0 0 1 ${z1x} ${z1y}`}               fill="none" stroke="#ffc8cc" strokeWidth="14" strokeLinecap="round"/>
-        <path d={`M ${z1x} ${z1y} A 80 80 0 0 1 ${z2x} ${z2y}`}       fill="none" stroke="#ffe4a0" strokeWidth="14" strokeLinecap="round"/>
-        <path d={`M ${z2x} ${z2y} A 80 80 0 0 1 ${z3x} ${z3y}`}       fill="none" stroke="#c8f0dc" strokeWidth="14" strokeLinecap="round"/>
-        <path d={`M ${z3x} ${z3y} A 80 80 0 0 1 180 100`}             fill="none" stroke="#88d8a8" strokeWidth="14" strokeLinecap="round"/>
-        {/* Aktiver Bogen — la=0 IMMER (Bogen ≤ 180°, short arc korrekt) */}
-        <path d={`M 20 100 A 80 80 0 0 1 ${ex} ${ey}`} fill="none" stroke={color} strokeWidth="14" strokeLinecap="round"/>
-        {/* Nadel */}
-        <line x1="100" y1="100" x2={nx} y2={ny} stroke="#1a1e2e" strokeWidth="2.5" strokeLinecap="round"/>
-        <circle cx="100" cy="100" r="5" fill="#1a1e2e"/>
-        {/* Score-Zahl */}
-        <text x="100" y="97" textAnchor="middle"
-          style={{fontFamily:"Georgia,serif",fontSize:22,fontWeight:900,fill:color,userSelect:"none"}}>{score}</text>
-      </svg>
-    </div>
-  );
-}
-
-// ── Main Gauge — la immer 0 ──────────────────────────────────────────────────
-function LegacyGauge({ score, color }) {
-  // cx=100, cy=100, r=80 — la=0 IMMER (Bogen max 180°)
-  const cx=100, cy=100, r=80;
-  const rad = (1 - score / 100) * Math.PI;
-  const x=(cx+r*Math.cos(rad)).toFixed(2);
-  const y=(cy-r*Math.sin(rad)).toFixed(2);
-  // Farbzonen fix bei 25/50/75
-  const z1x=(cx+r*Math.cos(Math.PI*0.75)).toFixed(2), z1y=(cy-r*Math.sin(Math.PI*0.75)).toFixed(2);
-  const z2x=(cx+r*Math.cos(Math.PI*0.50)).toFixed(2), z2y=(cy-r*Math.sin(Math.PI*0.50)).toFixed(2);
-  const z3x=(cx+r*Math.cos(Math.PI*0.25)).toFixed(2), z3y=(cy-r*Math.sin(Math.PI*0.25)).toFixed(2);
-  return (
-    <div style={{position:"relative",width:200,height:110,margin:"0 auto 6px",overflow:"hidden"}}>
-      <svg viewBox="0 0 200 104" style={{width:"100%",height:"100%"}}>
-        <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#e2e6f0" strokeWidth="14" strokeLinecap="round"/>
-        <path d={`M 20 100 A 80 80 0 0 1 ${z1x} ${z1y}`}         fill="none" stroke="#ffc8cc" strokeWidth="14" strokeLinecap="round"/>
-        <path d={`M ${z1x} ${z1y} A 80 80 0 0 1 ${z2x} ${z2y}`} fill="none" stroke="#ffe4a0" strokeWidth="14" strokeLinecap="round"/>
-        <path d={`M ${z2x} ${z2y} A 80 80 0 0 1 ${z3x} ${z3y}`} fill="none" stroke="#c8f0dc" strokeWidth="14" strokeLinecap="round"/>
-        <path d={`M ${z3x} ${z3y} A 80 80 0 0 1 180 100`}         fill="none" stroke="#88d8a8" strokeWidth="14" strokeLinecap="round"/>
-        {/* Aktiver Bogen — la=0 IMMER */}
-        <path d={`M 20 100 A 80 80 0 0 1 ${x} ${y}`} fill="none" stroke={color} strokeWidth="14" strokeLinecap="round"/>
-        <line x1="100" y1="100" x2={nx} y2={ny} stroke="#1a1e2e" strokeWidth="2.5" strokeLinecap="round"/>
-        <circle cx="100" cy="100" r="5" fill="#1a1e2e"/>
-      </svg>
-      <div style={{position:"absolute",bottom:8,left:"50%",transform:"translateX(-50%)",textAlign:"center"}}>
-        <div style={{fontFamily:"Georgia,serif",fontSize:38,fontWeight:900,color,lineHeight:1}}>{score}</div>
-      </div>
-    </div>
-  );
-}
-
-// ── APP ───────────────────────────────────────────────────────────────────────
 function MiniGauge({ score, color }) {
   const cx = 100, cy = 100, r = 80;
   const rad = (1 - score / 100) * Math.PI;
@@ -1669,6 +1598,7 @@ document.getElementById('loading').style.display = 'none';
 
 </body>
 </html>
+
 
 
 
