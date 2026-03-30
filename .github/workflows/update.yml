@@ -1,0 +1,57 @@
+# ════════════════════════════════════════════════════════════
+#  Crypto Signal System — Tägliche Daten-Aktualisierung
+#  Läuft 2x täglich: 09:00 + 14:00 Uhr Wien (UTC+2)
+#  09:00 Wien = 07:00 UTC
+#  14:00 Wien = 12:00 UTC
+# ════════════════════════════════════════════════════════════
+
+name: 📊 Crypto Daten Update
+
+on:
+  schedule:
+    - cron: '0 7 * * *'   # 09:00 Uhr Wien
+    - cron: '0 12 * * *'  # 14:00 Uhr Wien
+
+  # Manueller Start jederzeit möglich (wichtig zum Testen!)
+  workflow_dispatch:
+    inputs:
+      grund:
+        description: 'Warum manuell gestartet?'
+        required: false
+        default: 'Manueller Test'
+
+jobs:
+  update:
+    name: Marktdaten aktualisieren
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # Schritt 1: Code aus dem Repository holen
+      - name: 📥 Repository laden
+        uses: actions/checkout@v4
+
+      # Schritt 2: Python installieren
+      - name: 🐍 Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Schritt 3: Benötigte Pakete installieren
+      # "requests" brauchen wir um APIs aufzurufen
+      - name: 📦 Pakete installieren
+        run: pip install requests
+
+      # Schritt 4: Das Update-Script ausführen
+      - name: 🚀 Daten holen & HTML aktualisieren
+        run: python update_data.py
+
+      # Schritt 5: Änderungen speichern und zurück zu GitHub pushen
+      - name: 💾 Änderungen speichern
+        run: |
+          git config --global user.name  "Crypto-Bot"
+          git config --global user.email "crypto-bot@signal.at"
+          git add index.html
+          # Commit nur wenn sich wirklich etwas geändert hat
+          git diff --staged --quiet || git commit -m "📊 Auto-Update $(TZ='Europe/Vienna' date +'%d.%m.%Y %H:%M') Uhr"
+          git push
