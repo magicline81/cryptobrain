@@ -242,12 +242,12 @@ const { useEffect, useRef, useState } = React;
 
 // ── DATEN ─────────────────────────────────────────────────────────────────────
 const META = {
-  date: "29. März 2026 · 16:00 Uhr",
-  aiReasoning: "Das Modell sieht starke Sentiment- und Flow-Unterst?tzung, aber klaren Makro-Gegenwind. Extreme Fear und institutionelle Zufl?sse st?tzen das Bild, w?hrend Fed, Geopolitik und hohe BTC-Dominanz den Markt-Score begrenzen.",
+  date: "31. März 2026 · 18:00 Uhr",
+  aiReasoning: "Zum Quartalsende eskaliert der Makro-Gegenwind weiter: Ein kuwaitischer Öltanker wurde heute im Hafen von Dubai von iranischen Kräften angegriffen — Öl steigt auf neue Hochs. Trump droht mit der Vernichtung iranischer Ölinfrastruktur, während das Weiße Haus bestätigt, dass die Hormuz-Öffnung kein US-Kernziel ist. Das bedeutet: dauerhaft hohe Ölpreise, keine Zinssenkungen. Der Fear & Greed Index ist auf 10 gefallen — die tiefste Kapitulationszone seit dem FTX-Kollaps. Historisch folgen auf solche Werte die stärksten 60-Tage-Returns. Solanas Firedancer (1M TPS live) und 6 aktive XRP-ETFs halten die Katalysatoren-Komponente auf Rekordniveau.",
   analystPunkte: [
-    { emoji:"😱", typ:"bullish", titel:"Extreme Fear stützt das Modell", text:"Wir sind seit 47 Tagen im Extreme Fear — das ist der längste Streak seit dem FTX-Kollaps 2022. Was bedeutet das? Alle haben Angst. Retail-Anleger verkaufen in Panik. Aber genau dann kauft Smart Money günstig ein. BlackRock hat allein an einem Tag $215 Millionen in Bitcoin ETFs investiert — während alle anderen verkauften. Historisch: Wenn der Fear Index unter 20 bleibt, war nach 30 Tagen in 80% der Fälle ein positiver Return zu verzeichnen." },
+    { emoji:"😱", typ:"bullish", titel:"Fear & Greed bei 10 — tiefste Kapitulationszone seit FTX", text:"Der Fear & Greed Index steht heute bei 10 — das ist der niedrigste Wert seit dem FTX-Kollaps November 2022. Heute ist der 60. aufeinanderfolgende Tag im Extreme Fear. Was bedeutet das historisch? Werte unter 15 haben in den 12 Monaten danach durchschnittlich +18% Return erzielt. Bitcoin ETFs haben im März trotzdem $2,5 Milliarden Zuflüsse verzeichnet — Smart Money kauft in der Panik. Zum Quartalsende (heute) schichten Institutionen mechanisch um — das kann kurzfristig zusätzlichen Druck erzeugen, ist aber kein fundamentales Signal." },
     { emoji:"🏛️", typ:"bearish", titel:"Fed bremst — keine Zinssenkungen in Sicht", text:"Die US-Zentralbank (Fed) hat im März 2026 entschieden die Zinsen NICHT zu senken. Warum ist das schlecht für Crypto? Bei hohen Zinsen legen Banken und Fonds ihr Geld lieber in sichere Staatsanleihen (5% Zinsen) statt in riskante Crypto. Ursprünglich waren 2 Zinssenkungen für 2026 geplant — jetzt wird nur noch 1 erwartet. Dazu kommt: der neue Fed-Chef Warsh gilt als noch strenger als sein Vorgänger." },
-    { emoji:"⚔️", typ:"bearish", titel:"Iran-Krieg drückt den gesamten Markt", text:"Der aktive Konflikt zwischen USA/Israel und Iran blockiert die Strait of Hormuz — eine der wichtigsten Schifffahrtsrouten für Öl. Das Ergebnis: Ölpreise steigen, was die Inflation hoch hält und der Fed die Möglichkeit nimmt die Zinsen zu senken. Crypto reagiert auf solche Krisen wie ein 'Risk Asset' — ähnlich wie Technologieaktien. Bei globaler Unsicherheit verkaufen Anleger zuerst das Riskanteste." },
+    { emoji:"⚔️", typ:"bearish", titel:"Iran-Krieg eskaliert — Öltanker in Dubai angegriffen", text:"Tag 32 des Krieges: Heute wurde ein kuwaitischer Öltanker (Al Salmi) im Hafen von Dubai von iranischen Kräften angegriffen — Feuer und Ölverschmutzungsrisiko. Trump droht, Irans Ölinfrastruktur inklusive Kharg Island vollständig zu vernichten. Das Weiße Haus hat außerdem bestätigt: Die Wiedereröffnung der Hormuz-Straße ist kein Kern-Kriegsziel der USA. Das ist ein erheblicher Eskalationsschritt — Öl über $100 könnte dauerhaft bleiben, was der Fed keine Möglichkeit lässt die Zinsen zu senken. Crypto leidet als Risk-Asset überproportional." },
     { emoji:"₿", typ:"bearish", titel:"Altseason noch nicht gestartet", text:"Bitcoin hat aktuell 56.6% des gesamten Crypto-Marktes. Das ist hoch. Was bedeutet das? Das Geld der Investoren steckt in Bitcoin als sicherstem Crypto. Für Altcoins (SOL, XRP, ADA...) ist das schlecht — sie bekommen aktuell weniger Kapital ab. Die 'Altseason' — der Moment wo Altcoins explodieren — beginnt erst wenn die Bitcoin-Dominanz unter 52% fällt. Aktuell bei 56.6%. Noch warten." },
     { emoji:"🏦", typ:"bullish", titel:"Institutionelle Flows bleiben ein Pluspunkt", text:"Im Modell bleiben institutionelle Zufl?sse ein klarer Unterst?tzungsfaktor. Starke ETF-Zufl?sse stabilisieren das Marktbild, auch wenn sie den Makro-Gegenwind derzeit nicht voll neutralisieren." },
   ],
@@ -258,12 +258,12 @@ const META = {
     gut: "Über 3x = sehr attraktiv. 2–3x = gut. Unter 1.5x = zu riskant."
   },
   breakdownBars: [
-    { name:"Sentiment F&G", score:80, color:"#1756c8",
-      erklärung:"Fear & Greed steht bei 24 — Extreme Fear seit 47 Tagen. Das ist contrarian bullisch: historisch kauft Smart Money hier während Retail verkauft. Score 80 weil Extreme Fear Zone = Kaufopportunität. Wäre Score 50 bei neutralem Markt oder Score 5 bei Extreme Greed.",
-      signalBull:"Extreme Fear unter 20 → historisch 80% positive 30-Tage-Returns", signalBear:"Extreme Greed über 80 → Markt überhitzt, Korrektur droht" },
-    { name:"BTC Dominanz", score:22, color:"#5b4fcf",
-      erklärung:"BTC Dominanz bei 56.6% — sehr hoch. Das bedeutet: 57% aller Crypto-Marktkapitalisierung steckt in Bitcoin. Nur 43% in allen Altcoins. Altseason beginnt erst wenn BTC Dom unter 52% fällt. Aktuell Score 22 = bearish für Altcoins. Kapital ist noch nicht in Altcoins geflossen.",
-      signalBull:"BTC Dom fällt unter 48% → Altseason aktiv, Altcoins explodieren", signalBear:"BTC Dom steigt über 60% → Kapital flieht aus Altcoins in BTC" },
+    { name:"Sentiment F&G", score:88, color:"#1756c8",
+      erklärung:"Fear & Greed steht bei 10 — tiefste Kapitulationszone seit FTX-Kollaps November 2022. Heute der 60. aufeinanderfolgende Tag im Extreme Fear. Score 88 weil: Werte unter 15 markieren historisch starke Einstiegspunkte. Durchschnittlicher 12-Monats-Return nach F&G unter 15: +18,3%. Smart Money kauft aktiv.",
+      signalBull:"F&G unter 15 → historisch stärkste Einstiegszonen, ø +18% in 12 Monaten", signalBear:"Extreme Greed über 80 → Markt überhitzt, Korrektur droht" },
+    { name:"BTC Dominanz", score:18, color:"#5b4fcf",
+      erklärung:"BTC Dominanz bei 58,2% — weiter gestiegen. Kapital flieht aus Altcoins in Bitcoin als sicherstem Hafen. Score 18 = bearish für Altcoins. Altseason startet erst wenn BTC Dom unter 52% fällt — aktuell 6,2 Punkte entfernt. Trend zeigt weiter aufwärts was Altcoins kurzfristig belastet.",
+      signalBull:"BTC Dom fällt unter 48% → Altseason aktiv, Altcoins explodieren", signalBear:"BTC Dom steigt über 60% → Kapital flieht vollständig aus Altcoins in BTC" },
     { name:"On-Chain", score:73, color:"#00875a",
       erklärung:"On-Chain umfasst: Exchange Flows (neutral, ETF-Inflows stark bullisch), Funding Rates (leicht negativ = Short-Squeeze möglich), Stablecoin-Reserve 8.4% (viel Dry Powder wartet). Gesamt Score 73 weil institutionelle ETF-Flows stark bullisch sind ($2.7 Mrd. in 3 Wochen), auch wenn Exchange Flows neutral sind.",
       signalBull:"Hohe Stablecoin-Reserve + starke ETF-Inflows = Kapital wartet auf Einstieg", signalBear:"Große Exchange Inflows = Verkaufsdruck steigt" },
@@ -273,18 +273,18 @@ const META = {
     { name:"Fed & Zinsen", score:25, color:"#0097a0",
       erklärung:"Fed hat im März 2026 eine 'Hawkish Pause' beschlossen. Zinsen bleiben bei 3.5–3.75%. Nur 1 Schnitt für 2026 erwartet (war: 2). Core PCE bei 3.1% zu hoch. Iran-Krieg treibt Ölpreise, hält Inflation hoch. Neuer Fed Chair Warsh gilt als hawkischer als Powell. Score 25 = stark bearish.",
       signalBull:"Zinssenkungen senken Anlagekosten → Kapital fließt in Crypto", signalBear:"Hohe Zinsen = Staatsanleihen attraktiver als Crypto → Kapital flieht" },
-    { name:"Geopolitik", score:18, color:"#c0182a",
-      erklärung:"Schlechteste Kategorie: US+Israel vs. Iran Krieg aktiv. Strait of Hormuz seit 20+ Tagen blockiert → Öl über $95 → Inflation bleibt hoch → Fed kann nicht senken. Zusätzlich US-China Handelskrieg mit hohen Zöllen drückt globales Wachstum. Score 18 = sehr bearish. Stärkstes Risiko im aktuellen Markt.",
-      signalBull:"De-Eskalation / Diplomatie → Risk-On kehrt zurück", signalBear:"Weitere Eskalation → Risk-Off verstärkt sich, Crypto fällt 2–3x stärker als BTC" },
+    { name:"Geopolitik", score:10, color:"#c0182a",
+      erklärung:"Iran-Krieg Tag 32 eskaliert: Kuwaitischer Öltanker in Dubai-Hafen angegriffen. Trump droht Vernichtung iranischer Ölinfrastruktur (Kharg Island). Weißes Haus: Hormuz-Öffnung ist kein US-Kernziel — dauerhaft hohe Ölpreise. BTC Dom 58,2%, Crypto Global Market Cap $2,38 Bio. Score 10 = schlechteste Kategorie im Modell.",
+      signalBull:"Waffenstillstand / Diplomatie → Risk-On kehrt zurück, Öl fällt, Fed kann senken", signalBear:"Weitere Eskalation oder Angriff auf Kharg Island → Ölschock, starker Risk-Off" },
     { name:"Inst. Flows", score:82, color:"#7a5cf0",
       erklärung:"Institutionelle Flows sind das bullischste Signal aktuell: $2.7 Mrd. ETF-Inflows in 3 Wochen. BlackRock IBIT allein: +$215 Mio. an einem Tag während Retail in Panik verkauft. Goldman Sachs hält $108 Mio. SOL ETF. Grayscale hat Bittensor Trust gestartet. Score 82 = stark bullisch. Großes Geld kauft heimlich während Retail ängstlich ist.",
       signalBull:"Smart Money kauft im Extreme Fear = klassisches Akkumulationsmuster vor Rally", signalBear:"ETF-Abflüsse über mehrere Wochen = institutionelle Risikoreduzierung" },
   ],
   alerts: [
-    { icon:"😱", type:"bullish", msg:"Fear & Greed 24 — 47 Tage Extreme Fear. BlackRock +$215M während Retail verkauft." },
-    { icon:"⚔️", type:"bearish", msg:"Iran-Krieg + Hormuz blockiert → Öl-Schock → Inflation hoch → Fed kann nicht senken." },
+    { icon:"😱", type:"bullish", msg:"F&G 10 — 60 Tage Extreme Fear. Tiefste Kapitulationszone seit FTX. ø +18% Return in 12 Monaten." },
+    { icon:"⚔️", type:"bearish", msg:"Iran Tag 32: Öltanker in Dubai angegriffen. Trump droht Kharg Island. Hormuz kein US-Kernziel." },
     { icon:"🏛️", type:"bearish", msg:"Fed Hawkish Pause: Nur 1 Zinssenkung 2026 (war: 2). Core PCE 3.1% zu hoch." },
-    { icon:"₿",  type:"bearish", msg:"BTC Dominanz 56.6% — warten auf Rückgang unter 52% als Altseason-Signal." },
+    { icon:"₿",  type:"bearish", msg:"BTC Dominanz 58,2% — gestiegen. Altseason erst bei <52%. Noch 6 Punkte Abstand." },
     { icon:"🏦", type:"bullish", msg:"Institutionelle Flows und Dry Powder st?tzen die Aufwaertskomponente des Modells." },
     { icon:"🚀", type:"bullish", msg:"SOL Alpenglow aktiv · XRP ETF H1 · ADA Hard Fork Q2 — Katalysatoren kommen." },
   ],
@@ -297,18 +297,18 @@ const CHANCE_RISK_DERIVATION = [
 ];
 
 const MARKET_SIGNAL_COMPONENTS = [
-  { name:"Fear & Greed Index", score:80, weight:15 },
-  { name:"BTC Dominanz", score:22, weight:15 },
-  { name:"Fed & Zinspolitik", score:25, weight:12 },
-  { name:"Upgrade-Katalysatoren", score:78, weight:10 },
-  { name:"Geopolitik / Kriege", score:18, weight:8 },
-  { name:"Exchange Flows", score:35, weight:8 },
-  { name:"Regulierung / ETFs", score:65, weight:7 },
-  { name:"Institutionelle ETF Flows", score:82, weight:8 },
-  { name:"Funding Rates", score:65, weight:5 },
-  { name:"Globale Liquiditaet M2", score:50, weight:4 },
-  { name:"On-Chain Adressen", score:73, weight:4 },
-  { name:"TVL Trend (DeFi)", score:50, weight:4 },
+  { name:"Fear & Greed Index", score:88, weight:15 },
+  { name:"BTC Dominanz", score:18, weight:15 },
+  { name:"Fed & Zinspolitik", score:22, weight:12 },
+  { name:"Upgrade-Katalysatoren", score:88, weight:10 },
+  { name:"Geopolitik / Kriege", score:10, weight:8 },
+  { name:"Exchange Flows", score:32, weight:8 },
+  { name:"Regulierung / ETFs", score:82, weight:7 },
+  { name:"Institutionelle ETF Flows", score:70, weight:8 },
+  { name:"Funding Rates", score:62, weight:5 },
+  { name:"Globale Liquiditaet M2", score:38, weight:4 },
+  { name:"On-Chain Adressen", score:70, weight:4 },
+  { name:"TVL Trend (DeFi)", score:72, weight:4 },
 ];
 
 const MARKET_BREAKDOWN_GROUPS = {
@@ -325,16 +325,16 @@ const MARKET_BREAKDOWN_GROUPS = {
 const COIN_MODELS = [
   {
     name:"SOLANA", ticker:"SOL", color:"#00875a", bg:"#e6f7f0",
-    price:"$83.80", change:"-0.6%", atl:"$8", ath:"$294", score:85, signal:"AKKUMULIEREN",
+    price:"$83.20", change:"+3.5%", atl:"$8", ath:"$294", score:85, signal:"AKKUMULIEREN",
     subScores:[
       { label:"Upgrade-Katalysator", score:95, note:"Alpenglow live (150ms), Firedancer H2 2026" },
       { label:"Institutionelle Flows",score:88, note:"CME Futures, SOL-ETF $476M in 19 Tagen" },
       { label:"Technologie",          score:90, note:"Schnellste Blockchain, 50k TPS heute" },
       { label:"Fundamentals",         score:82, note:"$2.85 Mrd. Jahresumsatz, 27M aktive Adressen" },
       { label:"Makro-Exposition",     score:62, note:"Risk-On Asset — leidet bei Geopolitik" },
-      { label:"Discount zum ATH",     score:72, note:"$82 vs ATH $294 — 72% unter Peak" },
+      { label:"Discount zum ATH",     score:72, note:"$83.20 vs ATH $294 — 72% unter Peak" },
     ],
-    summary:"SOL kombiniert im Modell einen sehr hohen Katalysator-Basiswert mit solidem Regime-Support aus Flows und Aktivitaet. Gegenwind kommt weiter von BTC-Dominanz und Makro, aber unter den beobachteten Altcoins bleibt SOL einer der stabilsten High-Score-Faelle.",
+    summary:"SOL hat mit Firedancer (1M TPS live auf Mainnet) und Alpenglow (150ms Finality) den stärksten Tech-Katalysator aller beobachteten Coins. Mit 72% Discount zum ATH und der SEC-Klassifikation als digitale Ware bleiben Einstiegsniveau und institutionelle Nachfrage attraktiv. Im aktuellen Extreme-Fear-Umfeld (F&G 10) bleibt SOL unter den Altcoins der überzeugendste Risk/Reward-Fall.",
   },
   {
     name:"XRP", ticker:"XRP", color:"#1756c8", bg:"#eef3ff",
@@ -351,7 +351,7 @@ const COIN_MODELS = [
   },
   {
     name:"CHAINLINK", ticker:"LINK", color:"#2c5fd4", bg:"#e8f0ff",
-    price:"$8.41", change:"-1.2%", atl:"$0.15", ath:"$52.70", score:76, signal:"KAUFEN",
+    price:"$9.16", change:"+3.6%", atl:"$0.15", ath:"$52.70", score:76, signal:"KAUFEN",
     subScores:[
       { label:"Upgrade-Katalysator", score:78, note:"Grayscale ETF live — $41M Tag 1" },
       { label:"Institutionelle Flows",score:80, note:"Institutionen sehen LINK als Kern-Infrastruktur" },
@@ -364,7 +364,7 @@ const COIN_MODELS = [
   },
   {
     name:"CARDANO", ticker:"ADA", color:"#0097a0", bg:"#e0f7f7",
-    price:"$0.25", change:"+0.2%", atl:"$0.017", ath:"$3.10", score:71, signal:"KAUFEN",
+    price:"$0.241", change:"-0.3%", atl:"$0.017", ath:"$3.10", score:71, signal:"KAUFEN",
     subScores:[
       { label:"Upgrade-Katalysator", score:80, note:"Van Rossem Hard Fork Q2-Q3, Leios Upgrade" },
       { label:"Institutionelle Flows",score:58, note:"Geringere Inst. Adoption als SOL/ETH" },
