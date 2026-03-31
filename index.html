@@ -242,7 +242,7 @@ const { useEffect, useRef, useState } = React;
 
 // ── DATEN ─────────────────────────────────────────────────────────────────────
 const META = {
-  date: "30. März 2026 · 14:40 Uhr",
+  date: "29. März 2026 · 16:00 Uhr",
   aiReasoning: "Das Modell sieht starke Sentiment- und Flow-Unterst?tzung, aber klaren Makro-Gegenwind. Extreme Fear und institutionelle Zufl?sse st?tzen das Bild, w?hrend Fed, Geopolitik und hohe BTC-Dominanz den Markt-Score begrenzen.",
   analystPunkte: [
     { emoji:"😱", typ:"bullish", titel:"Extreme Fear stützt das Modell", text:"Wir sind seit 47 Tagen im Extreme Fear — das ist der längste Streak seit dem FTX-Kollaps 2022. Was bedeutet das? Alle haben Angst. Retail-Anleger verkaufen in Panik. Aber genau dann kauft Smart Money günstig ein. BlackRock hat allein an einem Tag $215 Millionen in Bitcoin ETFs investiert — während alle anderen verkauften. Historisch: Wenn der Fear Index unter 20 bleibt, war nach 30 Tagen in 80% der Fälle ein positiver Return zu verzeichnen." },
@@ -325,7 +325,7 @@ const MARKET_BREAKDOWN_GROUPS = {
 const COIN_MODELS = [
   {
     name:"SOLANA", ticker:"SOL", color:"#00875a", bg:"#e6f7f0",
-    price:"$84.22", change:"+2.3%", atl:"$8", ath:"$294", score:85, signal:"AKKUMULIEREN",
+    price:"$83.80", change:"-0.6%", atl:"$8", ath:"$294", score:85, signal:"AKKUMULIEREN",
     subScores:[
       { label:"Upgrade-Katalysator", score:95, note:"Alpenglow live (150ms), Firedancer H2 2026" },
       { label:"Institutionelle Flows",score:88, note:"CME Futures, SOL-ETF $476M in 19 Tagen" },
@@ -338,7 +338,7 @@ const COIN_MODELS = [
   },
   {
     name:"XRP", ticker:"XRP", color:"#1756c8", bg:"#eef3ff",
-    price:"$1.35", change:"+1.4%", atl:"$0.002", ath:"$3.40", score:79, signal:"AKKUMULIEREN",
+    price:"$1.34", change:"+0.9%", atl:"$0.002", ath:"$3.40", score:79, signal:"AKKUMULIEREN",
     subScores:[
       { label:"Upgrade-Katalysator", score:82, note:"ETF-Approval H1 2026 erwartet" },
       { label:"Institutionelle Flows",score:90, note:"25% globaler Institutionen planen Allocation" },
@@ -351,7 +351,7 @@ const COIN_MODELS = [
   },
   {
     name:"CHAINLINK", ticker:"LINK", color:"#2c5fd4", bg:"#e8f0ff",
-    price:"$8.88", change:"+4.6%", atl:"$0.15", ath:"$52.70", score:76, signal:"KAUFEN",
+    price:"$8.41", change:"-1.2%", atl:"$0.15", ath:"$52.70", score:76, signal:"KAUFEN",
     subScores:[
       { label:"Upgrade-Katalysator", score:78, note:"Grayscale ETF live — $41M Tag 1" },
       { label:"Institutionelle Flows",score:80, note:"Institutionen sehen LINK als Kern-Infrastruktur" },
@@ -364,7 +364,7 @@ const COIN_MODELS = [
   },
   {
     name:"CARDANO", ticker:"ADA", color:"#0097a0", bg:"#e0f7f7",
-    price:"$0.250", change:"+3.2%", atl:"$0.017", ath:"$3.10", score:71, signal:"KAUFEN",
+    price:"$0.25", change:"+0.2%", atl:"$0.017", ath:"$3.10", score:71, signal:"KAUFEN",
     subScores:[
       { label:"Upgrade-Katalysator", score:80, note:"Van Rossem Hard Fork Q2-Q3, Leios Upgrade" },
       { label:"Institutionelle Flows",score:58, note:"Geringere Inst. Adoption als SOL/ETH" },
@@ -377,7 +377,7 @@ const COIN_MODELS = [
   },
   {
     name:"ETHEREUM", ticker:"ETH", color:"#5b4fcf", bg:"#eeebff",
-    price:"$2,073", change:"+3.7%", atl:"$0.43", ath:"$4,891", score:69, signal:"HALTEN",
+    price:"$1,990", change:"-0.5%", atl:"$0.43", ath:"$4,891", score:69, signal:"HALTEN",
     subScores:[
       { label:"Upgrade-Katalysator", score:72, note:"Glamsterdam + Hegota Q3-Q4, 10x Scale" },
       { label:"Institutionelle Flows",score:82, note:"Wall Street Liebling, Spot ETF aktiv" },
@@ -390,7 +390,7 @@ const COIN_MODELS = [
   },
   {
     name:"SUI", ticker:"SUI", color:"#0066bb", bg:"#e0f0ff",
-    price:"$0.887", change:"+3.6%", atl:"$0.36", ath:"$5.35", score:64, signal:"HALTEN",
+    price:"$0.88", change:"-2.0%", atl:"$0.36", ath:"$5.35", score:64, signal:"HALTEN",
     subScores:[
       { label:"Upgrade-Katalysator", score:62, note:"Ecosystem-Wachstum laufend" },
       { label:"Institutionelle Flows",score:52, note:"Noch geringe institutionelle Adoption" },
@@ -403,7 +403,7 @@ const COIN_MODELS = [
   },
   {
     name:"BITTENSOR", ticker:"TAO", color:"#7a5cf0", bg:"#f0eeff",
-    price:"$320.21", change:"-0.3%", atl:"$6.50", ath:"$754", score:61, signal:"BEOBACHTEN",
+    price:"$321", change:"+5.8%", atl:"$6.50", ath:"$754", score:61, signal:"BEOBACHTEN",
     subScores:[
       { label:"Upgrade-Katalysator", score:65, note:"KI-Netzwerk Subnetz-Wachstum aktiv" },
       { label:"Institutionelle Flows",score:58, note:"Nvidia-Backing, aber noch nische" },
@@ -416,7 +416,7 @@ const COIN_MODELS = [
   },
   {
     name:"ONDO", ticker:"ONDO", color:"#00875a", bg:"#e6f7f0",
-    price:"$0.268", change:"+0.7%", atl:"$0.08", ath:"$2.14", score:58, signal:"BEOBACHTEN",
+    price:"$0.267", change:"+3.1%", atl:"$0.08", ath:"$2.14", score:58, signal:"BEOBACHTEN",
     subScores:[
       { label:"Upgrade-Katalysator", score:70, note:"DTCC-Integration genehmigt, BlackRock Partner" },
       { label:"Institutionelle Flows",score:72, note:"BlackRock aktiv, DTCC Genehmigung" },
@@ -429,7 +429,7 @@ const COIN_MODELS = [
   },
   {
     name:"IOTA", ticker:"IOTA", color:"#242938", bg:"#eef0f7",
-    price:"$0.056", change:"+2.4%", atl:"$0.055", ath:"$5.25", score:62, signal:"BEOBACHTEN",
+    price:"$0.056", change:"-1.4%", atl:"$0.055", ath:"$5.25", score:62, signal:"BEOBACHTEN",
     subScores:[
       { label:"Upgrade-Katalysator", score:75, note:"Rebased Upgrade live, LayerZero-Integration (150+ Chains)" },
       { label:"Institutionelle Flows",score:58, note:"BitGo Custody in USA, Uphold-Listing — institutioneller Zugang wächst" },
