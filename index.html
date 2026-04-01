@@ -9,6 +9,7 @@
 <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
 
 <style>
   :root {
@@ -242,51 +243,51 @@ const { useEffect, useRef, useState } = React;
 
 // ── DATEN ─────────────────────────────────────────────────────────────────────
 const META = {
-  date: "31. März 2026 · 18:00 Uhr",
-  aiReasoning: "Zum Quartalsende eskaliert der Makro-Gegenwind weiter: Ein kuwaitischer Öltanker wurde heute im Hafen von Dubai von iranischen Kräften angegriffen — Öl steigt auf neue Hochs. Trump droht mit der Vernichtung iranischer Ölinfrastruktur, während das Weiße Haus bestätigt, dass die Hormuz-Öffnung kein US-Kernziel ist. Das bedeutet: dauerhaft hohe Ölpreise, keine Zinssenkungen. Der Fear & Greed Index ist auf 10 gefallen — die tiefste Kapitulationszone seit dem FTX-Kollaps. Historisch folgen auf solche Werte die stärksten 60-Tage-Returns. Solanas Firedancer (1M TPS live) und 6 aktive XRP-ETFs halten die Katalysatoren-Komponente auf Rekordniveau.",
+  date: "31. März 2026 · 19:17 Uhr",
+  aiReasoning: "Quartalsende Q1 2026 unter extremem Druck: Der Iran-Krieg (Tag 32) dauert an — das Weiße Haus bestätigte heute, dass die Wiedereröffnung der Hormuz-Straße kein US-Kernziel ist, was dauerhaft hohe Ölpreise sichert und der Fed jeden Spielraum für Zinssenkungen nimmt. Der Fear & Greed Index bleibt bei 10 — der 46. aufeinanderfolgende Tag im Extreme Fear, dem längsten Streak seit dem FTX-Kollaps. Gleichzeitig zieht institutionelles Smart Money mit $2,5 Mrd. ETF-Zuflüssen im März aktiv nach unten, während XRP nun mit 6 live Spot-ETFs und $1,44 Mrd. Zuflüssen sowie die Franklin-Templeton-ONDO-Partnerschaft und TAOs 90%-Rallye im März die Katalysatoren-Seite des Modells stützen. Der Gesamtscore liegt bei 52 — ABWARTEN ist das richtige Regime.",
   analystPunkte: [
-    { emoji:"😱", typ:"bullish", titel:"Fear & Greed bei 10 — tiefste Kapitulationszone seit FTX", text:"Der Fear & Greed Index steht heute bei 10 — das ist der niedrigste Wert seit dem FTX-Kollaps November 2022. Heute ist der 60. aufeinanderfolgende Tag im Extreme Fear. Was bedeutet das historisch? Werte unter 15 haben in den 12 Monaten danach durchschnittlich +18% Return erzielt. Bitcoin ETFs haben im März trotzdem $2,5 Milliarden Zuflüsse verzeichnet — Smart Money kauft in der Panik. Zum Quartalsende (heute) schichten Institutionen mechanisch um — das kann kurzfristig zusätzlichen Druck erzeugen, ist aber kein fundamentales Signal." },
-    { emoji:"🏛️", typ:"bearish", titel:"Fed bremst — keine Zinssenkungen in Sicht", text:"Die US-Zentralbank (Fed) hat im März 2026 entschieden die Zinsen NICHT zu senken. Warum ist das schlecht für Crypto? Bei hohen Zinsen legen Banken und Fonds ihr Geld lieber in sichere Staatsanleihen (5% Zinsen) statt in riskante Crypto. Ursprünglich waren 2 Zinssenkungen für 2026 geplant — jetzt wird nur noch 1 erwartet. Dazu kommt: der neue Fed-Chef Warsh gilt als noch strenger als sein Vorgänger." },
-    { emoji:"⚔️", typ:"bearish", titel:"Iran-Krieg eskaliert — Öltanker in Dubai angegriffen", text:"Tag 32 des Krieges: Heute wurde ein kuwaitischer Öltanker (Al Salmi) im Hafen von Dubai von iranischen Kräften angegriffen — Feuer und Ölverschmutzungsrisiko. Trump droht, Irans Ölinfrastruktur inklusive Kharg Island vollständig zu vernichten. Das Weiße Haus hat außerdem bestätigt: Die Wiedereröffnung der Hormuz-Straße ist kein Kern-Kriegsziel der USA. Das ist ein erheblicher Eskalationsschritt — Öl über $100 könnte dauerhaft bleiben, was der Fed keine Möglichkeit lässt die Zinsen zu senken. Crypto leidet als Risk-Asset überproportional." },
-    { emoji:"₿", typ:"bearish", titel:"Altseason noch nicht gestartet", text:"Bitcoin hat aktuell 56.6% des gesamten Crypto-Marktes. Das ist hoch. Was bedeutet das? Das Geld der Investoren steckt in Bitcoin als sicherstem Crypto. Für Altcoins (SOL, XRP, ADA...) ist das schlecht — sie bekommen aktuell weniger Kapital ab. Die 'Altseason' — der Moment wo Altcoins explodieren — beginnt erst wenn die Bitcoin-Dominanz unter 52% fällt. Aktuell bei 56.6%. Noch warten." },
-    { emoji:"🏦", typ:"bullish", titel:"Institutionelle Flows bleiben ein Pluspunkt", text:"Im Modell bleiben institutionelle Zufl?sse ein klarer Unterst?tzungsfaktor. Starke ETF-Zufl?sse stabilisieren das Marktbild, auch wenn sie den Makro-Gegenwind derzeit nicht voll neutralisieren." },
+    { emoji:"😱", typ:"bullish", titel:"Fear & Greed bei 10 — tiefste Kapitulationszone seit FTX", text:"Der Fear & Greed Index steht heute bei 10 — das ist einer der niedrigsten Werte seit dem FTX-Kollaps November 2022. Bereits der 46. aufeinanderfolgende Tag im Extreme Fear — der längste Streak seit 2022. Was bedeutet das historisch? Werte unter 15 haben in den 12 Monaten danach durchschnittlich +18% Return erzielt. Bitcoin ETFs haben im März trotzdem $2,5 Milliarden Zuflüsse verzeichnet — Smart Money kauft in der Panik. Zum Quartalsende Q1 (heute) schichten Institutionen mechanisch um — das kann kurzfristig Druck erzeugen, ist aber kein fundamentales Warnsignal." },
+    { emoji:"⚔️", typ:"bearish", titel:"Iran-Krieg Tag 32 — Hormuz-Öffnung kein US-Ziel", text:"Der Krieg zwischen den USA/Israel und Iran dauert an. Heute bestätigte das Weiße Haus offiziell: Die Wiedereröffnung der Hormuz-Straße ist kein Kern-Kriegsziel der USA. Das ist eine massive Eskalation — 20% des globalen Öls fließt durch diese Straße. Trump verlängerte zwar die Frist, droht aber gleichzeitig mit der Vernichtung iranischer Ölinfrastruktur (Kharg Island). Ergebnis: Öl bleibt dauerhaft teuer. Teures Öl = hohe Inflation = keine Zinssenkungen = schlechtes Umfeld für Crypto als Risk-Asset." },
+    { emoji:"🏛️", typ:"bearish", titel:"Fed hält Zinsen hoch — nur 1 Senkung für 2026 erwartet", text:"Die US-Zentralbank (Fed) hat im März 2026 die Zinsen NICHT gesenkt. Zinsen bleiben bei 3,5–3,75%. Der Grund: Core PCE (Kernteuerung) liegt bei 2,7–3,0% — zu hoch für Zinssenkungen. Ursprünglich waren 2 Zinssenkungen für 2026 geplant, jetzt wird nur noch 1 erwartet. Warum ist das schlecht für Crypto? Bei hohen Zinsen legen Banken ihr Geld lieber in sichere Staatsanleihen als in riskante Crypto-Assets. Der Weg zu einem neuen Bull-Run führt über niedrigere Zinsen — und die kommen später als erwartet." },
+    { emoji:"₿", typ:"bearish", titel:"BTC Dominanz bei 58,2% — Altseason weit entfernt", text:"Bitcoin kontrolliert heute 58,2% des gesamten Crypto-Marktes — und das ist hoch. Was bedeutet das? Anleger vertrauen in unsicheren Zeiten Bitcoin als 'sicherstem' Crypto und parken dort ihr Geld. Für Altcoins wie SOL, XRP oder ADA ist das schlecht — sie bekommen weniger Kapital. Die 'Altseason' beginnt erst wenn die Bitcoin-Dominanz unter 52% fällt. Wir sind aktuell 6 Prozentpunkte davon entfernt — und der Trend zeigt weiter nach oben, nicht nach unten." },
+    { emoji:"🚀", typ:"bullish", titel:"Katalysatoren auf Rekordniveau — XRP ETFs live, ONDO und Franklin Templeton", text:"Trotz des schwachen Marktumfelds häufen sich echte Katalysatoren: Sechs Spot-XRP-ETFs sind jetzt in den USA live mit $1,44 Mrd. kumulativen Zuflüssen. Franklin Templeton — einer der größten Vermögensverwalter mit $1,7 Bio. AUM — hat Ende März eine Partnerschaft mit ONDO Finance bekannt gegeben und wird tokenisierte ETFs on-chain bringen. TAO (Bittensor) ist im März um 90% gestiegen, nachdem Nvidia-Chef Jensen Huang das dezentrale KI-Training öffentlich gelobt hat. Solana kombiniert Alpenglow (150ms Finality) und Firedancer (1M TPS). Diese Katalysatoren wirken verzögert, aber sie sind real." },
   ],
   chanceRisikoInfo: {
     erklärung: "Das Chance/Risiko-Verhältnis zeigt was du potenziell gewinnen kannst im Vergleich zu dem was du verlieren kannst.",
-    beispiel: "Bei 2.1x Chance zu 1x Risiko: Wenn du €1.000 investierst und der Markt läuft gut — könntest du €2.100 Gewinn machen. Wenn der Markt schlecht läuft — riskierst du bis zu €1.000 Verlust. Das Verhältnis 2.1:1 gilt als akzeptabel. Profis kaufen oft erst ab 2:1 aufwärts.",
+    beispiel: "Aktuell Gesamtscore 52 (ABWARTEN): Bei einem Score von 52 ist das Chance/Risiko-Verhältnis moderat. Wenn du €1.000 investierst und die Katalysatoren (XRP ETFs, ONDO-Franklin Templeton, SOL Upgrades) zünden — könntest du €1.800–2.200 Gewinn machen. Wenn der Makro-Gegenwind (Iran-Krieg, hohe Zinsen, BTC Dominanz) anhält — riskierst du bis zu €800–1.000 Verlust. Das aktuelle Verhältnis von ~1.8:1 ist für aggressive Positionen noch nicht ideal. Profis warten auf Gesamtscore über 60 oder kaufen sehr selektiv in die Schwäche.",
     basis: "Berechnet aus gewichteten Marktkomponenten, getrennt nach Aufw?rtstreibern und Risikodruck, nicht mehr aus einem festen Beispielwert.",
     gut: "Über 3x = sehr attraktiv. 2–3x = gut. Unter 1.5x = zu riskant."
   },
   breakdownBars: [
     { name:"Sentiment F&G", score:88, color:"#1756c8",
-      erklärung:"Fear & Greed steht bei 10 — tiefste Kapitulationszone seit FTX-Kollaps November 2022. Heute der 60. aufeinanderfolgende Tag im Extreme Fear. Score 88 weil: Werte unter 15 markieren historisch starke Einstiegspunkte. Durchschnittlicher 12-Monats-Return nach F&G unter 15: +18,3%. Smart Money kauft aktiv.",
+      erklärung:"Fear & Greed steht bei 10 — 46 aufeinanderfolgende Tage im Extreme Fear, der längste Streak seit dem FTX-Kollaps November 2022. Score 88 (konträr bullisch): Werte unter 15 markieren historisch die stärksten Einstiegspunkte. Ø 12-Monats-Return nach F&G unter 15: +18,3%. BTC ETFs zogen im März trotzdem $2,5 Mrd. an — Smart Money akkumuliert in der Panik aktiv.",
       signalBull:"F&G unter 15 → historisch stärkste Einstiegszonen, ø +18% in 12 Monaten", signalBear:"Extreme Greed über 80 → Markt überhitzt, Korrektur droht" },
     { name:"BTC Dominanz", score:18, color:"#5b4fcf",
-      erklärung:"BTC Dominanz bei 58,2% — weiter gestiegen. Kapital flieht aus Altcoins in Bitcoin als sicherstem Hafen. Score 18 = bearish für Altcoins. Altseason startet erst wenn BTC Dom unter 52% fällt — aktuell 6,2 Punkte entfernt. Trend zeigt weiter aufwärts was Altcoins kurzfristig belastet.",
+      erklärung:"BTC Dominanz bei 58,2% — weiter auf Mehrjahreshoch. Kapital flieht bei geopolitischer Unsicherheit aus Altcoins in Bitcoin als sicherstem Hafen. Score 18 = klar bearish für Altcoins. Altseason startet erst wenn BTC Dom unter 52% fällt — aktuell 6,2 Punkte entfernt. Iran-Krieg und hohe Zinsen halten die Dominanz oben.",
       signalBull:"BTC Dom fällt unter 48% → Altseason aktiv, Altcoins explodieren", signalBear:"BTC Dom steigt über 60% → Kapital flieht vollständig aus Altcoins in BTC" },
-    { name:"On-Chain", score:73, color:"#00875a",
-      erklärung:"On-Chain umfasst: Exchange Flows (neutral, ETF-Inflows stark bullisch), Funding Rates (leicht negativ = Short-Squeeze möglich), Stablecoin-Reserve 8.4% (viel Dry Powder wartet). Gesamt Score 73 weil institutionelle ETF-Flows stark bullisch sind ($2.7 Mrd. in 3 Wochen), auch wenn Exchange Flows neutral sind.",
-      signalBull:"Hohe Stablecoin-Reserve + starke ETF-Inflows = Kapital wartet auf Einstieg", signalBear:"Große Exchange Inflows = Verkaufsdruck steigt" },
-    { name:"Katalysatoren", score:78, color:"#b06a00",
-      erklärung:"Upgrade-Katalysatoren sind stark: SOL Alpenglow live (150ms Finality), XRP ETF H1 2026 erwartet (25% Institutionen planen Allocation), ADA Van Rossem Hard Fork Q2 noch nicht eingepreist, ETH Glamsterdam Q3-Q4. Score 78 weil mehrere echte, nahegelegene Katalysatoren aktiv sind.",
-      signalBull:"SOL Alpenglow + XRP ETF + ADA Hard Fork = starke Tech-Katalysatoren aktiv", signalBear:"Keine Upgrades geplant = Preis muss rein spekulativ steigen" },
-    { name:"Fed & Zinsen", score:25, color:"#0097a0",
-      erklärung:"Fed hat im März 2026 eine 'Hawkish Pause' beschlossen. Zinsen bleiben bei 3.5–3.75%. Nur 1 Schnitt für 2026 erwartet (war: 2). Core PCE bei 3.1% zu hoch. Iran-Krieg treibt Ölpreise, hält Inflation hoch. Neuer Fed Chair Warsh gilt als hawkischer als Powell. Score 25 = stark bearish.",
-      signalBull:"Zinssenkungen senken Anlagekosten → Kapital fließt in Crypto", signalBear:"Hohe Zinsen = Staatsanleihen attraktiver als Crypto → Kapital flieht" },
+    { name:"On-Chain", score:58, color:"#00875a",
+      erklärung:"On-Chain zeigt gemischtes Bild: Exchange Flows leicht negativ (letzte Woche $296 Mio. ETF-Abflüsse nach positivem Monat), Funding Rates nahe null (möglicher Short-Squeeze-Setup), On-Chain Adressen stabil (27 Mio. aktive SOL-Adressen). TVL-Wachstum bei IOTA (USDT0 live) und SUI positiv. Score 58 = neutral mit leicht negativer Tendenz durch jüngste Abflüsse.",
+      signalBull:"Hohe Stablecoin-Reserve + positive ETF-Inflows = Kapital wartet auf Einstieg", signalBear:"Anhaltende ETF-Abflüsse + Exchange-Inflows = steigender Verkaufsdruck" },
+    { name:"Katalysatoren", score:88, color:"#b06a00",
+      erklärung:"Upgrade-Katalysatoren auf Rekordniveau: SOL Alpenglow live (150ms Finality) + Firedancer (1M TPS auf Mainnet). 6 Spot-XRP-ETFs live mit $1,44 Mrd. Zuflüssen. Franklin Templeton-ONDO Partnership vom 26.03. für tokenisierte ETFs. ADA Van Rossem Hard Fork Q2 (Node 10.7.0 Pre-Release am 25.03.). ETH Glamsterdam H1 (Devnet-5 in Vorbereitung). LINK GLNK ETF live + Walmart/OnePay Integration. Score 88 — viele echte Katalysatoren gleichzeitig aktiv.",
+      signalBull:"SOL Alpenglow + XRP ETFs live + ADA Hard Fork + ONDO Partnership = starke Katalysatoren", signalBear:"Katalysatoren sind eingepreist oder verzögern sich → Enttäuschung möglich" },
+    { name:"Fed & Zinsen", score:22, color:"#0097a0",
+      erklärung:"Fed hat im März 2026 eine 'Hawkish Pause' beschlossen — Zinsen bleiben bei 3,5–3,75%. Nur noch 1 Schnitt für 2026 erwartet (war: 2 Schnitte geplant). Core PCE bei 2,7–3,0% zu hoch für Lockerungen. Iran-Krieg treibt Ölpreise und hält Inflation oben. Neuer Fed Chair Warsh gilt als hawkischer als Powell. Score 22 = stark bearish. Zinssenkungen kommen später als der Markt erhofft hatte.",
+      signalBull:"Zinssenkungen → Anlagekosten sinken, Kapital fließt in Crypto statt Staatsanleihen", signalBear:"Hohe Zinsen dauerhaft → Staatsanleihen (4%+) attraktiver als Crypto, Kapital flieht" },
     { name:"Geopolitik", score:10, color:"#c0182a",
-      erklärung:"Iran-Krieg Tag 32 eskaliert: Kuwaitischer Öltanker in Dubai-Hafen angegriffen. Trump droht Vernichtung iranischer Ölinfrastruktur (Kharg Island). Weißes Haus: Hormuz-Öffnung ist kein US-Kernziel — dauerhaft hohe Ölpreise. BTC Dom 58,2%, Crypto Global Market Cap $2,38 Bio. Score 10 = schlechteste Kategorie im Modell.",
-      signalBull:"Waffenstillstand / Diplomatie → Risk-On kehrt zurück, Öl fällt, Fed kann senken", signalBear:"Weitere Eskalation oder Angriff auf Kharg Island → Ölschock, starker Risk-Off" },
-    { name:"Inst. Flows", score:82, color:"#7a5cf0",
-      erklärung:"Institutionelle Flows sind das bullischste Signal aktuell: $2.7 Mrd. ETF-Inflows in 3 Wochen. BlackRock IBIT allein: +$215 Mio. an einem Tag während Retail in Panik verkauft. Goldman Sachs hält $108 Mio. SOL ETF. Grayscale hat Bittensor Trust gestartet. Score 82 = stark bullisch. Großes Geld kauft heimlich während Retail ängstlich ist.",
-      signalBull:"Smart Money kauft im Extreme Fear = klassisches Akkumulationsmuster vor Rally", signalBear:"ETF-Abflüsse über mehrere Wochen = institutionelle Risikoreduzierung" },
+      erklärung:"Iran-Krieg Tag 32 — kein Ende in Sicht: Das Weiße Haus bestätigte heute, dass Hormuz-Öffnung kein US-Kernziel ist. Trump verlängerte die Deadline, droht aber mit Vernichtung der iranischen Ölinfrastruktur (Kharg Island). US-China Handelskrieg: Neue Section-301-Ermittlungen, China kontert mit eigenen Untersuchungen. Durchschnittliche US-Zölle auf China-Waren: 47,5%. Score 10 = schlechteste Kategorie im Modell. Dauerhafter geopolitischer Druck.",
+      signalBull:"Waffenstillstand / Diplomatie → Risk-On, Öl fällt, Fed kann senken", signalBear:"Angriff auf Kharg Island / weitere Eskalation → Ölschock, starker Risk-Off-Einbruch" },
+    { name:"Inst. Flows", score:68, color:"#7a5cf0",
+      erklärung:"Institutionelle Flows insgesamt bullisch, aber zuletzt leicht abgekühlt: $2,5 Mrd. ETF-Zuflüsse im März gesamt — starkes Signal. Allerdings: $171 Mio. Abflüsse am 26.03. und $296 Mio. Wochenabflüsse zuletzt. BlackRock IBIT, Fidelity FBTC alle aktiv. Goldman Sachs hält $108 Mio. SOL ETF. Grayscale TAO Trust in Vorbereitung zur ETF-Umwandlung. Score 68 — positiv aber mit jüngsten Abflüssen leicht gedämpft.",
+      signalBull:"Smart Money akkumuliert im Extreme Fear = klassisches Muster vor großer Rally", signalBear:"Mehrwöchige ETF-Abflüsse = institutionelle Risikoreduzierung — klares Warnsignal" },
   ],
   alerts: [
-    { icon:"😱", type:"bullish", msg:"F&G 10 — 60 Tage Extreme Fear. Tiefste Kapitulationszone seit FTX. ø +18% Return in 12 Monaten." },
-    { icon:"⚔️", type:"bearish", msg:"Iran Tag 32: Öltanker in Dubai angegriffen. Trump droht Kharg Island. Hormuz kein US-Kernziel." },
-    { icon:"🏛️", type:"bearish", msg:"Fed Hawkish Pause: Nur 1 Zinssenkung 2026 (war: 2). Core PCE 3.1% zu hoch." },
-    { icon:"₿",  type:"bearish", msg:"BTC Dominanz 58,2% — gestiegen. Altseason erst bei <52%. Noch 6 Punkte Abstand." },
-    { icon:"🏦", type:"bullish", msg:"Institutionelle Flows und Dry Powder st?tzen die Aufwaertskomponente des Modells." },
-    { icon:"🚀", type:"bullish", msg:"SOL Alpenglow aktiv · XRP ETF H1 · ADA Hard Fork Q2 — Katalysatoren kommen." },
+    { icon:"😱", type:"bullish", msg:"F&G 10 — 46 Tage Extreme Fear. Längster Streak seit FTX. Historisch: ø +18% Return in 12 Monaten danach." },
+    { icon:"⚔️", type:"bearish", msg:"Iran Krieg Tag 32: Weißes Haus bestätigt — Hormuz-Öffnung kein US-Kernziel. Dauerhaft hohe Ölpreise erwartet." },
+    { icon:"🏛️", type:"bearish", msg:"Fed Hawkish Pause: Zinsen 3,5–3,75%, nur 1 Senkung für 2026 (war: 2). Core PCE bei 2,7–3,0% zu hoch." },
+    { icon:"₿",  type:"bearish", msg:"BTC Dominanz 58,2% — Mehrjahreshoch. Altseason erst bei unter 52%. Aktuell 6 Punkte Abstand." },
+    { icon:"🤝", type:"bullish", msg:"Franklin Templeton × ONDO: tokenisierte ETFs live (26.03.) — $1,7 Bio. AUM-Manager geht on-chain." },
+    { icon:"🚀", type:"bullish", msg:"XRP: 6 Spot-ETFs live, $1,44 Mrd. Zuflüsse. TAO: +90% im März. SOL: Firedancer 1M TPS + Alpenglow 150ms." },
   ],
 };
 
@@ -300,15 +301,15 @@ const MARKET_SIGNAL_COMPONENTS = [
   { name:"Fear & Greed Index", score:88, weight:15 },
   { name:"BTC Dominanz", score:18, weight:15 },
   { name:"Fed & Zinspolitik", score:22, weight:12 },
-  { name:"Upgrade-Katalysatoren", score:88, weight:10 },
+  { name:"Upgrade-Katalysatoren", score:90, weight:10 },
   { name:"Geopolitik / Kriege", score:10, weight:8 },
-  { name:"Exchange Flows", score:32, weight:8 },
-  { name:"Regulierung / ETFs", score:82, weight:7 },
-  { name:"Institutionelle ETF Flows", score:70, weight:8 },
-  { name:"Funding Rates", score:62, weight:5 },
-  { name:"Globale Liquiditaet M2", score:38, weight:4 },
-  { name:"On-Chain Adressen", score:70, weight:4 },
-  { name:"TVL Trend (DeFi)", score:72, weight:4 },
+  { name:"Exchange Flows", score:35, weight:8 },
+  { name:"Regulierung / ETFs", score:85, weight:7 },
+  { name:"Institutionelle ETF Flows", score:68, weight:8 },
+  { name:"Funding Rates", score:60, weight:5 },
+  { name:"Globale Liquiditaet M2", score:35, weight:4 },
+  { name:"On-Chain Adressen", score:68, weight:4 },
+  { name:"TVL Trend (DeFi)", score:70, weight:4 },
 ];
 
 const MARKET_BREAKDOWN_GROUPS = {
@@ -325,120 +326,120 @@ const MARKET_BREAKDOWN_GROUPS = {
 const COIN_MODELS = [
   {
     name:"SOLANA", ticker:"SOL", color:"#00875a", bg:"#e6f7f0",
-    price:"$83.20", change:"+3.5%", atl:"$8", ath:"$294", score:85, signal:"AKKUMULIEREN",
+    price:"$80.50", change:"-3.2%", atl:"$8", ath:"$294", score:83, signal:"AKKUMULIEREN",
     subScores:[
-      { label:"Upgrade-Katalysator", score:95, note:"Alpenglow live (150ms), Firedancer H2 2026" },
-      { label:"Institutionelle Flows",score:88, note:"CME Futures, SOL-ETF $476M in 19 Tagen" },
-      { label:"Technologie",          score:90, note:"Schnellste Blockchain, 50k TPS heute" },
-      { label:"Fundamentals",         score:82, note:"$2.85 Mrd. Jahresumsatz, 27M aktive Adressen" },
-      { label:"Makro-Exposition",     score:62, note:"Risk-On Asset — leidet bei Geopolitik" },
-      { label:"Discount zum ATH",     score:72, note:"$83.20 vs ATH $294 — 72% unter Peak" },
+      { label:"Upgrade-Katalysator", score:95, note:"Alpenglow live (150ms Finality), Firedancer 1M TPS auf Mainnet" },
+      { label:"Institutionelle Flows",score:85, note:"Goldman Sachs hält $108M SOL ETF, CME Futures aktiv" },
+      { label:"Technologie",          score:90, note:"Schnellste Blockchain, 50k+ TPS heute, 1M TPS in Tests" },
+      { label:"Fundamentals",         score:80, note:"$2,85 Mrd. Jahresumsatz, 27M aktive Adressen" },
+      { label:"Makro-Exposition",     score:58, note:"Risk-On Asset — leidet überproportional bei Geopolitik" },
+      { label:"Discount zum ATH",     score:73, note:"$80.50 vs ATH $294 — 73% unter Peak" },
     ],
-    summary:"SOL hat mit Firedancer (1M TPS live auf Mainnet) und Alpenglow (150ms Finality) den stärksten Tech-Katalysator aller beobachteten Coins. Mit 72% Discount zum ATH und der SEC-Klassifikation als digitale Ware bleiben Einstiegsniveau und institutionelle Nachfrage attraktiv. Im aktuellen Extreme-Fear-Umfeld (F&G 10) bleibt SOL unter den Altcoins der überzeugendste Risk/Reward-Fall.",
+    summary:"SOL hat mit Firedancer (1M TPS live auf Mainnet) und Alpenglow (150ms Finality) den stärksten Tech-Katalysator aller beobachteten Coins. Mit 73% Discount zum ATH und SEC-Klassifikation als digitale Ware bleiben Einstiegsniveau und institutionelle Nachfrage attraktiv. Im aktuellen Extreme-Fear-Umfeld (F&G 10) bleibt SOL unter den Altcoins der überzeugendste Risk/Reward-Fall — technologisch führend, institutionell gut aufgestellt.",
   },
   {
     name:"XRP", ticker:"XRP", color:"#1756c8", bg:"#eef3ff",
-    price:"$1.34", change:"+0.9%", atl:"$0.002", ath:"$3.40", score:79, signal:"AKKUMULIEREN",
+    price:"$1.34", change:"+0.9%", atl:"$0.002", ath:"$3.40", score:80, signal:"AKKUMULIEREN",
     subScores:[
-      { label:"Upgrade-Katalysator", score:82, note:"ETF-Approval H1 2026 erwartet" },
-      { label:"Institutionelle Flows",score:90, note:"25% globaler Institutionen planen Allocation" },
-      { label:"Technologie",          score:72, note:"Schnelle, günstige Cross-Border Payments" },
-      { label:"Fundamentals",         score:78, note:"Singapur Zentralbank testet XRP Ledger" },
-      { label:"Makro-Exposition",     score:60, note:"Regulierungsrisiko bleibt teilweise" },
+      { label:"Upgrade-Katalysator", score:88, note:"6 Spot-XRP-ETFs live, $1,44 Mrd. kumulative Zuflüsse (Stand 31.03.)" },
+      { label:"Institutionelle Flows",score:88, note:"SEC klassifiziert XRP als digitale Ware (17.03.) — größter regulatorischer Meilenstein" },
+      { label:"Technologie",          score:72, note:"Schnelle, günstige Cross-Border Payments, XRP Ledger" },
+      { label:"Fundamentals",         score:78, note:"SEC+CFTC: XRP = digitale Ware, Singapur Zentralbank testet XRP Ledger" },
+      { label:"Makro-Exposition",     score:62, note:"Regulatorische Klarheit verbessert — verbleibendes Risiko reduziert" },
       { label:"Discount zum ATH",     score:60, note:"$1.34 vs ATH $3.40 — 60% unter Peak" },
     ],
-    summary:"XRP profitiert im Modell vor allem von institutioneller Optionalitaet und regulatorischer Entspannung. Der Coin bleibt aber sensibel fuer schwaches Marktsentiment und technische Schwaeche.",
+    summary:"XRP hat zum Quartalsende Q1 2026 den größten regulatorischen Durchbruch: SEC und CFTC klassifizierten XRP als digitale Ware, und nun sind 6 Spot-ETFs live mit $1,44 Mrd. Zuflüssen. Das Einstiegsniveau bei 60% unter ATH und die neue institutionelle Infrastruktur machen XRP zum stärksten regulatorischen Katalysator-Case im Portfolio.",
   },
   {
     name:"CHAINLINK", ticker:"LINK", color:"#2c5fd4", bg:"#e8f0ff",
-    price:"$9.16", change:"+3.6%", atl:"$0.15", ath:"$52.70", score:76, signal:"KAUFEN",
+    price:"$9.10", change:"+3.6%", atl:"$0.15", ath:"$52.70", score:78, signal:"KAUFEN",
     subScores:[
-      { label:"Upgrade-Katalysator", score:78, note:"Grayscale ETF live — $41M Tag 1" },
-      { label:"Institutionelle Flows",score:80, note:"Institutionen sehen LINK als Kern-Infrastruktur" },
-      { label:"Technologie",          score:88, note:"Unverzichtbare Oracle-Infrastruktur für RWA" },
-      { label:"Fundamentals",         score:82, note:"Jedes RWA-Protokoll braucht Chainlink" },
-      { label:"Makro-Exposition",     score:55, note:"Infrastruktur-Token — etwas defensiver" },
-      { label:"Discount zum ATH",     score:82, note:"$8.41 vs ATH $52.70 — 84% unter Peak" },
+      { label:"Upgrade-Katalysator", score:82, note:"GLNK ETF live, OnePay/Walmart integriert LINK (29.03.), CCIP bei $18 Mrd." },
+      { label:"Institutionelle Flows",score:82, note:"Bloomberg Intelligence: LINK = Kern-Infrastruktur für RWA-Tokenisierung" },
+      { label:"Technologie",          score:88, note:"Unverzichtbare Oracle-Infrastruktur, kein DeFi/RWA ohne Chainlink" },
+      { label:"Fundamentals",         score:84, note:"$18 Mrd. CCIP-Volumen, Standard Chartered Ziel $25–45" },
+      { label:"Makro-Exposition",     score:57, note:"Infrastruktur-Token — etwas defensiver als reine Altcoins" },
+      { label:"Discount zum ATH",     score:83, note:"$9.10 vs ATH $52.70 — 83% unter Peak" },
     ],
-    summary:"LINK punktet im Modell ueber Technologie, Infrastrukturrolle und hohen Discount zum ATH. Was fehlt, ist ein staerkerer Momentum-Impuls im aktuellen Marktregime.",
+    summary:"LINK profitiert von zwei starken Neuigkeiten in dieser Woche: OnePay (Walmart-backed) integrierte LINK am 29.03., und Bloomberg Intelligence stuft Chainlink als strategischste Oracle-Infrastruktur für die RWA-Tokenisierungswelle ein. Mit 83% Discount zum ATH und dem Grayscale GLNK ETF als institutionellem Zugang bleibt LINK fundamental überzeugend.",
   },
   {
     name:"CARDANO", ticker:"ADA", color:"#0097a0", bg:"#e0f7f7",
     price:"$0.241", change:"-0.3%", atl:"$0.017", ath:"$3.10", score:71, signal:"KAUFEN",
     subScores:[
-      { label:"Upgrade-Katalysator", score:80, note:"Van Rossem Hard Fork Q2-Q3, Leios Upgrade" },
-      { label:"Institutionelle Flows",score:58, note:"Geringere Inst. Adoption als SOL/ETH" },
-      { label:"Technologie",          score:75, note:"Peer-Review Ansatz, Midnight Privacy aktiv" },
-      { label:"Fundamentals",         score:68, note:"ADA für US Strategic Reserve vorgeschlagen" },
-      { label:"Makro-Exposition",     score:62, note:"Defensive Narrative als Research-Chain" },
-      { label:"Discount zum ATH",     score:92, note:"$0.25 vs ATH $3.10 — 92% unter Peak" },
+      { label:"Upgrade-Katalysator", score:82, note:"Van Rossem Hard Fork Q2 2026, Node 10.7.0 Pre-Release (25.03.) — neue Plutus-Funktionen" },
+      { label:"Institutionelle Flows",score:58, note:"Geringere institutionelle Adoption als SOL/ETH/XRP" },
+      { label:"Technologie",          score:75, note:"Peer-Review Ansatz, Midnight Privacy aktiv, neue Krypto-Funktionen" },
+      { label:"Fundamentals",         score:68, note:"ADA für US Strategic Reserve vorgeschlagen, Governance-Meilensteine" },
+      { label:"Makro-Exposition",     score:62, note:"Defensive Narrative als Research-Chain, Governance als Stärke" },
+      { label:"Discount zum ATH",     score:92, note:"$0.241 vs ATH $3.10 — 92% unter Peak" },
     ],
-    summary:"ADA wird im Modell von Upgrade-N?he und hohem Discount gestuetzt. Gleichzeitig bleibt der Coin schw?cher bei Flows und ?kosystemdynamik als die Top-Kandidaten.",
+    summary:"ADA steht kurz vor dem Van Rossem Hard Fork (Q2 2026) — Node 10.7.0 Pre-Release kam am 25.03. Als Upgrade-Katalysator bleibt das stark. Der 92% Discount zum ATH ist der zweithöchste im Portfolio. Schwäche liegt bei institutionellen Flows — hier ist ADA deutlich hinter SOL, ETH und XRP.",
   },
   {
     name:"ETHEREUM", ticker:"ETH", color:"#5b4fcf", bg:"#eeebff",
-    price:"$1,990", change:"-0.5%", atl:"$0.43", ath:"$4,891", score:69, signal:"HALTEN",
+    price:"$2,050", change:"+3.0%", atl:"$0.43", ath:"$4,891", score:70, signal:"KAUFEN",
     subScores:[
-      { label:"Upgrade-Katalysator", score:72, note:"Glamsterdam + Hegota Q3-Q4, 10x Scale" },
-      { label:"Institutionelle Flows",score:82, note:"Wall Street Liebling, Spot ETF aktiv" },
+      { label:"Upgrade-Katalysator", score:74, note:"Glamsterdam H1 2026 (Devnet-5), 10k TPS + 78% niedrigere Gas-Gebühren, ePBS + BALs" },
+      { label:"Institutionelle Flows",score:82, note:"Wall Street Liebling, Spot ETF aktiv, US Strategic Reserve vorgesehen" },
       { label:"Technologie",          score:78, note:"75% DeFi TVL, dominanter Smart Contract Layer" },
-      { label:"Fundamentals",         score:85, note:"US Strategic Reserve vorgesehen" },
-      { label:"Makro-Exposition",     score:60, note:"ETH/BTC auf Mehrjahrestiefs — underperformt" },
-      { label:"Discount zum ATH",     score:59, note:"$1999 vs ATH $4891 — 59% unter Peak" },
+      { label:"Fundamentals",         score:85, note:"US Strategic Reserve vorgesehen, stärkste Entwicklerbasis (31.869 aktive Devs)" },
+      { label:"Makro-Exposition",     score:62, note:"ETH/BTC auf Mehrjahrestief — leichte Erholung +3% heute" },
+      { label:"Discount zum ATH",     score:58, note:"$2050 vs ATH $4891 — 58% unter Peak" },
     ],
-    summary:"ETH bleibt im Modell fundamental stark, bekommt aber weniger relativen Schub aus Katalysator- und Momentum-Komponenten als aggressivere Altcoins. Deshalb eher Stabilit?tsanker als High-Beta-Setup.",
+    summary:"ETH hat heute +3% gemacht und nähert sich der $2.050-Marke. Das Glamsterdam-Upgrade (H1 2026) schreitet mit Devnet-5 voran: 10.000 TPS und 78% günstigere Gas-Gebühren. Fundamental stark mit 31.869 aktiven Entwicklern und US Strategic Reserve Status. Underperformt gegenüber BTC, aber das institutionelle Fundament ist das stärkste im gesamten Altcoin-Raum.",
   },
   {
     name:"SUI", ticker:"SUI", color:"#0066bb", bg:"#e0f0ff",
-    price:"$0.88", change:"-2.0%", atl:"$0.36", ath:"$5.35", score:64, signal:"HALTEN",
+    price:"$0.96", change:"-2.0%", atl:"$0.36", ath:"$5.35", score:62, signal:"HALTEN",
     subScores:[
-      { label:"Upgrade-Katalysator", score:62, note:"Ecosystem-Wachstum laufend" },
+      { label:"Upgrade-Katalysator", score:60, note:"42,9 Mio. Token-Unlock am 1. April (morgen) — erhöhter Verkaufsdruck erwartet" },
       { label:"Institutionelle Flows",score:52, note:"Noch geringe institutionelle Adoption" },
-      { label:"Technologie",          score:88, note:"Object-Centric Design, Parallel Execution" },
-      { label:"Fundamentals",         score:65, note:"Starkes Entwickler-Team, wachsendes Ökosystem" },
-      { label:"Makro-Exposition",     score:48, note:"Klein-Cap leidet mehr bei Risk-Off" },
-      { label:"Discount zum ATH",     score:82, note:"$0.88 vs ATH $5.35 — 84% unter Peak" },
+      { label:"Technologie",          score:88, note:"Object-Centric Design, Parallel Execution — technologisch top" },
+      { label:"Fundamentals",         score:65, note:"Starkes Entwicklerteam, wachsendes DeFi-Ökosystem" },
+      { label:"Makro-Exposition",     score:48, note:"Klein-Cap leidet stärker bei Risk-Off als Large-Caps" },
+      { label:"Discount zum ATH",     score:82, note:"$0.96 vs ATH $5.35 — 82% unter Peak" },
     ],
-    summary:"SUI hat im Modell hohe Technologiepunkte, aber noch begrenzte institutionelle und fundamentale Tiefe. Dadurch bleibt der Coin ein asymmetrischer, aber klar regimeabh?ngiger Bet.",
+    summary:"SUI hat technologisch starke Grundlagen (Object-Centric Design, Parallel Execution), aber morgen (1. April) drohen 42,9 Mio. Token-Unlocks (1,13% der Umlaufmenge, ~$40 Mio.) kurzfristigen Verkaufsdruck zu erzeugen. In einem Risk-Off-Markt leidet SUI als Small-Cap überproportional. Abwarten bis nach dem Unlock-Event.",
   },
   {
     name:"BITTENSOR", ticker:"TAO", color:"#7a5cf0", bg:"#f0eeff",
-    price:"$321", change:"+5.8%", atl:"$6.50", ath:"$754", score:61, signal:"BEOBACHTEN",
+    price:"$350", change:"+8.2%", atl:"$6.50", ath:"$754", score:68, signal:"HALTEN",
     subScores:[
-      { label:"Upgrade-Katalysator", score:65, note:"KI-Netzwerk Subnetz-Wachstum aktiv" },
-      { label:"Institutionelle Flows",score:58, note:"Nvidia-Backing, aber noch nische" },
-      { label:"Technologie",          score:82, note:"Dezentralisiertes KI-Training, 21M Supply Cap" },
-      { label:"Fundamentals",         score:68, note:"Stärkste KI+Blockchain Narrative am Markt" },
-      { label:"Makro-Exposition",     score:42, note:"Hoch spekulativ, KI-Sentiment-abhängig" },
-      { label:"Discount zum ATH",     score:53, note:"$358 vs ATH $754 — 53% unter Peak" },
+      { label:"Upgrade-Katalysator", score:72, note:"$620 Mio. gestaked in Subnetz-Tokens, Kapazität wird auf 256 Subnetze erhöht" },
+      { label:"Institutionelle Flows",score:68, note:"Nvidia CEO Jensen Huang Endorsement (20.03.), $43 Mio. Q1 Revenue, Grayscale ETF-Antrag" },
+      { label:"Technologie",          score:82, note:"Dezentralisiertes KI-Training, 75% Supply gestaked, 21M Supply Cap" },
+      { label:"Fundamentals",         score:72, note:"$1,5 Mrd. Ecosystem Token-Marktkapitalisierung, stärkste KI+Blockchain Narrative" },
+      { label:"Makro-Exposition",     score:48, note:"Nach 90% Anstieg im März — hoch spekulativ, KI-Sentiment-abhängig" },
+      { label:"Discount zum ATH",     score:54, note:"$350 vs ATH $754 — 54% unter Peak" },
     ],
-    summary:"TAO punktet im Modell ueber Technologie und Narrative, verliert aber deutlich bei Makro-Exposition und Regimestabilit?t. Damit bleibt der Coin eher Beobachtungskandidat als Kernposition.",
+    summary:"TAO hat im März 2026 eine außergewöhnliche +90%-Rally hingelegt — getrieben von Nvidia CEO Jensen Huangs öffentlichem Lob (17.03.) und $43 Mio. Q1-Revenue. Subnetz-Tokens sind auf $1,5 Mrd. Gesamtwert gestiegen, 75% des Supplies ist gestaked. Nach der starken Rally ist Vorsicht angebracht — Score steigt auf HALTEN, aber das Momentum ist real und Grayscale ETF-Antrag stützt.",
   },
   {
     name:"ONDO", ticker:"ONDO", color:"#00875a", bg:"#e6f7f0",
-    price:"$0.267", change:"+3.1%", atl:"$0.08", ath:"$2.14", score:58, signal:"BEOBACHTEN",
+    price:"$0.270", change:"+3.1%", atl:"$0.08", ath:"$2.14", score:65, signal:"HALTEN",
     subScores:[
-      { label:"Upgrade-Katalysator", score:70, note:"DTCC-Integration genehmigt, BlackRock Partner" },
-      { label:"Institutionelle Flows",score:72, note:"BlackRock aktiv, DTCC Genehmigung" },
-      { label:"Technologie",          score:65, note:"RWA-Tokenisierung Infrastruktur" },
-      { label:"Fundamentals",         score:68, note:"Struktureller Makro-Bet, $30 Bio. Markt" },
-      { label:"Makro-Exposition",     score:38, note:"Vesting-Risk, große Token noch gesperrt" },
-      { label:"Discount zum ATH",     score:62, note:"$0.82 vs ATH $2.14 — 62% unter Peak" },
+      { label:"Upgrade-Katalysator", score:78, note:"Franklin Templeton Partnership (26.03.) — 5 tokenisierte ETFs, 24/7 via Crypto-Wallet" },
+      { label:"Institutionelle Flows",score:75, note:"Franklin Templeton $1,7 Bio. AUM, Ondo kontrolliert 70% des RWA-Markts ($950 Mio.)" },
+      { label:"Technologie",          score:65, note:"RWA-Tokenisierung Infrastruktur, On-Chain Securities" },
+      { label:"Fundamentals",         score:72, note:"RWA-Markt $950 Mio. (+90% seit Anfang 2025), Ondo dominiert Kategorie" },
+      { label:"Makro-Exposition",     score:42, note:"Vesting-Risiko, US Regulatory Clarity für Retail noch ausstehend" },
+      { label:"Discount zum ATH",     score:87, note:"$0.270 vs ATH $2.14 — 87% unter Peak" },
     ],
-    summary:"ONDO profitiert im Modell von regulatorischem R?ckenwind und RWA-Narrativ. Belastend bleiben Vesting-Druck und ein noch nicht voll best?tigtes Marktregime f?r den Coin.",
+    summary:"ONDO hat Ende März den wichtigsten Katalysator seiner Geschichte: Franklin Templeton (einer der weltgrößten Vermögensverwalter mit $1,7 Bio. AUM) wird tokenisierte ETFs über Ondo Global Markets anbieten. Ondo kontrolliert bereits 70% des $950 Mio. RWA-Tokenisierungsmarkts. Score steigt von 58 auf 65. Belastend bleibt Vesting-Risiko und US-Retail-Regulierung noch offen.",
   },
   {
     name:"IOTA", ticker:"IOTA", color:"#242938", bg:"#eef0f7",
-    price:"$0.056", change:"-1.4%", atl:"$0.055", ath:"$5.25", score:62, signal:"BEOBACHTEN",
+    price:"$0.055", change:"-1.4%", atl:"$0.055", ath:"$5.25", score:63, signal:"BEOBACHTEN",
     subScores:[
-      { label:"Upgrade-Katalysator", score:75, note:"Rebased Upgrade live, LayerZero-Integration (150+ Chains)" },
+      { label:"Upgrade-Katalysator", score:78, note:"USDT0 jetzt live auf IOTA Rebased — verbindet USDT-Liquidität über LayerZero/Stargate" },
       { label:"Institutionelle Flows",score:58, note:"BitGo Custody in USA, Uphold-Listing — institutioneller Zugang wächst" },
-      { label:"Technologie",          score:82, note:"Tangle DAG — keine Gebühren, featherweight für IoT & Trade Finance" },
-      { label:"Fundamentals",         score:72, note:"Kenya Cross-Border Trade live, AfCFTA Programm funded" },
-      { label:"Makro-Exposition",     score:42, note:"Nischen-Asset, kleine Market Cap — fiel 2x stärker als BTC zuletzt" },
-      { label:"Discount zum ATH",     score:99, note:"$0.056 vs ATH $5.25 — 99% unter Peak (All-Time-Low Zone)" },
+      { label:"Technologie",          score:82, note:"Tangle DAG — keine Gebühren, featherweight für IoT & Trade Finance, 150+ Chains via LayerZero" },
+      { label:"Fundamentals",         score:72, note:"Kenya Cross-Border Trade live, AfCFTA-Programm, IOTA für Enterprise 2026 positioniert" },
+      { label:"Makro-Exposition",     score:42, note:"Nischen-Asset, kleine Market Cap — fiel 2x stärker als BTC in der Korrektur" },
+      { label:"Discount zum ATH",     score:99, note:"$0.055 vs ATH $5.25 — 99% unter Peak (nahe All-Time-Low)" },
     ],
-    summary:"IOTA bekommt im Modell hohe Discount- und Technologiepunkte, bleibt aber wegen kleiner Marktkapitalisierung und schwacher Regimestabilit?t ein spekulativer Sonderfall. Der Case ist asymmetrisch, aber klar an Katalysatoren gebunden.",
+    summary:"IOTA hat einen wichtigen Schritt gemacht: USDT0 ist jetzt live auf IOTA Rebased — das verbindet IOTA mit der weltweiten USDT-Liquidität über das LayerZero/Stargate-Ökosystem (150+ Chains). Das Upgrade-Niveau steigt. Der Discount von 99% zum ATH ist der höchste im gesamten Portfolio. Preislich nahe dem All-Time-Low — ein asymmetrischer Sonderfall für geduldige Anleger mit hoher Risikobereitschaft.",
   },
 ];
 
@@ -700,6 +701,944 @@ const COINS = COIN_MODELS.map((coinModel) => {
   };
 });
 
+const CHART_ANALYSIS_MODELS = [
+  {
+    ticker:"SOL",
+    symbol:"BINANCE:SOLUSDT",
+    pair:"SOL / USDT",
+    score:74,
+    signal:"AKKUMULIEREN",
+    trend:"Bullish",
+    phase:"Akkumulation",
+    risk:"Mittel",
+    summary:"Trend bleibt auf Tagesbasis konstruktiv. Nach dem starken Katalysator-Run ist der Markt kurzfristig ueberdehnt, deshalb bleibt Pullback-Kauf an Support sinnvoller als Chase im Ausbruch.",
+    timeframes:[
+      { tf:"1D", tone:"bullish", title:"Trend intakt", text:"Preis haelt ueber EMA 50 und zeigt weiter hoehere Tiefs. Solange 72 nicht bricht, bleibt die Struktur bullisch." },
+      { tf:"4H", tone:"neutral", title:"Pullback-Zone aktiv", text:"Ruecklauf in die Zone 76 bis 78 waere gesund. Dort liegt die erste technische Reaktionszone fuer neue Kauefer." },
+      { tf:"1H", tone:"bullish", title:"Timing auf Rebound", text:"Kurzfristig reagiert SOL sensibel auf RSI-Reset und Volumenanstieg. Erstes Timing-Signal waere eine starke Reclaim-Kerze ueber 80." },
+    ],
+    levels:{
+      support:["78.0","72.0","68.0"],
+      resistance:["86.0","92.0","104.0"],
+    },
+    indicators:[
+      { label:"RSI 14", value:"58", note:"neutral bullish" },
+      { label:"RSI 2", value:"18", note:"kurzfristig ueberverkauft" },
+      { label:"Bollinger", value:"Mittleres Band", note:"Pullback in Mean-Reversion-Zone" },
+      { label:"EMA 20 / 50 / 200", value:"ueber 50 / 200", note:"Trend positiv, Trigger am EMA 20" },
+    ],
+    setup:{
+      buyZone:"76.0 - 78.5",
+      altEntry:"Breakout ueber 86.0",
+      stop:"72.0",
+      takeProfit:["86.0","92.0","104.0"],
+      crv:"2.4:1",
+      rationale:"Beste Chance entsteht bei Ruecklauf auf den EMA-20-Bereich. Unter 72 waere die saubere 4H-Struktur gebrochen.",
+    },
+    overlay:{
+      min:68,
+      max:104,
+      current:80.5,
+      ema20:78,
+      ema50:74,
+      ema200:70,
+      support:[78,72,68],
+      resistance:[86,92,104],
+      buyZone:[76,78.5],
+      stop:72,
+      targets:[86,92,104],
+      formation:"Bullischer Kanal",
+      note:"Ruecklauf an den Kanalboden plus EMA-20-Zone bleibt das bevorzugte Setup.",
+    },
+    probabilities:{ bull:62, neutral:24, bear:14 },
+  },
+  {
+    ticker:"XRP",
+    symbol:"BINANCE:XRPUSDT",
+    pair:"XRP / USDT",
+    score:69,
+    signal:"VORSICHTIG KAUFEN",
+    trend:"Leicht bullish",
+    phase:"Konsolidierung",
+    risk:"Mittel",
+    summary:"XRP bleibt strukturell interessant, aber das Momentum ist nach dem ETF-Schub nicht mehr frisch. Der Chart spricht eher fuer kontrollierte Kaeufe an Support als fuer aggressives Momentum-Following.",
+    timeframes:[
+      { tf:"1D", tone:"bullish", title:"Range mit positiver Tendenz", text:"Der Tageschart verteidigt die Zone um 1.22. Darueber bleibt die Struktur in Richtung 1.48 offen." },
+      { tf:"4H", tone:"neutral", title:"Seitwaerts mit Trigger-Level", text:"Solange 1.30 nicht nachhaltig reclaimed wird, bleibt XRP in einer Zwischenrange gefangen." },
+      { tf:"1H", tone:"neutral", title:"Timing erst bei Rebreak", text:"Fuer sauberes Timing braucht es eine bullische Kerze ueber 1.30 mit Volumen." },
+    ],
+    levels:{
+      support:["1.26","1.22","1.15"],
+      resistance:["1.34","1.48","1.62"],
+    },
+    indicators:[
+      { label:"RSI 14", value:"52", note:"neutral" },
+      { label:"RSI 2", value:"35", note:"noch kein extremes Washout" },
+      { label:"Bollinger", value:"Mitte der Range", note:"kein Overextension-Signal" },
+      { label:"EMA 20 / 50 / 200", value:"gemischt", note:"erst ueber 1.34 klar freundlicher" },
+    ],
+    setup:{
+      buyZone:"1.22 - 1.27",
+      altEntry:"Breakout ueber 1.34",
+      stop:"1.15",
+      takeProfit:["1.34","1.48","1.62"],
+      crv:"2.0:1",
+      rationale:"XRP hat gute Chance auf Trendfortsetzung, aber der Entry ist erst an Support oder nach Range-Break wirklich sauber.",
+    },
+    overlay:{
+      min:1.15,
+      max:1.62,
+      current:1.34,
+      ema20:1.29,
+      ema50:1.25,
+      ema200:1.19,
+      support:[1.26,1.22,1.15],
+      resistance:[1.34,1.48,1.62],
+      buyZone:[1.22,1.27],
+      stop:1.15,
+      targets:[1.34,1.48,1.62],
+      formation:"Range mit Breakout-Trigger",
+      note:"XRP braucht fuer Momentum den Ausbruch ueber den oberen Range-Deckel.",
+    },
+    probabilities:{ bull:54, neutral:28, bear:18 },
+  },
+  {
+    ticker:"LINK",
+    symbol:"BINANCE:LINKUSDT",
+    pair:"LINK / USDT",
+    score:71,
+    signal:"VORSICHTIG KAUFEN",
+    trend:"Bullish",
+    phase:"Basenbildung",
+    risk:"Mittel",
+    summary:"LINK zeigt eine robuste Struktur fuer einen Infrastruktur-Trade. Das Chartbild ist cleaner als bei vielen Altcoins, aber Momentum fehlt noch fuer eine harte Beschleunigung.",
+    timeframes:[
+      { tf:"1D", tone:"bullish", title:"Aufbau ueber Basiszone", text:"Die Zone um 8.40 haelt. Solange diese Basis intakt bleibt, ist der Weg Richtung 10.20 offen." },
+      { tf:"4H", tone:"bullish", title:"Konsolidierung ueber Support", text:"Ruecksetzer in 8.60 bis 8.80 wirken weiter kaufbar." },
+      { tf:"1H", tone:"neutral", title:"Timing wartet auf Trigger", text:"Kurzfristig ist LINK oft trendtraeger. Ein schneller Entry funktioniert erst mit Volumen ueber 9.35." },
+    ],
+    levels:{
+      support:["8.80","8.40","7.95"],
+      resistance:["9.35","10.20","11.40"],
+    },
+    indicators:[
+      { label:"RSI 14", value:"56", note:"konstruktiv" },
+      { label:"RSI 2", value:"27", note:"nahe Rebound-Zone" },
+      { label:"Bollinger", value:"untere Mitte", note:"Pullback nicht ueberzogen" },
+      { label:"EMA 20 / 50 / 200", value:"ueber 50 / 200", note:"Trendfilter positiv" },
+    ],
+    setup:{
+      buyZone:"8.55 - 8.85",
+      altEntry:"Breakout ueber 9.35",
+      stop:"7.95",
+      takeProfit:["9.35","10.20","11.40"],
+      crv:"2.3:1",
+      rationale:"LINK eignet sich fuer einen ruhigen Trend-Trade. Invalidiert wird das Setup erst mit Verlust der 7.95er Zone.",
+    },
+    overlay:{
+      min:7.95,
+      max:11.4,
+      current:9.1,
+      ema20:8.85,
+      ema50:8.55,
+      ema200:8.1,
+      support:[8.8,8.4,7.95],
+      resistance:[9.35,10.2,11.4],
+      buyZone:[8.55,8.85],
+      stop:7.95,
+      targets:[9.35,10.2,11.4],
+      formation:"Steigende Basis",
+      note:"Der Chart zeigt einen sauberen Trendaufbau ueber einer engen Demand-Zone.",
+    },
+    probabilities:{ bull:58, neutral:25, bear:17 },
+  },
+  {
+    ticker:"ADA",
+    symbol:"BINANCE:ADAUSDT",
+    pair:"ADA / USDT",
+    score:64,
+    signal:"HALTEN",
+    trend:"Neutral bullish",
+    phase:"Fruehe Akkumulation",
+    risk:"Mittel",
+    summary:"ADA hat attraktiven Discount und Katalysator-Hoffnung, aber die Struktur ist charttechnisch noch nicht sauber genug fuer eine aggressive Kaufempfehlung.",
+    timeframes:[
+      { tf:"1D", tone:"neutral", title:"Basis wird gebaut", text:"Die Zone um 0.23 ist entscheidend. Darunter kippt das Bild wieder klarer ins Schwache." },
+      { tf:"4H", tone:"neutral", title:"Rebound moeglich", text:"Ein Sprung ueber 0.25 waere das erste Zeichen fuer neues Momentum." },
+      { tf:"1H", tone:"bullish", title:"Oversold-Reaktion moeglich", text:"Kurzfristig kann ADA stark reagieren, wenn das Volumen in die 0.24er Zone zurueckkommt." },
+    ],
+    levels:{
+      support:["0.236","0.225","0.210"],
+      resistance:["0.252","0.272","0.298"],
+    },
+    indicators:[
+      { label:"RSI 14", value:"49", note:"neutral" },
+      { label:"RSI 2", value:"21", note:"kurzfristig tief" },
+      { label:"Bollinger", value:"unteres Band", note:"technische Erholung moeglich" },
+      { label:"EMA 20 / 50 / 200", value:"unter EMA 20", note:"noch kein klarer Trend-Trigger" },
+    ],
+    setup:{
+      buyZone:"0.228 - 0.238",
+      altEntry:"Breakout ueber 0.252",
+      stop:"0.210",
+      takeProfit:["0.252","0.272","0.298"],
+      crv:"1.9:1",
+      rationale:"ADA ist eher ein geduldiger Swing-Kandidat. Fuer aggressiven Long fehlt noch die klarere Trendbestaetigung.",
+    },
+    overlay:{
+      min:0.21,
+      max:0.298,
+      current:0.241,
+      ema20:0.245,
+      ema50:0.236,
+      ema200:0.224,
+      support:[0.236,0.225,0.21],
+      resistance:[0.252,0.272,0.298],
+      buyZone:[0.228,0.238],
+      stop:0.21,
+      targets:[0.252,0.272,0.298],
+      formation:"Fruehe Bodenstruktur",
+      note:"Noch kein sauberer Trend, aber die erste Demand-Zone wird sichtbar verteidigt.",
+    },
+    probabilities:{ bull:49, neutral:32, bear:19 },
+  },
+  {
+    ticker:"ETH",
+    symbol:"BINANCE:ETHUSDT",
+    pair:"ETH / USDT",
+    score:68,
+    signal:"VORSICHTIG KAUFEN",
+    trend:"Bullish",
+    phase:"Pullback im Aufwaertskanal",
+    risk:"Mittel",
+    summary:"ETH bleibt charttechnisch sauberer als der breite Altcoin-Markt. Der Bereich um 1,960 bis 2,000 ist die entscheidende technische Ruecklaufzone fuer einen fortgesetzten Aufschwung.",
+    timeframes:[
+      { tf:"1D", tone:"bullish", title:"Trendkanal aktiv", text:"Solange ETH ueber 1,920 handelt, bleibt die groessere Struktur konstruktiv." },
+      { tf:"4H", tone:"bullish", title:"Retest laeuft", text:"Der 4H-Chart arbeitet an einer Rueckeroberung des EMA-20-Bandes." },
+      { tf:"1H", tone:"neutral", title:"Timing erst nach Rueckeroberung", text:"Ein sauberer Entry braucht Reclaim ueber 2,060 mit Anschlussvolumen." },
+    ],
+    levels:{
+      support:["2,000","1,960","1,920"],
+      resistance:["2,120","2,220","2,380"],
+    },
+    indicators:[
+      { label:"RSI 14", value:"55", note:"leicht bullish" },
+      { label:"RSI 2", value:"29", note:"reset nach Pullback" },
+      { label:"Bollinger", value:"Mittlere Linie", note:"kein extremes Signal" },
+      { label:"EMA 20 / 50 / 200", value:"ueber 50 / 200", note:"Trendstruktur intakt" },
+    ],
+    setup:{
+      buyZone:"1,980 - 2,020",
+      altEntry:"Breakout ueber 2,120",
+      stop:"1,920",
+      takeProfit:["2,120","2,220","2,380"],
+      crv:"2.1:1",
+      rationale:"ETH bleibt ein klassischer Pullback-Long. Unter 1,920 waere die Serie hoeherer Tiefs beschaedigt.",
+    },
+    overlay:{
+      min:1920,
+      max:2380,
+      current:2050,
+      ema20:2020,
+      ema50:1985,
+      ema200:1945,
+      support:[2000,1960,1920],
+      resistance:[2120,2220,2380],
+      buyZone:[1980,2020],
+      stop:1920,
+      targets:[2120,2220,2380],
+      formation:"Aufwaertskanal",
+      note:"ETH arbeitet an einer klassischen Pullback-Fortsetzung innerhalb eines intakten Kanals.",
+    },
+    probabilities:{ bull:57, neutral:27, bear:16 },
+  },
+  {
+    ticker:"SUI",
+    symbol:"BINANCE:SUIUSDT",
+    pair:"SUI / USDT",
+    score:60,
+    signal:"HALTEN",
+    trend:"Neutral",
+    phase:"Event-Risiko",
+    risk:"Hoch",
+    summary:"SUI bleibt charttechnisch interessant, aber der Unlock-Druck macht das Setup asymmetrisch schwieriger. Ohne klare Stabilisierung ist der Coin eher Beobachtung als Vollgas-Long.",
+    timeframes:[
+      { tf:"1D", tone:"neutral", title:"Trend fragil", text:"Der Tageschart ist noch nicht kaputt, aber klar schwaecher als SOL oder ETH." },
+      { tf:"4H", tone:"bearish", title:"Unlock-Druck sichtbar", text:"Ruecklaeufe werden aktuell aggressiver verkauft als gekauft." },
+      { tf:"1H", tone:"neutral", title:"Nur fuer schnelles Timing", text:"Intra-Day-Rebounds sind moeglich, aber ohne hoehere Zeiteinheit bleibt das nur taktisch." },
+    ],
+    levels:{
+      support:["0.92","0.86","0.80"],
+      resistance:["1.02","1.12","1.26"],
+    },
+    indicators:[
+      { label:"RSI 14", value:"44", note:"unter neutral" },
+      { label:"RSI 2", value:"16", note:"kurzfristig tief" },
+      { label:"Bollinger", value:"unteres Band", note:"Bounce moeglich, Trend schwach" },
+      { label:"EMA 20 / 50 / 200", value:"unter EMA 20", note:"Momentum fehlt" },
+    ],
+    setup:{
+      buyZone:"0.88 - 0.93",
+      altEntry:"Breakout ueber 1.02",
+      stop:"0.80",
+      takeProfit:["1.02","1.12","1.26"],
+      crv:"1.8:1",
+      rationale:"SUI bleibt ein High-Beta-Trade. Erst nach Stabilisierung ueber 1.02 wird das Long-Setup wirklich sauber.",
+    },
+    overlay:{
+      min:0.8,
+      max:1.26,
+      current:0.96,
+      ema20:0.98,
+      ema50:0.93,
+      ema200:0.88,
+      support:[0.92,0.86,0.8],
+      resistance:[1.02,1.12,1.26],
+      buyZone:[0.88,0.93],
+      stop:0.8,
+      targets:[1.02,1.12,1.26],
+      formation:"Seitwaertsrange unter Druck",
+      note:"Der Unlock-Druck erzeugt eine fragilere Range als bei den staerkeren Large Caps.",
+    },
+    probabilities:{ bull:43, neutral:31, bear:26 },
+  },
+  {
+    ticker:"TAO",
+    symbol:"BINANCE:TAOUSDT",
+    pair:"TAO / USDT",
+    score:66,
+    signal:"VORSICHTIG KAUFEN",
+    trend:"Bullish",
+    phase:"Momentum-Konsolidierung",
+    risk:"Hoch",
+    summary:"TAO hat viel Momentum verbraucht, bleibt aber nach wie vor einer der spannendsten Trend-Cases. Technisch geht es jetzt um Halten der ersten groesseren Ruecklaufzone.",
+    timeframes:[
+      { tf:"1D", tone:"bullish", title:"Starker Trend, aber heiss", text:"Der Tagestrend ist klar positiv, allerdings nach starkem Monatslauf deutlich volatiler." },
+      { tf:"4H", tone:"neutral", title:"Ruecklauf laeuft", text:"Eine Stabilisierung zwischen 330 und 342 waere fuer die naechste Welle gesund." },
+      { tf:"1H", tone:"bullish", title:"Momentum-Reentry moeglich", text:"Wenn das Volumen ueber 372 zurueckkommt, kann TAO schnell wieder beschleunigen." },
+    ],
+    levels:{
+      support:["342","330","312"],
+      resistance:["372","410","468"],
+    },
+    indicators:[
+      { label:"RSI 14", value:"57", note:"Trend positiv" },
+      { label:"RSI 2", value:"24", note:"Reset nach Rally" },
+      { label:"Bollinger", value:"mittlere Linie", note:"kein extremes Stretch mehr" },
+      { label:"EMA 20 / 50 / 200", value:"klar ueber 50 / 200", note:"Trend weiter stark" },
+    ],
+    setup:{
+      buyZone:"332 - 345",
+      altEntry:"Breakout ueber 372",
+      stop:"312",
+      takeProfit:["372","410","468"],
+      crv:"2.2:1",
+      rationale:"TAO ist kein defensiver Trade. Das Setup bleibt gut, aber nur solange die Ruecklaufzone nicht sauber wegbricht.",
+    },
+    overlay:{
+      min:312,
+      max:468,
+      current:350,
+      ema20:344,
+      ema50:336,
+      ema200:320,
+      support:[342,330,312],
+      resistance:[372,410,468],
+      buyZone:[332,345],
+      stop:312,
+      targets:[372,410,468],
+      formation:"Momentum-Konsolidierung",
+      note:"Nach starkem Lauf entsteht eine klassische High-Beta-Rebound-Zone.",
+    },
+    probabilities:{ bull:55, neutral:23, bear:22 },
+  },
+  {
+    ticker:"ONDO",
+    symbol:"BINANCE:ONDOUSDT",
+    pair:"ONDO / USDT",
+    score:70,
+    signal:"VORSICHTIG KAUFEN",
+    trend:"Bullish",
+    phase:"Trendaufbau",
+    risk:"Mittel",
+    summary:"ONDO hat eines der saubersten Story-Setups im aktuellen Markt. Charttechnisch ist der Coin interessant, solange er die erste Nachfragezone sauber verteidigt.",
+    timeframes:[
+      { tf:"1D", tone:"bullish", title:"Trend baut sich auf", text:"Der Tageschart verbessert sich sichtbar. Der Bereich um 0.25 bleibt zentrale Demand-Zone." },
+      { tf:"4H", tone:"bullish", title:"Konstruktiver Pullback", text:"Ruecksetzer auf 0.26 bis 0.27 wirken bisher wie gesunde Konsolidierung." },
+      { tf:"1H", tone:"neutral", title:"Timing auf Trigger", text:"Fuer den naechsten Schub braucht ONDO einen Push ueber 0.29 mit Volumen." },
+    ],
+    levels:{
+      support:["0.260","0.245","0.225"],
+      resistance:["0.292","0.325","0.360"],
+    },
+    indicators:[
+      { label:"RSI 14", value:"59", note:"freundlich" },
+      { label:"RSI 2", value:"31", note:"nah am Reset" },
+      { label:"Bollinger", value:"mittlere obere Zone", note:"Trend freundlich, nicht ueberdehnt" },
+      { label:"EMA 20 / 50 / 200", value:"ueber 20 / 50", note:"Trend verbessert sich" },
+    ],
+    setup:{
+      buyZone:"0.258 - 0.270",
+      altEntry:"Breakout ueber 0.292",
+      stop:"0.225",
+      takeProfit:["0.292","0.325","0.360"],
+      crv:"2.5:1",
+      rationale:"ONDO liefert fuer einen Story-Trade ein gutes CRV. Der Trade lebt davon, dass 0.245 bis 0.225 haelt.",
+    },
+    overlay:{
+      min:0.225,
+      max:0.36,
+      current:0.27,
+      ema20:0.268,
+      ema50:0.255,
+      ema200:0.24,
+      support:[0.26,0.245,0.225],
+      resistance:[0.292,0.325,0.36],
+      buyZone:[0.258,0.27],
+      stop:0.225,
+      targets:[0.292,0.325,0.36],
+      formation:"Aufbau ueber Demand-Zone",
+      note:"Story und Chart passen aktuell gut zusammen, solange die erste Demand-Zone haelt.",
+    },
+    probabilities:{ bull:60, neutral:24, bear:16 },
+  },
+  {
+    ticker:"IOTA",
+    symbol:"BINANCE:IOTAUSDT",
+    pair:"IOTA / USDT",
+    score:63,
+    signal:"HALTEN",
+    trend:"Neutral bullish",
+    phase:"Fruehe Bodenbildung",
+    risk:"Hoch",
+    summary:"IOTA ist charttechnisch ein asymmetrischer Spezialfall. Sehr tiefer Discount, aber noch kein reifer Trend. Das eignet sich eher fuer kleine, geduldige Positionen als fuer aggressives Trading.",
+    timeframes:[
+      { tf:"1D", tone:"neutral", title:"Bodenversuch", text:"Der Tageschart versucht erstmals seit laengerer Zeit eine stabilere Basis zu formen." },
+      { tf:"4H", tone:"bullish", title:"erste Reversal-Signale", text:"Kurzfristig reagiert IOTA positiv auf Zufluss-News, bleibt aber hoch volatil." },
+      { tf:"1H", tone:"neutral", title:"nur taktisch sauber", text:"Der Intraday-Chart ist sehr noisy. Entries funktionieren nur mit engem Risiko." },
+    ],
+    levels:{
+      support:["0.053","0.050","0.046"],
+      resistance:["0.058","0.064","0.071"],
+    },
+    indicators:[
+      { label:"RSI 14", value:"47", note:"neutral" },
+      { label:"RSI 2", value:"22", note:"kurzfristig tief" },
+      { label:"Bollinger", value:"untere Range", note:"technischer Bounce moeglich" },
+      { label:"EMA 20 / 50 / 200", value:"unter 50, ueber Tief", note:"Trend noch unreif" },
+    ],
+    setup:{
+      buyZone:"0.052 - 0.054",
+      altEntry:"Breakout ueber 0.058",
+      stop:"0.046",
+      takeProfit:["0.058","0.064","0.071"],
+      crv:"2.0:1",
+      rationale:"IOTA hat gutes asymmetrisches Potenzial, aber noch keine starke Trendbestaetigung. Deshalb nur kontrollierter Positionsaufbau.",
+    },
+    overlay:{
+      min:0.046,
+      max:0.071,
+      current:0.055,
+      ema20:0.054,
+      ema50:0.052,
+      ema200:0.049,
+      support:[0.053,0.05,0.046],
+      resistance:[0.058,0.064,0.071],
+      buyZone:[0.052,0.054],
+      stop:0.046,
+      targets:[0.058,0.064,0.071],
+      formation:"Bodenversuch",
+      note:"IOTA ist eher ein asymmetrischer Recovery-Case als ein sauberer Trendchart.",
+    },
+    probabilities:{ bull:46, neutral:30, bear:24 },
+  },
+];
+
+const CHART_ANALYSES = CHART_ANALYSIS_MODELS.map((analysisItem) => {
+  const linkedCoin = COINS.find((coin) => coin.ticker === analysisItem.ticker);
+  return {
+    ...analysisItem,
+    name: linkedCoin?.name || analysisItem.ticker,
+    price: linkedCoin?.price || "—",
+    change: linkedCoin?.change || "—",
+    color: linkedCoin?.color || "#1756c8",
+    bg: linkedCoin?.bg || "#eef3ff",
+  };
+});
+
+function getTradingSignalLabel(score) {
+  if (score >= 72) return "AKKUMULIEREN";
+  if (score >= 66) return "VORSICHTIG KAUFEN";
+  if (score >= 58) return "HALTEN";
+  if (score >= 45) return "BEOBACHTEN";
+  return "MEIDEN";
+}
+
+function getTradingSignalStyle(signal) {
+  const styles = {
+    "AKKUMULIEREN": { color:"#00875a", bg:"#e6f7f0" },
+    "VORSICHTIG KAUFEN": { color:"#4a8a00", bg:"#f0f7e6" },
+    "HALTEN": { color:"#b06a00", bg:"#fff8e6" },
+    "BEOBACHTEN": { color:"#888", bg:"#f7f8fc" },
+    "MEIDEN": { color:"#c0182a", bg:"#ffeef0" },
+  };
+  return styles[signal] || styles["BEOBACHTEN"];
+}
+
+function getToneColors(tone) {
+  const styles = {
+    bullish: { color:"#00875a", bg:"#e6f7f0", border:"#80d4b0" },
+    neutral: { color:"#b06a00", bg:"#fff8e6", border:"#e8d080" },
+    bearish: { color:"#c0182a", bg:"#ffeef0", border:"#f0b0b8" },
+  };
+  return styles[tone] || styles.neutral;
+}
+
+function parseLevelValue(level) {
+  if (typeof level === "number") return level;
+  if (typeof level !== "string") return NaN;
+  return Number(level.replace(/,/g, ""));
+}
+
+function formatScenarioLevel(level) {
+  return typeof level === "number" ? String(level) : level;
+}
+
+function buildChartScenario(coin) {
+  const support = coin.levels?.support?.[0] || coin.setup?.buyZone;
+  const resistance = coin.levels?.resistance?.[0] || coin.setup?.takeProfit?.[0];
+  const buyZone = coin.setup?.buyZone || "";
+  const stop = coin.setup?.stop || "";
+
+  return {
+    bullish: `Bullish bleibt ${coin.ticker}, solange die Buy-Zone ${buyZone} verteidigt wird und der Markt ueber ${formatScenarioLevel(resistance)} ausbricht.`,
+    neutral: `Neutral ist das Setup, wenn ${coin.ticker} zwischen ${formatScenarioLevel(support)} und ${formatScenarioLevel(resistance)} seitwaerts rotiert und Trigger-Volumen fehlt.`,
+    bearish: `Bearish wird das Bild unter ${stop}. Dann ist die aktuelle Struktur invalidiert und ein tieferer Ruecklauf wahrscheinlich.`,
+  };
+}
+
+function getSetupMetrics(coin) {
+  const buyZone = String(coin.setup?.buyZone || "").split("-").map((value) => parseLevelValue(value.trim())).filter((value) => !Number.isNaN(value));
+  const entry = buyZone.length === 2 ? (buyZone[0] + buyZone[1]) / 2 : parseLevelValue(coin.overlay?.current);
+  const stop = parseLevelValue(coin.setup?.stop);
+  const targets = (coin.setup?.takeProfit || []).map(parseLevelValue).filter((value) => !Number.isNaN(value));
+  const firstTarget = targets[0];
+  const secondTarget = targets[1];
+  const riskPct = entry && stop ? (((entry - stop) / entry) * 100) : 0;
+  const rewardPct = entry && firstTarget ? (((firstTarget - entry) / entry) * 100) : 0;
+  const stretchPct = entry && secondTarget ? (((secondTarget - entry) / entry) * 100) : 0;
+
+  return {
+    entry,
+    stop,
+    firstTarget,
+    secondTarget,
+    riskPct,
+    rewardPct,
+    stretchPct,
+  };
+}
+
+function formatPercent(value) {
+  if (!Number.isFinite(value)) return "n/a";
+  const sign = value > 0 ? "+" : "";
+  return `${sign}${value.toFixed(1)}%`;
+}
+
+function toPatternCandle(candle) {
+  return {
+    time:candle.time,
+    open:Number(candle.open),
+    high:Number(candle.high),
+    low:Number(candle.low),
+    close:Number(candle.close),
+  };
+}
+
+function getCandleBody(candle) {
+  return Math.abs(candle.close - candle.open);
+}
+
+function getCandleRange(candle) {
+  return Math.max(0.0000001, candle.high - candle.low);
+}
+
+function getUpperWick(candle) {
+  return candle.high - Math.max(candle.open, candle.close);
+}
+
+function getLowerWick(candle) {
+  return Math.min(candle.open, candle.close) - candle.low;
+}
+
+function isBullishCandle(candle) {
+  return candle.close > candle.open;
+}
+
+function isBearishCandle(candle) {
+  return candle.close < candle.open;
+}
+
+function detectCandlestickPatterns(rawCandles) {
+  const candles = (rawCandles || []).map(toPatternCandle);
+  const found = [];
+  const seen = new Set();
+
+  const pushPattern = (key, bias, title, description) => {
+    if (seen.has(key)) return;
+    seen.add(key);
+    const source = candles[Number(String(key).split("-").pop())];
+    found.push({ key, bias, title, description, time:source?.time });
+  };
+
+  for (let i = Math.max(2, candles.length - 12); i < candles.length; i += 1) {
+    const a = candles[i - 2];
+    const b = candles[i - 1];
+    const c = candles[i];
+    if (!a || !b || !c) continue;
+
+    const bodyA = getCandleBody(a);
+    const bodyB = getCandleBody(b);
+    const bodyC = getCandleBody(c);
+    const rangeB = getCandleRange(b);
+    const upperC = getUpperWick(c);
+    const lowerC = getLowerWick(c);
+    const middleB = (b.open + b.close) / 2;
+    const midpointA = (a.open + a.close) / 2;
+
+    if ((bodyC / getCandleRange(c)) <= 0.1) {
+      pushPattern(`doji-${i}`, "neutral", "Doji", "Unentschlossenheit im Markt. Erst die naechste Kerze entscheidet die Richtung.");
+    }
+
+    if (lowerC >= bodyC * 2 && upperC <= Math.max(bodyC * 0.6, getCandleRange(c) * 0.08) && ((c.close - c.low) / getCandleRange(c)) > 0.55) {
+      pushPattern(`hammer-${i}`, "bullish", "Hammer", "Langer unterer Schatten signalisiert Absorption und moegliche Bodenreaktion.");
+    }
+
+    if (upperC >= bodyC * 2 && lowerC <= Math.max(bodyC * 0.6, getCandleRange(c) * 0.08) && ((c.high - c.close) / getCandleRange(c)) > 0.35) {
+      pushPattern(`shooting-${i}`, "bearish", "Shooting Star / Inverted Hammer", "Langer oberer Schatten zeigt Ablehnung hoeherer Preise und moegliche Umkehr.");
+    }
+
+    if (isBearishCandle(b) && isBullishCandle(c) && c.open <= b.close && c.close >= b.open && bodyC > bodyB * 0.9) {
+      pushPattern(`bull-engulf-${i}`, "bullish", "Bullish Engulfing", "Die letzte Kerze verschlingt die vorangegangene Abwaerts-Kerze und spricht fuer Momentumwechsel.");
+    }
+
+    if (isBullishCandle(b) && isBearishCandle(c) && c.open >= b.close && c.close <= b.open && bodyC > bodyB * 0.9) {
+      pushPattern(`bear-engulf-${i}`, "bearish", "Bearish Engulfing", "Die letzte Kerze uebernimmt nach oben und kippt dann aggressiv nach unten.");
+    }
+
+    if (isBearishCandle(a) && (bodyB / rangeB) < 0.35 && isBullishCandle(c) && c.close > midpointA && middleB < a.close) {
+      pushPattern(`morning-${i}`, "bullish", "Morning Star", "Dreikerzen-Umkehrmuster: Verkauf verliert Kontrolle, Nachfrage uebernimmt.");
+    }
+
+    if (isBullishCandle(a) && (bodyB / rangeB) < 0.35 && isBearishCandle(c) && c.close < midpointA && middleB > a.close) {
+      pushPattern(`evening-${i}`, "bearish", "Evening Star", "Dreikerzen-Umkehrmuster: Aufwaertsdruck ermuedet und wird abverkauft.");
+    }
+
+    if (isBearishCandle(b) && isBullishCandle(c) && c.open > b.close && c.open < b.open && c.close < b.open && c.close > midpointA) {
+      pushPattern(`piercing-${i}`, "bullish", "Piercing Pattern", "Bullische Rueckeroberung in den Koerper der Vorkerze, oft fruehes Reversal-Signal.");
+    }
+
+    if (isBullishCandle(b) && isBearishCandle(c) && c.open < b.close && c.open > b.open && c.close > b.open && c.close < midpointA) {
+      pushPattern(`dark-cloud-${i}`, "bearish", "Dark Cloud Cover", "Bearische Umkehr in den Koerper der Vorkerze hinein.");
+    }
+
+    if (isBearishCandle(a) && bodyB < bodyA * 0.6 && b.high < a.open && b.low > a.close && isBullishCandle(c)) {
+      pushPattern(`bull-harami-${i}`, "bullish", "Bullish Harami", "Die Range zieht sich nach Abwaertsdruck zusammen und bereitet moegliche Richtungswende vor.");
+    }
+
+    if (isBullishCandle(a) && bodyB < bodyA * 0.6 && b.high < a.close && b.low > a.open && isBearishCandle(c)) {
+      pushPattern(`bear-harami-${i}`, "bearish", "Bearish Harami", "Nach starker Aufwaertskerze zeigt sich Kompression und nachlassendes Momentum.");
+    }
+  }
+
+  const prioritized = found.slice(-4).reverse();
+  const bullishCount = prioritized.filter((item) => item.bias === "bullish").length;
+  const bearishCount = prioritized.filter((item) => item.bias === "bearish").length;
+  const bias = bullishCount > bearishCount ? "bullish" : bearishCount > bullishCount ? "bearish" : "neutral";
+
+  return {
+    patterns: prioritized,
+    bias,
+    summary: prioritized.length
+      ? `Letzte relevante Candlestick-Muster: ${prioritized.map((item) => item.title).join(", ")}.`
+      : "In den letzten Kerzen liegt kein starkes Umkehr- oder Fortsetzungsmuster mit hoher Prioritaet vor.",
+  };
+}
+
+function useCandlestickPatternAnalysis(symbol, interval) {
+  const [state, setState] = useState({ status:"loading", patterns:[], bias:"neutral", summary:"" });
+
+  useEffect(() => {
+    let active = true;
+    const marketSymbol = String(symbol || "").replace("BINANCE:", "");
+    const klineInterval = mapChartIntervalToKlineInterval(interval);
+
+    setState({ status:"loading", patterns:[], bias:"neutral", summary:"Lade Candlestick-Muster aus echten Marktdaten." });
+
+    fetch(`https://api.binance.com/api/v3/klines?symbol=${marketSymbol}&interval=${klineInterval}&limit=60`)
+      .then((response) => {
+        if (!response.ok) throw new Error("pattern_feed_error");
+        return response.json();
+      })
+      .then((rows) => {
+        if (!active) return;
+        const candles = rows.map((row) => ({
+          open:Number(row[1]),
+          high:Number(row[2]),
+          low:Number(row[3]),
+          close:Number(row[4]),
+        }));
+        setState({ status:"ready", ...detectCandlestickPatterns(candles) });
+      })
+      .catch(() => {
+        if (!active) return;
+        setState({ status:"error", patterns:[], bias:"neutral", summary:"Candlestick-Muster konnten nicht geladen werden." });
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [symbol, interval]);
+
+  return state;
+}
+
+function average(values) {
+  if (!values.length) return 0;
+  return values.reduce((sum, value) => sum + value, 0) / values.length;
+}
+
+function detectStructurePatterns(rawCandles) {
+  const candles = (rawCandles || []).map(toPatternCandle);
+  if (candles.length < 30) {
+    return { status:"insufficient", bias:"neutral", patterns:[], primary:null, summary:"Zu wenige Kerzen fuer belastbare Formationsanalyse." };
+  }
+
+  const windowCandles = candles.slice(-36);
+  const segment = 6;
+  const first = windowCandles.slice(0, segment);
+  const last = windowCandles.slice(-segment);
+  const firstHalf = windowCandles.slice(0, 18);
+  const secondHalf = windowCandles.slice(-18);
+  const mid = windowCandles.slice(12, 24);
+
+  const upperStart = average(first.map((c) => c.high));
+  const upperEnd = average(last.map((c) => c.high));
+  const lowerStart = average(first.map((c) => c.low));
+  const lowerEnd = average(last.map((c) => c.low));
+  const rangeStart = upperStart - lowerStart;
+  const rangeEnd = upperEnd - lowerEnd;
+  const avgPrice = average(windowCandles.map((c) => c.close));
+  const tolerance = Math.max(avgPrice * 0.012, rangeStart * 0.15);
+  const patterns = [];
+
+  const pushPattern = (key, bias, title, description, upperLine, lowerLine) => {
+    patterns.push({ key, bias, title, description, upperLine, lowerLine });
+  };
+
+  const upperFlat = Math.abs(upperEnd - upperStart) <= tolerance;
+  const lowerFlat = Math.abs(lowerEnd - lowerStart) <= tolerance;
+  const ascending = lowerEnd > lowerStart + tolerance;
+  const descending = upperEnd < upperStart - tolerance;
+  const converging = rangeEnd < rangeStart * 0.82;
+  const similarSlope = Math.abs((upperEnd - upperStart) - (lowerEnd - lowerStart)) <= Math.max(avgPrice * 0.015, rangeStart * 0.25);
+
+  const upperLine = {
+    startTime: first[0].time,
+    endTime: last[last.length - 1].time,
+    startValue: upperStart,
+    endValue: upperEnd,
+  };
+  const lowerLine = {
+    startTime: first[0].time,
+    endTime: last[last.length - 1].time,
+    startValue: lowerStart,
+    endValue: lowerEnd,
+  };
+
+  if (upperFlat && ascending && converging) {
+    pushPattern("ascending_triangle", "bullish", "Bullisches Dreieck", "Horizontaler Widerstand trifft auf steigende Tiefs. Das spricht fuer Nachfrageaufbau unter dem Trigger-Level.", upperLine, lowerLine);
+  }
+
+  if (lowerFlat && descending && converging) {
+    pushPattern("descending_triangle", "bearish", "Bearisches Dreieck", "Horizontaler Support wird von fallenden Hochs zusammengedrueckt. Das erhoeht das Risiko eines Breakdown-Setups.", upperLine, lowerLine);
+  }
+
+  if (descending && lowerEnd < lowerStart - tolerance && converging) {
+    pushPattern("falling_wedge", "bullish", "Falling Wedge", "Beide Trendlinien fallen, aber die Range zieht sich zusammen. Das ist haeufig ein bullisches Exhaustion-Muster.", upperLine, lowerLine);
+  }
+
+  if ((upperEnd > upperStart + tolerance) && (lowerEnd > lowerStart + tolerance) && converging) {
+    pushPattern("rising_wedge", "bearish", "Rising Wedge", "Steigende Struktur mit enger werdender Range. Momentum baut ab und das macht die Formation anfaellig fuer Ruecksetzer.", upperLine, lowerLine);
+  }
+
+  if ((upperEnd > upperStart + tolerance) && (lowerEnd > lowerStart + tolerance) && similarSlope && !converging) {
+    pushPattern("ascending_channel", "bullish", "Aufwaertskanal", "Hoehere Hochs und hoehere Tiefs laufen in einem sauberen Kanal. Trendfolge bleibt gueltig, solange die Unterkante haelt.", upperLine, lowerLine);
+  }
+
+  if ((upperEnd < upperStart - tolerance) && (lowerEnd < lowerStart - tolerance) && similarSlope && !converging) {
+    pushPattern("descending_channel", "bearish", "Abwaertskanal", "Tiefere Hochs und tiefere Tiefs dominieren den Verlauf. Rebounds bleiben vorerst nur Gegenbewegungen.", upperLine, lowerLine);
+  }
+
+  const lowA = Math.min(...firstHalf.map((c) => c.low));
+  const lowB = Math.min(...secondHalf.map((c) => c.low));
+  const midHigh = Math.max(...mid.map((c) => c.high));
+  if (Math.abs(lowA - lowB) <= Math.max(avgPrice * 0.015, rangeStart * 0.18) && midHigh > Math.max(lowA, lowB) + Math.max(avgPrice * 0.03, rangeStart * 0.35)) {
+    pushPattern("double_bottom", "bullish", "Double Bottom", "Zwei vergleichbare Tiefs mit klarer Zwischenerholung zeigen Absorption im Bodenbereich.", null, null);
+  }
+
+  const highA = Math.max(...firstHalf.map((c) => c.high));
+  const highB = Math.max(...secondHalf.map((c) => c.high));
+  const midLow = Math.min(...mid.map((c) => c.low));
+  if (Math.abs(highA - highB) <= Math.max(avgPrice * 0.015, rangeStart * 0.18) && Math.min(highA, highB) > midLow + Math.max(avgPrice * 0.03, rangeStart * 0.35)) {
+    pushPattern("double_top", "bearish", "Double Top", "Zwei vergleichbare Hochs mit deutlicher Reaktion dazwischen deuten auf Angebotsdruck im oberen Bereich.", null, null);
+  }
+
+  const prioritized = patterns.slice(0, 3);
+  const bullishCount = prioritized.filter((item) => item.bias === "bullish").length;
+  const bearishCount = prioritized.filter((item) => item.bias === "bearish").length;
+  const bias = bullishCount > bearishCount ? "bullish" : bearishCount > bullishCount ? "bearish" : "neutral";
+  const primary = prioritized[0] || null;
+
+  return {
+    status:"ready",
+    bias,
+    patterns: prioritized,
+    primary,
+    summary: primary ? `Primare Formation: ${primary.title}. ${primary.description}` : "Keine dominante Strukturformation mit ausreichender Konvergenz erkannt.",
+  };
+}
+
+function buildFallbackStructurePattern(coin, candles) {
+  if (!coin?.overlay || !candles?.length) return null;
+  const start = candles[Math.max(0, candles.length - 28)];
+  const end = candles[candles.length - 1];
+  if (!start || !end) return null;
+
+  const support = coin.overlay.support || [];
+  const resistance = coin.overlay.resistance || [];
+  const buyZone = coin.overlay.buyZone || [];
+  const formationName = String(coin.overlay.formation || "Struktur");
+
+  const bullish = /bull|aufwaert|steigend|demand|boden|recovery|akkum/i.test(formationName);
+  const bearish = /abwaert|bear|druck/i.test(formationName);
+  const bias = bullish ? "bullish" : bearish ? "bearish" : "neutral";
+
+  const upperLine = {
+    startTime: start.time,
+    endTime: end.time,
+    startValue: resistance[1] ?? resistance[0] ?? coin.overlay.max,
+    endValue: resistance[0] ?? coin.overlay.current,
+  };
+  const lowerLine = {
+    startTime: start.time,
+    endTime: end.time,
+    startValue: support[1] ?? support[0] ?? coin.overlay.min,
+    endValue: buyZone[0] ?? support[0] ?? coin.overlay.current,
+  };
+
+  return {
+    status:"fallback",
+    bias,
+    patterns:[{
+      key:`fallback-${coin.ticker}`,
+      bias,
+      title:formationName,
+      description:`Fallback-Zeichnung aus dem hinterlegten Chartmodell fuer ${coin.ticker}, damit die Leitstruktur direkt sichtbar bleibt.`,
+      upperLine,
+      lowerLine,
+    }],
+    primary:{
+      key:`fallback-${coin.ticker}`,
+      bias,
+      title:formationName,
+      description:`Fallback-Zeichnung aus dem hinterlegten Chartmodell fuer ${coin.ticker}, damit die Leitstruktur direkt sichtbar bleibt.`,
+      upperLine,
+      lowerLine,
+    },
+    summary:`Fallback-Formation aktiv: ${formationName}. Diese Linie basiert auf dem hinterlegten Coin-Setup und dient als sichtbare Leitstruktur, falls der Live-Scan keine dominante Formation erkennt.`,
+  };
+}
+
+function useStructurePatternAnalysis(symbol, interval) {
+  const [state, setState] = useState({ status:"loading", bias:"neutral", patterns:[], primary:null, summary:"" });
+
+  useEffect(() => {
+    let active = true;
+    const marketSymbol = String(symbol || "").replace("BINANCE:", "");
+    const klineInterval = mapChartIntervalToKlineInterval(interval);
+
+    setState({ status:"loading", bias:"neutral", patterns:[], primary:null, summary:"Lade Strukturformationen aus echten Marktdaten." });
+
+    fetch(`https://api.binance.com/api/v3/klines?symbol=${marketSymbol}&interval=${klineInterval}&limit=90`)
+      .then((response) => {
+        if (!response.ok) throw new Error("structure_feed_error");
+        return response.json();
+      })
+      .then((rows) => {
+        if (!active) return;
+        const candles = rows.map((row) => ({
+          time: Math.floor(row[0] / 1000),
+          open:Number(row[1]),
+          high:Number(row[2]),
+          low:Number(row[3]),
+          close:Number(row[4]),
+        }));
+        setState(detectStructurePatterns(candles));
+      })
+      .catch(() => {
+        if (!active) return;
+        setState({ status:"error", bias:"neutral", patterns:[], primary:null, summary:"Strukturformationen konnten nicht geladen werden." });
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [symbol, interval]);
+
+  return state;
+}
+
+function buildPremiumChartReadout(coin, setupMetrics, formattedValues) {
+  const tfDaily = coin.timeframes?.find((item) => item.tf === "1D") || coin.timeframes?.[0];
+  const tf4h = coin.timeframes?.find((item) => item.tf === "4H") || coin.timeframes?.[1];
+  const tf1h = coin.timeframes?.find((item) => item.tf === "1H") || coin.timeframes?.[2];
+  const topSupport = formattedValues.support[0] || formattedValues.buyZone;
+  const topResistance = formattedValues.resistance[0] || formattedValues.targets[0] || "-";
+  const secondResistance = formattedValues.resistance[1] || formattedValues.targets[1] || topResistance;
+  const trigger = coin.setup?.altEntry || `Breakout ueber ${topResistance}`;
+  const firstTarget = formattedValues.targets[0] || topResistance;
+  const secondTarget = formattedValues.targets[1] || firstTarget;
+  const invalidation = formattedValues.stop;
+  const rewardText = formatPercent(setupMetrics.rewardPct);
+  const riskText = formatPercent(-Math.abs(setupMetrics.riskPct));
+  const stretchText = formatPercent(setupMetrics.stretchPct);
+
+  return {
+    bigPicture: `${coin.ticker} handelt aktuell in der Phase "${coin.phase}". Das technische Gesamtbild ist ${coin.trend.toLowerCase()} und der Chartscore liegt bei ${coin.score}/100. Damit ist das Setup nicht als isolierter Moonshot zu lesen, sondern als strukturierter Trade mit klarer Bedingung und klarer Invalidation.`,
+    marketStructure: [
+      `Daily: ${tfDaily?.text || "Kein Daily-Text verfuegbar."}`,
+      `4H: ${tf4h?.text || "Kein 4H-Text verfuegbar."}`,
+      `1H: ${tf1h?.text || "Kein 1H-Text verfuegbar."}`,
+    ],
+    keyLevels: [
+      `Support beginnt bei ${topSupport}. Darunter wird die Struktur fragiler und das Risiko steigt deutlich.`,
+      `Der erste relevante Widerstand liegt bei ${topResistance}. Ein sauberer Reclaim dort ist der wichtigste Trigger fuer Momentum.`,
+      `Die naechste Expansionszone liegt bei ${secondResistance}. Dort muss sich zeigen, ob nur ein Bounce oder ein echter Trendaufbau laeuft.`,
+    ],
+    indicatorSummary: `Die Indikatoren werden bewusst nur als Bestaetigung gelesen: ${coin.indicators.map((item) => `${item.label} ${item.value} (${item.note})`).join(" · ")}.`,
+    tradingPlan: [
+      `Trigger: ${trigger}`,
+      `Buy Zone: ${formattedValues.buyZone}`,
+      `Stop Loss: ${invalidation} (${riskText})`,
+      `TP1: ${firstTarget} (${rewardText})`,
+      `TP2: ${secondTarget} (${stretchText})`,
+      `CRV: ${coin.setup?.crv || "n/a"}`,
+    ],
+    verdict: `Finales Urteil: ${coin.signal}. Solange ${formattedValues.buyZone} haelt, bleibt das Setup technisch spielbar. Unter ${invalidation} ist die aktuelle Idee invalidiert. Ueber ${topResistance} wird aus Beobachtung ein deutlich saubererer Trigger-Trade.`,
+  };
+}
+
 const beginnerSubScoreLabels = {
   "Upgrade-Katalysator":"Hier wird bewertet, ob es in naher Zukunft ein Ereignis gibt, das neue Aufmerksamkeit und frisches Kapital anziehen kann, zum Beispiel ein Upgrade, ETF-News oder eine wichtige Partnerschaft.",
   "Institutionelle Flows":"Hier wird gemessen, ob große Marktteilnehmer wie Fonds, Vermögensverwalter oder professionelle Investoren schon Positionen aufbauen oder sich noch zurückhalten.",
@@ -874,6 +1813,790 @@ function Gauge({ score, color }) {
   );
 }
 
+function TradingViewAdvancedChart({ symbol, interval, title }) {
+  const widgetRef = useRef(null);
+  const [widgetState, setWidgetState] = useState("loading");
+
+  useEffect(() => {
+    if (!widgetRef.current) return;
+    widgetRef.current.innerHTML = "";
+    setWidgetState("loading");
+
+    const script = document.createElement("script");
+    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+    script.type = "text/javascript";
+    script.async = true;
+    script.innerHTML = JSON.stringify({
+      autosize: true,
+      symbol,
+      interval,
+      timezone: "Europe/Vienna",
+      theme: "light",
+      style: "1",
+      locale: "de_DE",
+      allow_symbol_change: false,
+      calendar: false,
+      hide_side_toolbar: false,
+      hide_top_toolbar: false,
+      hide_legend: false,
+      save_image: false,
+      withdateranges: true,
+      support_host: "https://www.tradingview.com",
+    });
+    script.onerror = () => setWidgetState("fallback");
+
+    widgetRef.current.appendChild(script);
+
+    const timeoutId = window.setTimeout(() => {
+      const hasEmbeddedWidget = widgetRef.current && (
+        widgetRef.current.querySelector("iframe") ||
+        widgetRef.current.querySelector(".tradingview-widget-container__widget")
+      );
+      setWidgetState(hasEmbeddedWidget ? "ready" : "fallback");
+    }, 2200);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+      if (widgetRef.current) widgetRef.current.innerHTML = "";
+    };
+  }, [symbol, interval]);
+
+  return (
+    <div>
+      <div style={{ height:520, borderRadius:18, overflow:"hidden", border:"1px solid #d8def0", background:"#fff", position:"relative" }}>
+        <div ref={widgetRef} style={{ height:"100%", width:"100%" }} />
+        {widgetState === "fallback" && (
+          <div style={{ position:"absolute", inset:0, display:"flex", alignItems:"center", justifyContent:"center", padding:"24px", background:"linear-gradient(180deg,rgba(255,255,255,.92),rgba(248,250,255,.96))" }}>
+            <div style={{ maxWidth:420, textAlign:"center" }}>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"#9aa0bc", marginBottom:10 }}>TradingView Fallback</div>
+              <div style={{ fontFamily:"Georgia,serif", fontSize:26, fontWeight:700, color:"#1a1e2e", marginBottom:10 }}>{title}</div>
+              <div style={{ fontSize:12, color:"#5a6282", lineHeight:1.8, marginBottom:14 }}>
+                Das TradingView-Widget konnte lokal nicht geladen werden.
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+      <div style={{ marginTop:8, fontSize:10, color:"#9aa0bc", lineHeight:1.6 }}>
+        Live-Chart via TradingView fuer {title}.
+      </div>
+    </div>
+  );
+}
+
+function ProMarketChart({ coin, interval, title }) {
+  const chartRef = useRef(null);
+  const [chartStatus, setChartStatus] = useState("loading");
+  const precision = getChartPrecision(coin);
+  const minMove = Number((1 / (10 ** precision)).toFixed(precision));
+
+  useEffect(() => {
+    if (!chartRef.current) return;
+    if (!window.LightweightCharts) {
+      setChartStatus("library_error");
+      return;
+    }
+
+    const { createChart, CrosshairMode, LineStyle } = window.LightweightCharts;
+    const symbol = coin.symbol.replace("BINANCE:", "");
+    const klineInterval = mapChartIntervalToKlineInterval(interval);
+    let active = true;
+    let resizeObserver = null;
+    let chart = null;
+
+    setChartStatus("loading");
+    chartRef.current.innerHTML = "";
+
+    fetch(`https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${klineInterval}&limit=220`)
+      .then((response) => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.json();
+      })
+      .then((rows) => {
+        if (!active || !chartRef.current) return;
+
+        try {
+          const candles = rows.map((row) => ({
+            time: Math.floor(row[0] / 1000),
+            open: Number(row[1]),
+            high: Number(row[2]),
+            low: Number(row[3]),
+            close: Number(row[4]),
+          })).filter((row) => [row.open, row.high, row.low, row.close].every(Number.isFinite));
+
+          if (!candles.length) throw new Error("No candle data");
+
+          const closes = candles.map((candle) => candle.close);
+          const ema20 = [];
+          const ema50 = [];
+          const ema200 = [];
+
+          for (let i = 0; i < candles.length; i += 1) {
+            const slice20 = closes.slice(Math.max(0, i - 59), i + 1);
+            const slice50 = closes.slice(Math.max(0, i - 119), i + 1);
+            const slice200 = closes.slice(0, i + 1);
+            ema20.push({ time:candles[i].time, value:calculateEMA(slice20, 20) ?? candles[i].close });
+            ema50.push({ time:candles[i].time, value:calculateEMA(slice50, 50) ?? candles[i].close });
+            ema200.push({ time:candles[i].time, value:calculateEMA(slice200, 200) ?? candles[i].close });
+          }
+
+          chart = createChart(chartRef.current, {
+            width: chartRef.current.clientWidth || 760,
+            height: 520,
+            layout: {
+              background: { color:"#ffffff" },
+              textColor: "#5a6282",
+              fontFamily: "Outfit, sans-serif",
+            },
+            grid: {
+              vertLines: { color:"#f1f4fa" },
+              horzLines: { color:"#eef2f8" },
+            },
+            rightPriceScale: {
+              borderColor:"#e2e6f0",
+            },
+            timeScale: {
+              borderColor:"#e2e6f0",
+              timeVisible: interval !== "1D",
+              secondsVisible: false,
+            },
+            crosshair: {
+              mode: CrosshairMode.Normal,
+              vertLine: { color:"#b9c3d9", width:1, style:LineStyle.Dashed },
+              horzLine: { color:"#b9c3d9", width:1, style:LineStyle.Dashed },
+            },
+          });
+
+        const candleSeries = chart.addCandlestickSeries({
+          upColor:"#0d8c61",
+          downColor:"#c0182a",
+          borderUpColor:"#0d8c61",
+          borderDownColor:"#c0182a",
+          wickUpColor:"#0d8c61",
+          wickDownColor:"#c0182a",
+          priceLineVisible:true,
+          lastValueVisible:true,
+          priceFormat: { type:"price", precision, minMove },
+        });
+        candleSeries.setData(candles);
+
+        const ema20Series = chart.addLineSeries({ color:"#00875a", lineWidth:2, priceLineVisible:false, lastValueVisible:false, priceFormat: { type:"price", precision, minMove } });
+        const ema50Series = chart.addLineSeries({ color:"#1756c8", lineWidth:2, priceLineVisible:false, lastValueVisible:false, priceFormat: { type:"price", precision, minMove } });
+        const ema200Series = chart.addLineSeries({ color:"#5b4fcf", lineWidth:2, priceLineVisible:false, lastValueVisible:false, priceFormat: { type:"price", precision, minMove } });
+          ema20Series.setData(ema20);
+          ema50Series.setData(ema50);
+          ema200Series.setData(ema200);
+
+          const priceLines = [
+            { value:coin.overlay.stop, color:"#c0182a", title:"Stop", style:LineStyle.Dashed, width:2 },
+            ...coin.overlay.support.map((value, index) => ({ value, color:"#00875a", title:`S${index + 1}`, style:index === 0 ? LineStyle.Solid : LineStyle.Dashed, width:index === 0 ? 2 : 1 })),
+            ...coin.overlay.resistance.map((value, index) => ({ value, color:"#c0182a", title:`R${index + 1}`, style:index === 0 ? LineStyle.Solid : LineStyle.Dashed, width:index === 0 ? 2 : 1 })),
+            ...coin.overlay.targets.map((value, index) => ({ value, color:"#1756c8", title:`TP${index + 1}`, style:LineStyle.Dotted, width:1 })),
+          ];
+          const candlestickPatterns = detectCandlestickPatterns(candles);
+          const detectedStructurePatterns = detectStructurePatterns(candles);
+          const structurePatterns = detectedStructurePatterns.primary ? detectedStructurePatterns : (buildFallbackStructurePattern(coin, candles) || detectedStructurePatterns);
+
+          priceLines.forEach((line) => {
+            candleSeries.createPriceLine({
+              price: line.value,
+              color: line.color,
+              lineWidth: line.width,
+              lineStyle: line.style,
+              axisLabelVisible: true,
+              title: line.title,
+            });
+          });
+
+          if (structurePatterns.primary?.upperLine) {
+            const upperPatternSeries = chart.addLineSeries({
+              color: structurePatterns.primary.bias === "bearish" ? "#b01222" : "#0b57d0",
+              lineWidth: 3,
+              lineStyle: LineStyle.Solid,
+              priceLineVisible: false,
+              lastValueVisible: false,
+              crosshairMarkerVisible: true,
+              priceFormat: { type:"price", precision, minMove },
+            });
+            upperPatternSeries.setData([
+              { time: structurePatterns.primary.upperLine.startTime, value: structurePatterns.primary.upperLine.startValue },
+              { time: structurePatterns.primary.upperLine.endTime, value: structurePatterns.primary.upperLine.endValue },
+            ]);
+          }
+
+          if (structurePatterns.primary?.lowerLine) {
+            const lowerPatternSeries = chart.addLineSeries({
+              color: structurePatterns.primary.bias === "bearish" ? "#d64550" : "#0b8f5a",
+              lineWidth: 3,
+              lineStyle: LineStyle.Solid,
+              priceLineVisible: false,
+              lastValueVisible: false,
+              crosshairMarkerVisible: true,
+              priceFormat: { type:"price", precision, minMove },
+            });
+            lowerPatternSeries.setData([
+              { time: structurePatterns.primary.lowerLine.startTime, value: structurePatterns.primary.lowerLine.startValue },
+              { time: structurePatterns.primary.lowerLine.endTime, value: structurePatterns.primary.lowerLine.endValue },
+            ]);
+          }
+
+          candleSeries.setMarkers(
+            [
+              ...(candlestickPatterns.patterns || []).filter((pattern) => pattern.time).map((pattern) => ({
+                time: pattern.time,
+                position: pattern.bias === "bearish" ? "aboveBar" : "belowBar",
+                color: pattern.bias === "bullish" ? "#00875a" : pattern.bias === "bearish" ? "#c0182a" : "#b06a00",
+                shape: pattern.bias === "bearish" ? "arrowDown" : pattern.bias === "bullish" ? "arrowUp" : "circle",
+                text: pattern.title,
+              })),
+              ...(structurePatterns.primary && structurePatterns.primary.upperLine ? [{
+                time: structurePatterns.primary.upperLine.endTime,
+                position: structurePatterns.primary.bias === "bearish" ? "aboveBar" : "belowBar",
+                color: structurePatterns.primary.bias === "bullish" ? "#0b57d0" : "#b01222",
+                shape: "square",
+                text: `FORMATION ${structurePatterns.primary.title.toUpperCase()}`,
+              }] : []),
+              ...(structurePatterns.primary && structurePatterns.primary.lowerLine ? [{
+                time: structurePatterns.primary.lowerLine.endTime,
+                position: structurePatterns.primary.bias === "bearish" ? "aboveBar" : "belowBar",
+                color: structurePatterns.primary.bias === "bullish" ? "#0b8f5a" : "#d64550",
+                shape: "circle",
+                text: structurePatterns.primary.bias === "bullish" ? "UNTERKANTE" : "SUPPORT-LINIE",
+              }] : []),
+            ]
+          );
+
+          chart.timeScale().fitContent();
+
+          resizeObserver = new ResizeObserver((entries) => {
+            const entry = entries[0];
+            if (!entry || !chart) return;
+            chart.applyOptions({ width: Math.floor(entry.contentRect.width) });
+          });
+          resizeObserver.observe(chartRef.current);
+
+          setChartStatus("ready");
+        } catch (error) {
+          setChartStatus("library_error");
+        }
+      })
+      .catch(() => {
+        if (!active) return;
+        setChartStatus("data_error");
+      });
+
+    return () => {
+      active = false;
+      if (resizeObserver) resizeObserver.disconnect();
+      if (chart) chart.remove();
+    };
+  }, [coin, interval]);
+
+  return (
+    <div>
+      <div style={{ height:520, borderRadius:18, overflow:"hidden", border:"1px solid #d8def0", background:"#fff", position:"relative" }}>
+        <div ref={chartRef} style={{ height:"100%", width:"100%" }} />
+        {chartStatus !== "ready" && (
+          <div style={{ position:"absolute", inset:0, display:"flex", alignItems:"center", justifyContent:"center", padding:"24px", background:"linear-gradient(180deg,rgba(255,255,255,.92),rgba(248,250,255,.96))" }}>
+            <div style={{ maxWidth:420, textAlign:"center" }}>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"#9aa0bc", marginBottom:10 }}>Pro Chart</div>
+              <div style={{ fontFamily:"Georgia,serif", fontSize:26, fontWeight:700, color:"#1a1e2e", marginBottom:10 }}>{title}</div>
+              <div style={{ fontSize:12, color:"#5a6282", lineHeight:1.8, marginBottom:14 }}>
+                {chartStatus === "loading" && "Lade echte Binance-Candles, EMAs und Analyse-Level."}
+                {chartStatus === "data_error" && "Die Marktdaten konnten nicht geladen werden. Ohne Feed wird kein Fake-Chart angezeigt."}
+                {chartStatus === "library_error" && "Die Chart-Library oder Initialisierung ist fehlgeschlagen. Bitte Seite hart neu laden."}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+      <div style={{ marginTop:8, fontSize:10, color:"#9aa0bc", lineHeight:1.6 }}>
+        Professioneller Candlestick-Chart via Lightweight Charts mit Binance-OHLC, EMA20/50/200 sowie Stop-, Support-, Resistance- und TP-Linien. Quelle: {coin.symbol.replace("BINANCE:","")} auf Binance.
+      </div>
+      <div style={{ marginTop:10, display:"flex", gap:8, flexWrap:"wrap" }}>
+        <div style={{ padding:"6px 10px", borderRadius:999, background:"#eef4ff", border:"1px solid #c9dafc", fontSize:10, fontWeight:700, color:"#0b57d0" }}>Blaue Linie = obere Formationskante</div>
+        <div style={{ padding:"6px 10px", borderRadius:999, background:"#e9f7f1", border:"1px solid #bde4d3", fontSize:10, fontWeight:700, color:"#0b8f5a" }}>Gruene Linie = bullische Unterkante</div>
+        <div style={{ padding:"6px 10px", borderRadius:999, background:"#fff1f2", border:"1px solid #f0c7cd", fontSize:10, fontWeight:700, color:"#b01222" }}>Rote Linie = bearische Formationskante</div>
+      </div>
+    </div>
+  );
+}
+
+function ChartAnalysisReport({
+  card, mono, selectedChartCoin, chartCoinIndex, setChartCoinIndex, chartInterval, setChartInterval,
+  formattedChartHeaderPrice, selectedTradingSignalStyle, chartQuickFacts, chartMetaStats, chartChecklist,
+  formattedBuyZone, formattedStop, formattedTakeProfit, formattedSupportLevels, formattedResistanceLevels, chartScenario, setupMetrics,
+}) {
+  const intervalLabel = chartInterval === "60" ? "1H" : chartInterval === "240" ? "4H" : "1D";
+  const candlestickAnalysis = useCandlestickPatternAnalysis(selectedChartCoin.symbol, chartInterval);
+  const structureAnalysis = useStructurePatternAnalysis(selectedChartCoin.symbol, chartInterval);
+  const candlestickTone = candlestickAnalysis.bias === "bullish" ? getToneColors("bullish") : candlestickAnalysis.bias === "bearish" ? getToneColors("bearish") : getToneColors("neutral");
+  const structureTone = structureAnalysis.bias === "bullish" ? getToneColors("bullish") : structureAnalysis.bias === "bearish" ? getToneColors("bearish") : getToneColors("neutral");
+  const premiumReadout = buildPremiumChartReadout(selectedChartCoin, setupMetrics, {
+    buyZone: formattedBuyZone,
+    stop: formattedStop,
+    targets: formattedTakeProfit,
+    support: formattedSupportLevels,
+    resistance: formattedResistanceLevels,
+  });
+  return (
+    <div style={{ maxWidth:1180, margin:"0 auto" }}>
+      <div className="frost-card soft-hover" style={{ ...card, padding:"14px 18px", marginBottom:18, background:"linear-gradient(135deg,rgba(248,250,255,.96),rgba(255,248,243,.96))" }}>
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", gap:16, flexWrap:"wrap" }}>
+          <div style={{ minWidth:260, flex:1 }}>
+            <div style={{ ...mono, fontSize:9, color:"#9aa0bc", letterSpacing:2, textTransform:"uppercase", marginBottom:6 }}>Chart Analyse Report</div>
+            <div style={{ fontSize:13, color:"#5a6282", lineHeight:1.7 }}>Ein dominanter Hauptchart, kompakte Kennzahlen und klare Textsektionen statt Dashboard-Karten.</div>
+          </div>
+          <div style={{ display:"flex", gap:8, flexWrap:"wrap", justifyContent:"flex-end" }}>
+            {CHART_ANALYSES.map((item, index) => {
+              const active = index === chartCoinIndex;
+              return <button key={item.ticker} onClick={() => setChartCoinIndex(index)} className="tab-chip" style={{ padding:"9px 13px", borderRadius:999, border:"1.5px solid", borderColor: active ? item.color : "#dde3f1", background: active ? item.color : "#fff", color: active ? "#fff" : "#4f5878", fontSize:11, fontWeight:700, cursor:"pointer", fontFamily:"Outfit,sans-serif" }}>{item.ticker}</button>;
+            })}
+          </div>
+        </div>
+      </div>
+
+      <div className="frost-card soft-hover" style={{ ...card, padding:"26px 28px", background:"rgba(255,255,255,.92)" }}>
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:18, flexWrap:"wrap", marginBottom:18 }}>
+          <div style={{ flex:1, minWidth:280 }}>
+            <div style={{ ...mono, fontSize:10, color:selectedChartCoin.color, letterSpacing:2, textTransform:"uppercase", marginBottom:8 }}>Technischer Marktbericht</div>
+            <div style={{ display:"flex", alignItems:"baseline", gap:12, flexWrap:"wrap", marginBottom:8 }}>
+              <div style={{ fontFamily:"Georgia,serif", fontSize:34, fontWeight:900, color:"#1a1e2e" }}>{selectedChartCoin.pair}</div>
+              <div style={{ fontSize:18, fontWeight:800, color:"#1a1e2e" }}>{formattedChartHeaderPrice}</div>
+              <div style={{ fontSize:13, fontWeight:700, color:String(selectedChartCoin.change).startsWith("+") ? "#00875a" : "#c0182a" }}>{selectedChartCoin.change}</div>
+            </div>
+            <div style={{ fontSize:13, color:"#5a6282", lineHeight:1.8, maxWidth:760 }}>{selectedChartCoin.summary}</div>
+          </div>
+          <div style={{ minWidth:250, display:"grid", gap:8 }}>
+            {[["Analyse", getTradingSignalLabel(selectedChartCoin.score), selectedTradingSignalStyle.color], ["Signal", selectedChartCoin.signal, selectedTradingSignalStyle.color], ["Intervall", intervalLabel, "#1a1e2e"], ["Quelle", selectedChartCoin.symbol, "#5a6282"]].map(([label, value, color]) => (
+              <div key={label} style={{ display:"flex", justifyContent:"space-between", gap:14, borderBottom:"1px solid #edf0f7", paddingBottom:7 }}>
+                <div style={{ ...mono, fontSize:10, color:"#9aa0bc", letterSpacing:1 }}>{label}</div>
+                <div style={{ fontSize:12, fontWeight:700, color, textAlign:"right" }}>{value}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", gap:12, flexWrap:"wrap", marginBottom:14 }}>
+          <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
+            {chartQuickFacts.map((item) => <div key={item.label} style={{ padding:"7px 10px", borderRadius:999, background:"#f7f8fc", border:"1px solid #e2e6f0" }}><span style={{ ...mono, fontSize:10, color:"#9aa0bc", marginRight:6 }}>{item.label}</span><span style={{ fontSize:11, fontWeight:700, color:item.tone }}>{item.value}</span></div>)}
+          </div>
+          <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
+            {[["60","1H"],["240","4H"],["1D","1D"]].map(([value, label]) => <button key={value} onClick={() => setChartInterval(value)} className="tab-chip" style={{ padding:"8px 12px", borderRadius:999, border:"1.5px solid", borderColor: chartInterval===value ? "#1756c8" : "#dde3f1", background: chartInterval===value ? "#1756c8" : "#fff", color: chartInterval===value ? "#fff" : "#4f5878", fontSize:11, fontWeight:700, cursor:"pointer", fontFamily:"Outfit,sans-serif" }}>{label}</button>)}
+          </div>
+        </div>
+
+        <div style={{ marginBottom:18 }}><ProMarketChart coin={selectedChartCoin} interval={chartInterval} title={selectedChartCoin.pair} /></div>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(150px,1fr))", gap:10, marginBottom:22 }}>
+          {chartMetaStats.map((item) => <div key={item.label} style={{ background:"#fbfcff", border:"1px solid #e4e8f2", borderRadius:14, padding:"12px 13px" }}><div style={{ ...mono, fontSize:10, color:"#9aa0bc", letterSpacing:1, marginBottom:5 }}>{item.label}</div><div style={{ fontSize:18, fontWeight:800, color:"#1a1e2e" }}>{item.value}</div></div>)}
+        </div>
+
+        <div style={{ display:"grid", gridTemplateColumns:"minmax(0,1.12fr) minmax(290px,.62fr)", gap:18, alignItems:"start" }}>
+          <div style={{ display:"grid", gap:16 }}>
+            <div style={{ border:"1px solid #edf0f7", borderRadius:18, padding:"18px 18px 16px" }}>
+              <div style={{ ...mono, fontSize:10, color:"#9aa0bc", letterSpacing:2, textTransform:"uppercase", marginBottom:10 }}>Ebene 1 · Das grosse Bild</div>
+              <div style={{ fontSize:13, color:"#5a6282", lineHeight:1.9, marginBottom:14 }}>{premiumReadout.bigPicture}</div>
+            </div>
+
+            <div style={{ border:"1px solid #edf0f7", borderRadius:18, padding:"18px 18px 16px" }}>
+              <div style={{ ...mono, fontSize:10, color:"#9aa0bc", letterSpacing:2, textTransform:"uppercase", marginBottom:10 }}>Ebene 2 · Marktstruktur</div>
+              <div style={{ display:"grid", gap:9, marginBottom:14 }}>
+                {premiumReadout.marketStructure.map((item) => <div key={item} style={{ display:"flex", gap:10, alignItems:"flex-start" }}><div style={{ width:7, height:7, borderRadius:999, background:selectedChartCoin.color, marginTop:7, flexShrink:0 }} /><div style={{ fontSize:12, color:"#3d4563", lineHeight:1.8 }}>{item}</div></div>)}
+              </div>
+              <div style={{ fontSize:12, color:"#5a6282", lineHeight:1.8 }}>{selectedChartCoin.setup.rationale}</div>
+            </div>
+
+            <div style={{ border:"1px solid #edf0f7", borderRadius:18, padding:"18px 18px 16px" }}>
+              <div style={{ ...mono, fontSize:10, color:"#9aa0bc", letterSpacing:2, textTransform:"uppercase", marginBottom:10 }}>Ebene 3 · Key Levels</div>
+              <div style={{ display:"grid", gap:9 }}>
+                {premiumReadout.keyLevels.map((item) => <div key={item} style={{ display:"flex", gap:10, alignItems:"flex-start" }}><div style={{ width:7, height:7, borderRadius:999, background:selectedChartCoin.color, marginTop:7, flexShrink:0 }} /><div style={{ fontSize:12, color:"#3d4563", lineHeight:1.8 }}>{item}</div></div>)}
+              </div>
+            </div>
+
+            <div style={{ border:"1px solid #edf0f7", borderRadius:18, padding:"18px" }}>
+              <div style={{ ...mono, fontSize:10, color:"#9aa0bc", letterSpacing:2, textTransform:"uppercase", marginBottom:12 }}>Ebene 4 · Indikator-Check</div>
+              <div style={{ fontSize:12, color:"#5a6282", lineHeight:1.85, marginBottom:14 }}>{premiumReadout.indicatorSummary}</div>
+              <div style={{ display:"grid", gap:9 }}>
+                {chartChecklist.map((item) => <div key={item} style={{ display:"flex", gap:10, alignItems:"flex-start" }}><div style={{ width:7, height:7, borderRadius:999, background:"#1756c8", marginTop:7, flexShrink:0 }} /><div style={{ fontSize:12, color:"#3d4563", lineHeight:1.8 }}>{item}</div></div>)}
+              </div>
+            </div>
+
+            <div style={{ border:"1px solid #edf0f7", borderRadius:18, padding:"18px" }}>
+              <div style={{ ...mono, fontSize:10, color:"#9aa0bc", letterSpacing:2, textTransform:"uppercase", marginBottom:12 }}>Ebene 5 · Candlestick-Muster</div>
+              <div style={{ background:candlestickTone.bg, border:`1px solid ${candlestickTone.border}`, borderRadius:14, padding:"12px 13px", marginBottom:12 }}>
+                <div style={{ ...mono, fontSize:9, color:candlestickTone.color, letterSpacing:1, marginBottom:5 }}>{candlestickAnalysis.status === "ready" ? `Bias ${candlestickAnalysis.bias}` : "Pattern Scan"}</div>
+                <div style={{ fontSize:12, color:"#5a6282", lineHeight:1.8 }}>{candlestickAnalysis.summary}</div>
+              </div>
+              <div style={{ display:"grid", gap:8 }}>
+                {(candlestickAnalysis.patterns || []).map((pattern) => <div key={pattern.key} style={{ border:"1px solid #edf0f7", borderRadius:12, padding:"10px 11px", background:"#fbfcff" }}><div style={{ display:"flex", justifyContent:"space-between", gap:10, alignItems:"center", marginBottom:4 }}><div style={{ fontSize:12, fontWeight:700, color:"#1a1e2e" }}>{pattern.title}</div><div style={{ ...mono, fontSize:9, color:pattern.bias === "bullish" ? "#00875a" : pattern.bias === "bearish" ? "#c0182a" : "#b06a00", letterSpacing:1 }}>{pattern.bias}</div></div><div style={{ fontSize:11, color:"#5a6282", lineHeight:1.7 }}>{pattern.description}</div></div>)}
+              </div>
+            </div>
+
+            <div style={{ border:"1px solid #edf0f7", borderRadius:18, padding:"18px" }}>
+              <div style={{ ...mono, fontSize:10, color:"#9aa0bc", letterSpacing:2, textTransform:"uppercase", marginBottom:12 }}>Ebene 6 · Trading Setup</div>
+              <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(190px,1fr))", gap:10, marginBottom:12 }}>
+                {[["Buy Zone", formattedBuyZone, "#00875a", "#eaf7ef", "#bde2cb"], ["Stop Loss", formattedStop, "#c0182a", "#fff1f2", "#f2c8cf"], ["Take Profit", formattedTakeProfit.join(" / "), "#1756c8", "#f5f7fe", "#dbe2f6"]].map(([label, value, color, bg, border]) => <div key={label} style={{ background:bg, border:`1px solid ${border}`, borderRadius:14, padding:"12px 13px" }}><div style={{ ...mono, fontSize:9, color, letterSpacing:1, marginBottom:4 }}>{label}</div><div style={{ fontSize:label === "Take Profit" ? 15 : 16, fontWeight:800, color:label === "Take Profit" ? "#1a1e2e" : color }}>{value}</div></div>)}
+              </div>
+              <div style={{ display:"grid", gap:8, marginBottom:12 }}>
+                {premiumReadout.tradingPlan.map((item) => <div key={item} style={{ fontSize:12, color:"#3d4563", lineHeight:1.75 }}>{item}</div>)}
+              </div>
+              <div style={{ fontSize:12, color:"#5a6282", lineHeight:1.85 }}>Primaere Aktivierung ueber <strong style={{ color:"#1a1e2e" }}>{selectedChartCoin.setup.altEntry}</strong>. Erstes Ziel <strong style={{ color:"#1756c8" }}>{formattedTakeProfit[0]}</strong>, Stretch-Ziel <strong style={{ color:"#5b4fcf" }}>{formattedTakeProfit[1] || formattedTakeProfit[0]}</strong>.</div>
+            </div>
+
+            <div style={{ border:"1px solid #edf0f7", borderRadius:18, padding:"18px" }}>
+              <div style={{ ...mono, fontSize:10, color:"#9aa0bc", letterSpacing:2, textTransform:"uppercase", marginBottom:12 }}>Ebene 7 · Multi-Timeframe</div>
+              <div style={{ display:"grid", gap:10 }}>
+                {selectedChartCoin.timeframes.map((item) => {
+                  const tone = getToneColors(item.tone);
+                  return <div key={item.tf} style={{ display:"grid", gridTemplateColumns:"72px minmax(0,1fr)", gap:12, alignItems:"start", background:"#fbfcff", border:`1px solid ${tone.border}`, borderRadius:14, padding:"12px 13px" }}><div><div style={{ fontFamily:"Georgia,serif", fontSize:20, fontWeight:700, color:"#1a1e2e", marginBottom:4 }}>{item.tf}</div><div style={{ ...mono, fontSize:9, color:tone.color, letterSpacing:1 }}>{item.title}</div></div><div style={{ fontSize:12, color:"#5a6282", lineHeight:1.75 }}>{item.text}</div></div>;
+                })}
+              </div>
+            </div>
+          </div>
+
+          <div style={{ display:"grid", gap:16 }}>
+            <div style={{ border:"1px solid #edf0f7", borderRadius:18, padding:"18px", textAlign:"center" }}>
+              <div style={{ ...mono, fontSize:10, color:"#9aa0bc", letterSpacing:2, textTransform:"uppercase", marginBottom:10 }}>Premium Urteil</div>
+              <Gauge score={selectedChartCoin.score} color={selectedChartCoin.color} />
+              <div style={{ fontFamily:"Georgia,serif", fontSize:22, fontWeight:700, color:selectedTradingSignalStyle.color, margin:"8px 0 6px" }}>{selectedChartCoin.signal}</div>
+              <div style={{ fontSize:11, color:"#6b7391", lineHeight:1.7 }}>{premiumReadout.verdict}</div>
+              <div style={{ marginTop:10, padding:"9px 10px", borderRadius:12, background:candlestickTone.bg, border:`1px solid ${candlestickTone.border}`, fontSize:11, color:"#5a6282", lineHeight:1.7 }}>
+                Candlestick-Bias: <strong style={{ color:candlestickTone.color }}>{candlestickAnalysis.bias}</strong>. {candlestickAnalysis.summary}
+              </div>
+              <div style={{ marginTop:10, padding:"9px 10px", borderRadius:12, background:structureTone.bg, border:`1px solid ${structureTone.border}`, fontSize:11, color:"#5a6282", lineHeight:1.7 }}>
+                Formations-Bias: <strong style={{ color:structureTone.color }}>{structureAnalysis.bias}</strong>. {structureAnalysis.summary}
+              </div>
+            </div>
+
+            <div style={{ border:"1px solid #edf0f7", borderRadius:18, padding:"18px" }}>
+              <div style={{ ...mono, fontSize:10, color:"#9aa0bc", letterSpacing:2, textTransform:"uppercase", marginBottom:12 }}>Formationen</div>
+              <div style={{ background:structureTone.bg, border:`1px solid ${structureTone.border}`, borderRadius:14, padding:"12px 13px", marginBottom:12 }}>
+                <div style={{ ...mono, fontSize:9, color:structureTone.color, letterSpacing:1, marginBottom:5 }}>{structureAnalysis.primary ? structureAnalysis.primary.title : "Pattern Scan"}</div>
+                <div style={{ fontSize:12, color:"#5a6282", lineHeight:1.8 }}>{structureAnalysis.summary}</div>
+              </div>
+              <div style={{ display:"grid", gap:8 }}>
+                {(structureAnalysis.patterns || []).map((pattern) => <div key={pattern.key} style={{ border:"1px solid #edf0f7", borderRadius:12, padding:"10px 11px", background:"#fbfcff" }}><div style={{ display:"flex", justifyContent:"space-between", gap:10, alignItems:"center", marginBottom:4 }}><div style={{ fontSize:12, fontWeight:700, color:"#1a1e2e" }}>{pattern.title}</div><div style={{ ...mono, fontSize:9, color:pattern.bias === "bullish" ? "#00875a" : pattern.bias === "bearish" ? "#c0182a" : "#b06a00", letterSpacing:1 }}>{pattern.bias}</div></div><div style={{ fontSize:11, color:"#5a6282", lineHeight:1.7 }}>{pattern.description}</div></div>)}
+              </div>
+            </div>
+
+            <div style={{ border:"1px solid #edf0f7", borderRadius:18, padding:"18px" }}>
+              <div style={{ ...mono, fontSize:10, color:"#9aa0bc", letterSpacing:2, textTransform:"uppercase", marginBottom:12 }}>Schluessellevel</div>
+              <div style={{ marginBottom:12 }}>
+                <div style={{ fontSize:12, fontWeight:700, color:"#00875a", marginBottom:8 }}>Support</div>
+                <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>{formattedSupportLevels.map((level) => <div key={level} style={{ padding:"6px 10px", borderRadius:999, background:"#ecf8f0", border:"1px solid #b9e6d1", color:"#00875a", fontSize:11, fontWeight:700 }}>{level}</div>)}</div>
+              </div>
+              <div>
+                <div style={{ fontSize:12, fontWeight:700, color:"#c0182a", marginBottom:8 }}>Widerstand</div>
+                <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>{formattedResistanceLevels.map((level) => <div key={level} style={{ padding:"6px 10px", borderRadius:999, background:"#fff1f2", border:"1px solid #f2c7cd", color:"#c0182a", fontSize:11, fontWeight:700 }}>{level}</div>)}</div>
+              </div>
+            </div>
+
+            <div style={{ border:"1px solid #edf0f7", borderRadius:18, padding:"18px" }}>
+              <div style={{ ...mono, fontSize:10, color:"#9aa0bc", letterSpacing:2, textTransform:"uppercase", marginBottom:12 }}>Wahrscheinlichkeiten</div>
+              {[["Bullish", selectedChartCoin.probabilities.bull, "#00875a"], ["Neutral", selectedChartCoin.probabilities.neutral, "#b06a00"], ["Bearish", selectedChartCoin.probabilities.bear, "#c0182a"]].map(([label, value, color]) => <div key={label} style={{ marginBottom:11 }}><div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:5 }}><div style={{ fontSize:11, fontWeight:700, color:"#1a1e2e" }}>{label}</div><div style={{ ...mono, fontSize:11, color }}>{value}%</div></div><div style={{ height:8, background:"#e8ecf5", borderRadius:999, overflow:"hidden" }}><div style={{ width:`${value}%`, height:"100%", background:color, borderRadius:999 }} /></div></div>)}
+            </div>
+
+            <div style={{ border:"1px solid #edf0f7", borderRadius:18, padding:"18px" }}>
+              <div style={{ ...mono, fontSize:10, color:"#9aa0bc", letterSpacing:2, textTransform:"uppercase", marginBottom:12 }}>Indikatoren & Szenarien</div>
+              <div style={{ display:"grid", gap:10, marginBottom:12 }}>
+                {selectedChartCoin.indicators.map((indicator) => <div key={indicator.label} style={{ display:"flex", justifyContent:"space-between", gap:12, alignItems:"center" }}><div><div style={{ fontSize:12, fontWeight:700, color:"#1a1e2e" }}>{indicator.label}</div><div style={{ fontSize:10, color:"#9aa0bc", marginTop:2 }}>{indicator.note}</div></div><div style={{ ...mono, fontSize:14, fontWeight:700, color:selectedChartCoin.color }}>{indicator.value}</div></div>)}
+              </div>
+              <div style={{ display:"grid", gap:8 }}>
+                {[["Bullish", chartScenario.bullish, "#00875a", "#ecf8f0", "#b9e6d1"], ["Neutral", chartScenario.neutral, "#b06a00", "#fff8e6", "#f1ddb0"], ["Bearish", chartScenario.bearish, "#c0182a", "#fff1f2", "#f2c7cd"]].map(([label, text, color, bg, border]) => <div key={label} style={{ background:bg, border:`1px solid ${border}`, borderRadius:14, padding:"11px 12px" }}><div style={{ ...mono, fontSize:9, color, letterSpacing:1, marginBottom:4 }}>{label}</div><div style={{ fontSize:11, color:"#5a6282", lineHeight:1.75 }}>{text}</div></div>)}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="frost-card soft-hover" style={{ ...card, marginTop:18, padding:"18px 20px" }}>
+        <div style={{ ...mono, fontSize:10, color:"#9aa0bc", letterSpacing:2, textTransform:"uppercase", marginBottom:10 }}>Referenzansicht TradingView</div>
+        <div style={{ fontSize:12, color:"#5a6282", lineHeight:1.7, marginBottom:12 }}>Die Referenz bleibt sichtbar, damit du den Pro-Chart direkt gegen den externen Marktfeed vergleichen kannst.</div>
+        <TradingViewAdvancedChart symbol={selectedChartCoin.symbol} interval={chartInterval} title={selectedChartCoin.pair} />
+      </div>
+    </div>
+  );
+}
+
+function mapChartIntervalToKlineInterval(interval) {
+  const map = { "60":"1h", "240":"4h", "1D":"1d" };
+  return map[interval] || "4h";
+}
+
+function calculateEMA(values, period) {
+  if (!values.length) return null;
+  const multiplier = 2 / (period + 1);
+  let ema = values[0];
+  for (let i = 1; i < values.length; i += 1) {
+    ema = ((values[i] - ema) * multiplier) + ema;
+  }
+  return ema;
+}
+
+function getChartPrecision(coin) {
+  if (coin.ticker === "IOTA") return 4;
+  if (coin.overlay?.current < 1) return 4;
+  if (coin.overlay?.current < 10) return 3;
+  return 2;
+}
+
+function formatChartNumber(value, coin) {
+  const precision = getChartPrecision(coin);
+  return Number(value).toFixed(precision);
+}
+
+function formatChartLevel(value, coin) {
+  if (value === null || value === undefined) return "";
+  const parsed = typeof value === "string" ? Number(value.replace(",", ".")) : Number(value);
+  if (!Number.isFinite(parsed)) return String(value);
+  return formatChartNumber(parsed, coin);
+}
+
+function formatChartRange(values, coin) {
+  if (!Array.isArray(values) || values.length < 2) return "";
+  return `${formatChartLevel(values[0], coin)} - ${formatChartLevel(values[1], coin)}`;
+}
+
+function AnalysisOverlayChart({ coin, interval }) {
+  const overlay = coin.overlay;
+  if (!overlay) return null;
+  const mono = { fontFamily:"'DM Mono',monospace" };
+  const [marketCandles, setMarketCandles] = useState([]);
+  const [candleStatus, setCandleStatus] = useState("loading");
+
+  const chartHeight = 330;
+  const chartWidth = 760;
+  const padLeft = 78;
+  const padRight = 26;
+  const padTop = 24;
+  const padBottom = 34;
+  const innerWidth = chartWidth - padLeft - padRight;
+  const innerHeight = chartHeight - padTop - padBottom;
+
+  useEffect(() => {
+    const symbol = coin.symbol.replace("BINANCE:", "");
+    const klineInterval = mapChartIntervalToKlineInterval(interval);
+    let active = true;
+
+    setCandleStatus("loading");
+
+    fetch(`https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${klineInterval}&limit=220`)
+      .then((response) => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.json();
+      })
+      .then((rows) => {
+        if (!active) return;
+        const parsed = rows.map((row) => ({
+          openTime: row[0],
+          open: Number(row[1]),
+          high: Number(row[2]),
+          low: Number(row[3]),
+          close: Number(row[4]),
+        })).filter((row) => [row.open, row.high, row.low, row.close].every(Number.isFinite));
+
+        if (!parsed.length) throw new Error("No candle data");
+        setMarketCandles(parsed);
+        setCandleStatus("ready");
+      })
+      .catch(() => {
+        if (!active) return;
+        setMarketCandles([]);
+        setCandleStatus("error");
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [coin.symbol, interval]);
+
+  const closeSeries = marketCandles.map((candle) => candle.close);
+  const visibleCandles = marketCandles.slice(-28);
+  const ema20Value = calculateEMA(closeSeries.slice(-60), 20) ?? overlay.ema20;
+  const ema50Value = calculateEMA(closeSeries.slice(-120), 50) ?? overlay.ema50;
+  const ema200Value = calculateEMA(closeSeries, 200) ?? overlay.ema200;
+  const seriesHigh = visibleCandles.length ? Math.max(...visibleCandles.map((candle) => candle.high), ...overlay.targets, ...overlay.resistance) : overlay.max;
+  const seriesLow = visibleCandles.length ? Math.min(...visibleCandles.map((candle) => candle.low), ...overlay.support, overlay.stop) : overlay.min;
+  const displayMax = seriesHigh;
+  const displayMin = seriesLow;
+
+  const toY = (value) => {
+    const range = displayMax - displayMin || 1;
+    const ratio = (value - displayMin) / range;
+    return padTop + (innerHeight - (ratio * innerHeight));
+  };
+
+  const supportYs = overlay.support.map(toY);
+  const resistanceYs = overlay.resistance.map(toY);
+  const buyTopY = toY(overlay.buyZone[1]);
+  const buyBottomY = toY(overlay.buyZone[0]);
+  const stopY = toY(overlay.stop);
+  const lastClose = visibleCandles.length ? visibleCandles[visibleCandles.length - 1].close : overlay.current;
+  const currentY = toY(lastClose);
+  const ema20Y = toY(ema20Value);
+  const ema50Y = toY(ema50Value);
+  const ema200Y = toY(ema200Value);
+  const candleGap = visibleCandles.length ? innerWidth / visibleCandles.length : innerWidth / 28;
+  const candleWidth = Math.max(4, Math.min(12, candleGap * 0.62));
+  const candleSeries = visibleCandles.map((candle, index) => ({
+    ...candle,
+    x: padLeft + (candleGap * index) + candleGap / 2,
+  }));
+
+  const trendLine = `M ${padLeft + innerWidth * 0.05} ${toY(displayMin + (displayMax - displayMin) * 0.18)}
+    L ${padLeft + innerWidth * 0.95} ${toY(displayMin + (displayMax - displayMin) * 0.48)}`;
+
+  const channelLine = `M ${padLeft + innerWidth * 0.08} ${toY(displayMin + (displayMax - displayMin) * 0.38)}
+    L ${padLeft + innerWidth * 0.98} ${toY(displayMin + (displayMax - displayMin) * 0.68)}`;
+
+  const formatValue = (value) => formatChartNumber(value, coin);
+
+  return (
+    <div className="frost-card soft-hover" style={{ marginTop:16, borderRadius:20, padding:"18px 18px 16px", background:"rgba(255,255,255,.86)", border:"1.5px solid rgba(210,217,232,.92)", boxShadow:"0 18px 40px rgba(33,44,82,.08)" }}>
+      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", gap:12, marginBottom:12, flexWrap:"wrap" }}>
+        <div>
+          <div style={{ ...mono, fontSize:9, color:"#9aa0bc", letterSpacing:2, textTransform:"uppercase", marginBottom:5 }}>Custom Analysis Overlay</div>
+          <div style={{ fontFamily:"Georgia,serif", fontSize:21, fontWeight:700, color:"#1a1e2e" }}>{coin.pair} Analyse-Chart</div>
+        </div>
+        <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
+          <div style={{ padding:"5px 10px", borderRadius:999, background:"#f7f8fc", color:"#1a1e2e", fontSize:10, fontWeight:700 }}>{mapChartIntervalToKlineInterval(interval).toUpperCase()} Candles</div>
+          <div style={{ padding:"5px 10px", borderRadius:999, background:"#e6f7f0", color:"#00875a", fontSize:10, fontWeight:700 }}>EMA 20</div>
+          <div style={{ padding:"5px 10px", borderRadius:999, background:"#eef3ff", color:"#1756c8", fontSize:10, fontWeight:700 }}>EMA 50</div>
+          <div style={{ padding:"5px 10px", borderRadius:999, background:"#f7f0ff", color:"#5b4fcf", fontSize:10, fontWeight:700 }}>EMA 200</div>
+          <div style={{ padding:"5px 10px", borderRadius:999, background:"#fff8e6", color:"#b06a00", fontSize:10, fontWeight:700 }}>{overlay.formation}</div>
+        </div>
+      </div>
+
+      <div style={{ background:"linear-gradient(180deg,#ffffff,#f8faff)", border:"1px solid #d8def0", borderRadius:18, padding:14 }}>
+        <svg viewBox={`0 0 ${chartWidth} ${chartHeight}`} width="100%" height="330" style={{ display:"block" }}>
+          <defs>
+            <linearGradient id="analysisPriceStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#1756c8" stopOpacity=".55" />
+              <stop offset="60%" stopColor={coin.color} stopOpacity=".95" />
+              <stop offset="100%" stopColor="#5b4fcf" stopOpacity=".9" />
+            </linearGradient>
+          </defs>
+
+          {[0,1,2,3,4].map((i) => {
+            const y = padTop + (innerHeight / 4) * i;
+            return <line key={i} x1={padLeft} y1={y} x2={chartWidth - padRight} y2={y} stroke="#ecf0f8" strokeWidth="1" />;
+          })}
+
+          {[0,1,2,3,4,5].map((i) => {
+            const x = padLeft + (innerWidth / 5) * i;
+            return <line key={i} x1={x} y1={padTop} x2={x} y2={chartHeight - padBottom} stroke="#f3f6fb" strokeWidth="1" />;
+          })}
+
+          <rect
+            x={padLeft + innerWidth * 0.12}
+            y={buyTopY}
+            width={innerWidth * 0.42}
+            height={Math.max(16, buyBottomY - buyTopY)}
+            fill="#80d4b033"
+            stroke="#80d4b0"
+            strokeDasharray="6 5"
+            rx="12"
+          />
+
+          <line x1={padLeft} y1={stopY} x2={chartWidth - padRight} y2={stopY} stroke="#c0182a" strokeWidth="2" strokeDasharray="8 5" />
+
+          {supportYs.map((y, index) => (
+            <line key={`support-${index}`} x1={padLeft} y1={y} x2={chartWidth - padRight} y2={y} stroke="#00875a" strokeWidth={index === 0 ? 2.4 : 1.4} strokeDasharray={index === 0 ? "0" : "5 5"} opacity={index === 0 ? 0.95 : 0.62} />
+          ))}
+
+          {resistanceYs.map((y, index) => (
+            <line key={`res-${index}`} x1={padLeft} y1={y} x2={chartWidth - padRight} y2={y} stroke="#c0182a" strokeWidth={index === 0 ? 2.4 : 1.4} strokeDasharray={index === 0 ? "0" : "5 5"} opacity={index === 0 ? 0.95 : 0.62} />
+          ))}
+
+          <path d={trendLine} fill="none" stroke="#1756c8" strokeWidth="2.2" opacity="0.7" />
+          <path d={channelLine} fill="none" stroke="#5b4fcf" strokeWidth="1.6" strokeDasharray="7 5" opacity="0.55" />
+
+          {candleStatus === "loading" && (
+            <text x={padLeft + 8} y={padTop + 16} fill="#9aa0bc" fontSize="11" fontFamily="'DM Mono', monospace">Lade echte Candles...</text>
+          )}
+          {candleStatus === "error" && (
+            <text x={padLeft + 8} y={padTop + 16} fill="#c0182a" fontSize="11" fontFamily="'DM Mono', monospace">Kline-Feed nicht erreichbar</text>
+          )}
+
+          {candleSeries.map((candle, index) => {
+            const bullish = candle.close >= candle.open;
+            const openY = toY(candle.open);
+            const closeY = toY(candle.close);
+            const highY = toY(candle.high);
+            const lowY = toY(candle.low);
+            const bodyTop = Math.min(openY, closeY);
+            const bodyHeight = Math.max(4, Math.abs(closeY - openY));
+            const candleColor = bullish ? "#0d8c61" : "#c0182a";
+
+            return (
+              <g key={`candle-${index}`} opacity="0.98">
+                <line x1={candle.x} y1={highY} x2={candle.x} y2={lowY} stroke={candleColor} strokeWidth="1.4" strokeLinecap="round" />
+                <rect
+                  x={candle.x - candleWidth / 2}
+                  y={bodyTop}
+                  width={candleWidth}
+                  height={bodyHeight}
+                  rx="2"
+                  fill={bullish ? "#dff6ec" : "#ffe7eb"}
+                  stroke={candleColor}
+                  strokeWidth="1.2"
+                />
+              </g>
+            );
+          })}
+
+          <path d={`M ${padLeft} ${ema20Y} L ${chartWidth - padRight} ${ema20Y - 8}`} fill="none" stroke="#00875a" strokeWidth="1.8" opacity="0.65" />
+          <path d={`M ${padLeft} ${ema50Y + 4} L ${chartWidth - padRight} ${ema50Y - 4}`} fill="none" stroke="#1756c8" strokeWidth="1.8" opacity="0.6" />
+          <path d={`M ${padLeft} ${ema200Y + 8} L ${chartWidth - padRight} ${ema200Y + 2}`} fill="none" stroke="#5b4fcf" strokeWidth="1.8" opacity="0.58" />
+          <circle cx={chartWidth - padRight - 12} cy={currentY - 10} r="6" fill={coin.color} />
+
+          {[
+            { label:`Aktuell ${formatValue(lastClose)}`, y:currentY - 10, color:coin.color, x:chartWidth - padRight - 115 },
+            { label:`Buy ${formatChartRange(overlay.buyZone, coin)}`, y:buyTopY - 8, color:"#00875a", x:padLeft + 18 },
+            { label:`Stop ${formatChartLevel(overlay.stop, coin)}`, y:stopY - 8, color:"#c0182a", x:chartWidth - padRight - 88 },
+            { label:`EMA20 ${formatValue(ema20Value)}`, y:ema20Y - 8, color:"#00875a", x:padLeft + 18 },
+          ].map((tag) => (
+            <g key={tag.label}>
+              <rect x={tag.x} y={tag.y - 14} width={Math.max(82, tag.label.length * 5.4)} height="22" rx="11" fill="#ffffff" stroke={tag.color} strokeWidth="1.2" />
+              <text x={tag.x + 10} y={tag.y} fill={tag.color} fontSize="11" fontWeight="700" fontFamily="'DM Mono', monospace">{tag.label}</text>
+            </g>
+          ))}
+
+          {overlay.targets.map((target, index) => {
+            const y = toY(target);
+            return (
+              <g key={`tp-${target}`}>
+                <rect x={chartWidth - padRight - 92} y={y - 11} width="72" height="22" rx="11" fill="#ffffff" stroke="#1756c8" strokeWidth="1.1" />
+                <text x={chartWidth - padRight - 82} y={y + 4} fill="#1756c8" fontSize="11" fontWeight="700" fontFamily="'DM Mono', monospace">{`TP${index + 1} ${formatChartLevel(target, coin)}`}</text>
+              </g>
+            );
+          })}
+
+          <text x={padLeft - 56} y={padTop + 8} fill="#9aa0bc" fontSize="11" fontFamily="'DM Mono', monospace">{formatValue(displayMax)}</text>
+          <text x={padLeft - 56} y={chartHeight - padBottom + 4} fill="#9aa0bc" fontSize="11" fontFamily="'DM Mono', monospace">{formatValue(displayMin)}</text>
+          <text x={padLeft} y={chartHeight - 10} fill="#9aa0bc" fontSize="11" fontFamily="'DM Mono', monospace">Setup-Zone</text>
+          <text x={padLeft + innerWidth * 0.45} y={chartHeight - 10} fill="#9aa0bc" fontSize="11" fontFamily="'DM Mono', monospace">{overlay.formation}</text>
+        </svg>
+      </div>
+
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))", gap:10, marginTop:12 }}>
+        <div style={{ background:"#fff", border:"1px solid #e2e6f0", borderRadius:12, padding:"10px 11px" }}>
+          <div style={{ ...mono, fontSize:9, color:"#9aa0bc", letterSpacing:1, marginBottom:4 }}>FORMATION</div>
+          <div style={{ fontSize:12, fontWeight:700, color:"#1a1e2e" }}>{overlay.formation}</div>
+        </div>
+        <div style={{ background:"#fff", border:"1px solid #e2e6f0", borderRadius:12, padding:"10px 11px" }}>
+          <div style={{ ...mono, fontSize:9, color:"#9aa0bc", letterSpacing:1, marginBottom:4 }}>EMA CLUSTER</div>
+          <div style={{ fontSize:12, fontWeight:700, color:"#1a1e2e" }}>20 {formatValue(ema20Value)} · 50 {formatValue(ema50Value)} · 200 {formatValue(ema200Value)}</div>
+        </div>
+        <div style={{ background:"#fff", border:"1px solid #e2e6f0", borderRadius:12, padding:"10px 11px" }}>
+          <div style={{ ...mono, fontSize:9, color:"#9aa0bc", letterSpacing:1, marginBottom:4 }}>DATENQUELLE</div>
+          <div style={{ fontSize:12, fontWeight:700, color:"#1a1e2e" }}>{candleStatus === "ready" ? `Binance OHLC ${mapChartIntervalToKlineInterval(interval)}` : overlay.note}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [openCoins, setOpenCoins] = useState([]);
   const [openCoinSubScores, setOpenCoinSubScores] = useState({});
@@ -881,8 +2604,10 @@ function App() {
   const [openWeight, setOpenWeight] = useState(null);     // expandable weight items
   const [openBreakdown, setOpenBreakdown] = useState(null); // expandable breakdown bars
   const [openChanceRiskDetails, setOpenChanceRiskDetails] = useState(false);
-  const [tab, setTab] = useState("coins"); // "coins" | "market"
+  const [tab, setTab] = useState("coins"); // "coins" | "chart" | "market"
   const [coinGridColumns, setCoinGridColumns] = useState(1);
+  const [chartCoinIndex, setChartCoinIndex] = useState(0);
+  const [chartInterval, setChartInterval] = useState("240");
   const coinGridRef = useRef(null);
 
   const mono  = { fontFamily:"'DM Mono',monospace" };
@@ -896,6 +2621,38 @@ function App() {
   const sigBg = {AKKUMULIEREN:"#e6f7f0",KAUFEN:"#f0f7e6",HALTEN:"#fff8e6",BEOBACHTEN:"#f7f8fc"};
 
   const col = vCol[MARKET_VERDICT] || "#888";
+  const selectedChartCoin = CHART_ANALYSES[chartCoinIndex] || CHART_ANALYSES[0];
+  const selectedTradingSignalStyle = getTradingSignalStyle(selectedChartCoin?.signal || "BEOBACHTEN");
+  const topChartSetups = [...CHART_ANALYSES].sort((a,b) => b.score - a.score).slice(0, 5);
+  const setupMetrics = getSetupMetrics(selectedChartCoin);
+  const chartScenario = buildChartScenario(selectedChartCoin);
+  const formatSelectedChartValue = (value) => formatChartLevel(value, selectedChartCoin);
+  const formattedBuyZone = formatChartRange(selectedChartCoin.overlay?.buyZone || [], selectedChartCoin) || selectedChartCoin.setup.buyZone;
+  const formattedTakeProfit = (selectedChartCoin.setup.takeProfit || []).map((target) => formatSelectedChartValue(target));
+  const formattedSupportLevels = (selectedChartCoin.levels.support || []).map((level) => formatSelectedChartValue(level));
+  const formattedResistanceLevels = (selectedChartCoin.levels.resistance || []).map((level) => formatSelectedChartValue(level));
+  const formattedChartHeaderPrice = Number.isFinite(parseLevelValue(selectedChartCoin.overlay?.current))
+    ? `$${formatSelectedChartValue(selectedChartCoin.overlay.current)}`
+    : selectedChartCoin.price;
+  const formattedStop = formatSelectedChartValue(selectedChartCoin.setup.stop);
+  const chartQuickFacts = [
+    { label:"Trend", value:selectedChartCoin.trend, tone:selectedTradingSignalStyle.color },
+    { label:"Phase", value:selectedChartCoin.phase, tone:"#1a1e2e" },
+    { label:"Risiko", value:selectedChartCoin.risk, tone:"#b06a00" },
+    { label:"Signal", value:selectedChartCoin.signal, tone:selectedTradingSignalStyle.color },
+  ];
+  const chartMetaStats = [
+    { label:"Entry", value:Number.isFinite(setupMetrics.entry) ? formatSelectedChartValue(setupMetrics.entry) : formattedBuyZone },
+    { label:"Stop", value:formattedStop },
+    { label:"TP1", value:formattedTakeProfit[0] || "-" },
+    { label:"CRV", value:selectedChartCoin.setup.crv },
+  ];
+  const chartChecklist = [
+    `Buy-Zone ${formattedBuyZone} bleibt der bevorzugte Reaktionsbereich.`,
+    `Trigger-Entry erst bei Break ueber ${selectedChartCoin.setup.altEntry.replace("Breakout ueber ","")}.`,
+    `Unter ${formattedStop} ist das aktuelle Setup technisch invalidiert.`,
+    `Hoeheres Zielband bleibt ${formattedTakeProfit.join(" / ")} bei stabiler Struktur.`,
+  ];
   
   useEffect(() => {
     const updateCoinGridColumns = () => {
@@ -1009,7 +2766,7 @@ function App() {
 
         {/* TAB NAV */}
         <div className="fade-up" style={{ display:"flex", gap:10, marginBottom:18, animationDelay:".08s" }}>
-          {[["coins","🏆 Coin Analyse"],["market","📊 Markt Signal"]].map(([key,label])=>(
+          {[["market","📊 Markt Signal"],["coins","🏆 Coin Analyse"],["chart","📈 Chart Analyse"]].map(([key,label])=>(
             <button key={key} className="tab-chip" onClick={()=>setTab(key)} style={{
               padding:"11px 22px", borderRadius:999, border:"1.5px solid",
               borderColor: tab===key?"#1756c8":"#e2e6f0",
@@ -1197,6 +2954,9 @@ function App() {
                             <div style={{ ...mono, fontSize:9, letterSpacing:1, textTransform:"uppercase", color:c.color, marginBottom:4 }}>Gesamtscore</div>
                             <div style={{ fontFamily:"Georgia,serif", fontSize:28, fontWeight:900, color:sCol(c.score) }}>{c.score}</div>
                             <div style={{ ...mono, fontSize:9, color:sigCol[c.signal]||"#888", letterSpacing:1, marginTop:2 }}>{c.signal}</div>
+                            <div style={{ fontSize:10, color:"#5a6282", lineHeight:1.55, marginTop:6 }}>
+                              Investment-Score: bewertet Coin-Qualitaet, Fundamentaldaten, Katalysatoren und Marktumfeld.
+                            </div>
                           </div>
                           <div style={{ flex:1, background:"#f7f8fc", borderRadius:8, padding:"10px 12px", display:"flex", flexDirection:"column", justifyContent:"center" }}>
                             <div style={{ ...mono, fontSize:9, letterSpacing:1, textTransform:"uppercase", color:"#9aa0bc", marginBottom:6 }}>Katalysator</div>
@@ -1213,6 +2973,337 @@ function App() {
                 );
               })}
             </div>
+          </div>
+        )}
+
+        {/* —— CHART ANALYSE TAB ——————————————————————————————————————— */}
+        {tab === "chart" && selectedChartCoin && (
+          <div className="fade-up" style={{ animationDelay:".12s" }}>
+            <ChartAnalysisReport
+              card={card}
+              mono={mono}
+              selectedChartCoin={selectedChartCoin}
+              chartCoinIndex={chartCoinIndex}
+              setChartCoinIndex={setChartCoinIndex}
+              chartInterval={chartInterval}
+              setChartInterval={setChartInterval}
+              formattedChartHeaderPrice={formattedChartHeaderPrice}
+              selectedTradingSignalStyle={selectedTradingSignalStyle}
+              chartQuickFacts={chartQuickFacts}
+              chartMetaStats={chartMetaStats}
+              chartChecklist={chartChecklist}
+              formattedBuyZone={formattedBuyZone}
+              formattedStop={formattedStop}
+              formattedTakeProfit={formattedTakeProfit}
+              formattedSupportLevels={formattedSupportLevels}
+              formattedResistanceLevels={formattedResistanceLevels}
+              chartScenario={chartScenario}
+              setupMetrics={setupMetrics}
+            />
+            {false && (
+              <>
+            <div className="frost-card soft-hover" style={{ ...card, padding:"16px 20px", background:"linear-gradient(135deg,rgba(238,243,255,.96),rgba(247,240,255,.96))", border:"1.5px solid #c0b0f0", marginBottom:16 }}>
+              <div style={{ display:"flex", alignItems:"flex-start", gap:12, flexWrap:"wrap" }}>
+                <div style={{ flex:1, minWidth:280 }}>
+                  <div style={{ ...mono, fontSize:9, color:"#5b4fcf", letterSpacing:2, textTransform:"uppercase", marginBottom:6 }}>Technische Version 2</div>
+                  <div style={{ fontSize:13, color:"#5a6282", lineHeight:1.7 }}>
+                    Der Tab ist jetzt staerker chartzentriert gedacht: TradingView im Fokus, kompakte Signalboxen, schnelle Trigger und dieselbe visuelle Sprache wie deine bestehende Seite.
+                  </div>
+                </div>
+                <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
+                  {topChartSetups.map((item) => {
+                    const itemStyle = getTradingSignalStyle(item.signal);
+                    return (
+                      <div key={item.ticker} style={{ minWidth:92, background:"#fff", border:"1px solid #e2e6f0", borderRadius:12, padding:"9px 11px" }}>
+                        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", gap:8, marginBottom:4 }}>
+                          <div style={{ fontSize:11, fontWeight:700, color:"#1a1e2e" }}>{item.ticker}</div>
+                          <div style={{ ...mono, fontSize:11, color:itemStyle.color }}>{item.score}</div>
+                        </div>
+                        <div style={{ fontSize:9, color:itemStyle.color, lineHeight:1.5 }}>{item.signal}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <div className="main-grid" style={{ display:"grid", gridTemplateColumns:"minmax(0,1.12fr) minmax(330px,0.48fr)", gap:18, alignItems:"start" }}>
+              <div>
+                <div className="frost-card soft-hover" style={{ ...card, marginBottom:16 }}>
+                  <div style={{ ...mono, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"#9aa0bc", marginBottom:12 }}>Coin Auswahl</div>
+                  <div style={{ display:"flex", gap:10, flexWrap:"wrap" }}>
+                    {CHART_ANALYSES.map((item, index) => {
+                      const active = index === chartCoinIndex;
+                      return (
+                        <button
+                          key={item.ticker}
+                          onClick={() => setChartCoinIndex(index)}
+                          className="tab-chip"
+                          style={{
+                            padding:"10px 14px",
+                            borderRadius:999,
+                            border:"1.5px solid",
+                            borderColor: active ? item.color : "#e2e6f0",
+                            background: active ? `linear-gradient(135deg, ${item.color}, #5b4fcf)` : "rgba(255,255,255,.76)",
+                            color: active ? "#fff" : "#5a6282",
+                            fontSize:12,
+                            fontWeight:700,
+                            cursor:"pointer",
+                            fontFamily:"Outfit,sans-serif",
+                            boxShadow: active ? `0 14px 28px ${item.color}22` : "0 10px 24px rgba(33,44,82,.06)",
+                          }}
+                        >
+                          {item.ticker}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="frost-card soft-hover" style={{ ...card, marginBottom:16 }}>
+                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:12, flexWrap:"wrap", marginBottom:14 }}>
+                    <div>
+                      <div style={{ ...mono, fontSize:9, letterSpacing:2, textTransform:"uppercase", color:selectedChartCoin.color, marginBottom:6 }}>TradingView Chart</div>
+                      <div style={{ display:"flex", alignItems:"baseline", gap:10, flexWrap:"wrap" }}>
+                        <div style={{ fontFamily:"Georgia,serif", fontSize:28, fontWeight:900, color:"#1a1e2e" }}>{selectedChartCoin.pair}</div>
+                        <div style={{ fontSize:14, fontWeight:700, color:"#1a1e2e" }}>{formattedChartHeaderPrice}</div>
+                        <div style={{ fontSize:12, color:String(selectedChartCoin.change).startsWith("+") ? "#00875a" : "#c0182a" }}>{selectedChartCoin.change}</div>
+                      </div>
+                      <div style={{ fontSize:11, color:"#5a6282", lineHeight:1.6, marginTop:4 }}>{selectedChartCoin.summary}</div>
+                    </div>
+                    <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
+                      {[["60","1H"],["240","4H"],["1D","1D"]].map(([value, label]) => (
+                        <button
+                          key={value}
+                          onClick={() => setChartInterval(value)}
+                          className="tab-chip"
+                          style={{
+                            padding:"9px 12px",
+                            borderRadius:999,
+                            border:"1.5px solid",
+                            borderColor: chartInterval===value ? "#1756c8" : "#e2e6f0",
+                            background: chartInterval===value ? "linear-gradient(135deg,#1756c8,#5b4fcf)" : "#fff",
+                            color: chartInterval===value ? "#fff" : "#5a6282",
+                            fontSize:11,
+                            fontWeight:700,
+                            cursor:"pointer",
+                            fontFamily:"Outfit,sans-serif",
+                          }}
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(150px,1fr))", gap:8, marginBottom:14 }}>
+                    <div style={{ background:"#fff", border:"1px solid #e2e6f0", borderRadius:12, padding:"10px 11px" }}>
+                      <div style={{ ...mono, fontSize:9, color:"#9aa0bc", letterSpacing:1, marginBottom:3 }}>TREND</div>
+                      <div style={{ fontSize:13, fontWeight:700, color:selectedTradingSignalStyle.color }}>{selectedChartCoin.trend}</div>
+                    </div>
+                    <div style={{ background:"#fff", border:"1px solid #e2e6f0", borderRadius:12, padding:"10px 11px" }}>
+                      <div style={{ ...mono, fontSize:9, color:"#9aa0bc", letterSpacing:1, marginBottom:3 }}>PHASE</div>
+                      <div style={{ fontSize:13, fontWeight:700, color:"#1a1e2e" }}>{selectedChartCoin.phase}</div>
+                    </div>
+                    <div style={{ background:"#fff", border:"1px solid #e2e6f0", borderRadius:12, padding:"10px 11px" }}>
+                      <div style={{ ...mono, fontSize:9, color:"#9aa0bc", letterSpacing:1, marginBottom:3 }}>RISIKO</div>
+                      <div style={{ fontSize:13, fontWeight:700, color:"#b06a00" }}>{selectedChartCoin.risk}</div>
+                    </div>
+                    <div style={{ background:"#fff", border:"1px solid #e2e6f0", borderRadius:12, padding:"10px 11px" }}>
+                      <div style={{ ...mono, fontSize:9, color:"#9aa0bc", letterSpacing:1, marginBottom:3 }}>SIGNAL</div>
+                      <div style={{ fontSize:13, fontWeight:700, color:selectedTradingSignalStyle.color }}>{selectedChartCoin.signal}</div>
+                    </div>
+                  </div>
+                  <TradingViewAdvancedChart symbol={selectedChartCoin.symbol} interval={chartInterval} title={selectedChartCoin.pair} />
+                  <div style={{ marginTop:16 }}>
+                    <ProMarketChart coin={selectedChartCoin} interval={chartInterval} title={selectedChartCoin.pair} />
+                  </div>
+                </div>
+
+                <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))", gap:16, marginBottom:16 }}>
+                  <div className="frost-card soft-hover" style={{ ...card, marginBottom:0 }}>
+                    <div style={{ ...mono, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"#9aa0bc", marginBottom:12 }}>Multi-Timeframe Analyse</div>
+                    <div style={{ display:"grid", gap:10 }}>
+                    {selectedChartCoin.timeframes.map((item) => {
+                      const tone = getToneColors(item.tone);
+                      return (
+                        <div key={item.tf} style={{ background:"#fff", border:`1.5px solid ${tone.border}`, borderRadius:14, padding:"12px 13px" }}>
+                          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", gap:10, marginBottom:8 }}>
+                            <div style={{ fontFamily:"Georgia,serif", fontSize:18, fontWeight:700, color:"#1a1e2e" }}>{item.tf}</div>
+                            <div style={{ ...mono, fontSize:9, color:tone.color, letterSpacing:1 }}>{item.title}</div>
+                          </div>
+                          <div style={{ fontSize:12, fontWeight:700, color:tone.color, marginBottom:5 }}>{item.tone.toUpperCase()}</div>
+                          <div style={{ fontSize:11, color:"#5a6282", lineHeight:1.7 }}>{item.text}</div>
+                        </div>
+                        );
+                    })}
+                    </div>
+                  </div>
+
+                  <div className="frost-card soft-hover" style={{ ...card, marginBottom:0 }}>
+                    <div style={{ ...mono, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"#9aa0bc", marginBottom:12 }}>Signalbox</div>
+                    <div style={{ display:"grid", gap:10 }}>
+                      <div style={{ background:"#e6f7f0", border:"1px solid #80d4b0", borderRadius:12, padding:"11px 12px" }}>
+                        <div style={{ ...mono, fontSize:9, color:"#00875a", letterSpacing:1, marginBottom:4 }}>BUY ZONE</div>
+                        <div style={{ fontSize:16, fontWeight:800, color:"#00875a" }}>{formattedBuyZone}</div>
+                        <div style={{ fontSize:10, color:"#5a6282", lineHeight:1.6, marginTop:4 }}>Alternative: {selectedChartCoin.setup.altEntry}</div>
+                      </div>
+                      <div style={{ background:"#ffeef0", border:"1px solid #f0b0b8", borderRadius:12, padding:"11px 12px" }}>
+                        <div style={{ ...mono, fontSize:9, color:"#c0182a", letterSpacing:1, marginBottom:4 }}>STOP LOSS</div>
+                        <div style={{ fontSize:16, fontWeight:800, color:"#c0182a" }}>{selectedChartCoin.setup.stop}</div>
+                        <div style={{ fontSize:10, color:"#5a6282", lineHeight:1.6, marginTop:4 }}>Unter der Struktur-Invalidation.</div>
+                      </div>
+                      <div style={{ background:"#f7f8fc", border:"1px solid #e2e6f0", borderRadius:12, padding:"11px 12px" }}>
+                        <div style={{ ...mono, fontSize:9, color:"#1756c8", letterSpacing:1, marginBottom:4 }}>TAKE PROFIT</div>
+                        <div style={{ display:"flex", gap:6, flexWrap:"wrap" }}>
+                          {formattedTakeProfit.map((target, index) => (
+                            <div key={target} style={{ padding:"6px 9px", borderRadius:999, background:"#fff", border:"1px solid #d8def0", fontSize:11, fontWeight:700, color:"#1a1e2e" }}>
+                              TP{index + 1} {target}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))", gap:16 }}>
+                  <div className="frost-card soft-hover" style={{ ...card, marginBottom:0 }}>
+                    <div style={{ ...mono, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"#9aa0bc", marginBottom:12 }}>Support & Widerstand</div>
+                    <div style={{ display:"grid", gap:10 }}>
+                      <div style={{ background:"#e6f7f0", border:"1px solid #80d4b0", borderRadius:12, padding:"12px 13px" }}>
+                        <div style={{ fontSize:12, fontWeight:700, color:"#00875a", marginBottom:8 }}>Support</div>
+                        <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
+                          {formattedSupportLevels.map((level) => (
+                            <div key={level} style={{ padding:"6px 10px", borderRadius:999, background:"#fff", color:"#00875a", fontSize:12, fontWeight:700, border:"1px solid #b9e6d1" }}>{level}</div>
+                          ))}
+                        </div>
+                      </div>
+                      <div style={{ background:"#ffeef0", border:"1px solid #f0b0b8", borderRadius:12, padding:"12px 13px" }}>
+                        <div style={{ fontSize:12, fontWeight:700, color:"#c0182a", marginBottom:8 }}>Widerstand</div>
+                        <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
+                          {formattedResistanceLevels.map((level) => (
+                            <div key={level} style={{ padding:"6px 10px", borderRadius:999, background:"#fff", color:"#c0182a", fontSize:12, fontWeight:700, border:"1px solid #f2c7cd" }}>{level}</div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="frost-card soft-hover" style={{ ...card, marginBottom:0 }}>
+                    <div style={{ ...mono, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"#9aa0bc", marginBottom:12 }}>Indikatoren</div>
+                    {selectedChartCoin.indicators.map((indicator, index) => (
+                      <div key={indicator.label} style={{ display:"flex", justifyContent:"space-between", gap:12, alignItems:"center", padding:index === 0 ? "0 0 10px" : "10px 0", borderTop:index === 0 ? "none" : "1px solid #edf0f7" }}>
+                        <div>
+                          <div style={{ fontSize:12, fontWeight:700, color:"#1a1e2e" }}>{indicator.label}</div>
+                          <div style={{ fontSize:10, color:"#9aa0bc", marginTop:2 }}>{indicator.note}</div>
+                        </div>
+                        <div style={{ ...mono, fontSize:16, fontWeight:700, color:selectedChartCoin.color }}>{indicator.value}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="signal-panel" style={{ position:"sticky", top:14, alignSelf:"start", display:"flex", flexDirection:"column", gap:18 }}>
+                <div className="frost-card soft-hover" style={{ ...card, textAlign:"center", marginBottom:0 }}>
+                  <div style={{ ...mono, fontSize:10, letterSpacing:3, textTransform:"uppercase", color:"#9aa0bc", marginBottom:10 }}>Technischer Score</div>
+                  <Gauge score={selectedChartCoin.score} color={selectedChartCoin.color} />
+                  <div style={{ ...mono, fontSize:9, letterSpacing:2, color:"#9aa0bc", textTransform:"uppercase", marginBottom:8 }}>Chart Analyse (0-100)</div>
+                  <div style={{ fontFamily:"Georgia,serif", fontSize:19, fontWeight:700, marginBottom:8, color:selectedTradingSignalStyle.color }}>
+                    {selectedChartCoin.signal}
+                  </div>
+                  <div style={{ display:"flex", justifyContent:"center", gap:8, flexWrap:"wrap", marginBottom:12 }}>
+                    <div style={{ background:selectedTradingSignalStyle.bg, color:selectedTradingSignalStyle.color, borderRadius:999, padding:"5px 10px", fontSize:10, fontWeight:700 }}>
+                      {selectedChartCoin.trend}
+                    </div>
+                    <div style={{ background:"#f7f8fc", color:"#5a6282", borderRadius:999, padding:"5px 10px", fontSize:10, fontWeight:700 }}>
+                      Phase: {selectedChartCoin.phase}
+                    </div>
+                    <div style={{ background:"#fff8e6", color:"#b06a00", borderRadius:999, padding:"5px 10px", fontSize:10, fontWeight:700 }}>
+                      Risiko: {selectedChartCoin.risk}
+                    </div>
+                  </div>
+                  <div style={{ fontSize:12, color:"#5a6282", lineHeight:1.7 }}>
+                    Chartscore bewertet Trend, Struktur, Timing, Reaktionszonen und Setup-Qualitaet. Hoeherer Score bedeutet bessere technische Chance, nicht automatisch geringeres Risiko.
+                  </div>
+                  <div style={{ fontSize:10, color:"#9aa0bc", lineHeight:1.6, marginTop:8 }}>
+                    Technischer Score: bewertet nur das aktuelle Chart-Setup und kann deshalb bewusst vom Coin-Gesamtscore abweichen.
+                  </div>
+                </div>
+
+                <div className="frost-card soft-hover" style={{ ...card, marginBottom:0 }}>
+                  <div style={{ ...mono, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"#9aa0bc", marginBottom:12 }}>Chart Kommentar</div>
+                  <div style={{ background:"linear-gradient(135deg,#eef3ff,#f7f0ff)", border:"1.5px solid #c0b0f0", borderRadius:14, padding:"12px 13px", marginBottom:10 }}>
+                    <div style={{ fontSize:12, fontWeight:700, color:"#5b4fcf", marginBottom:6 }}>Gesamtbild</div>
+                    <div style={{ fontSize:11, color:"#5a6282", lineHeight:1.8 }}>{selectedChartCoin.summary}</div>
+                  </div>
+                  <div style={{ background:"#f7f8fc", border:"1px solid #e2e6f0", borderRadius:12, padding:"11px 12px", fontSize:11, color:"#5a6282", lineHeight:1.7 }}>
+                    {selectedChartCoin.setup.rationale}
+                  </div>
+                </div>
+
+                <div className="frost-card soft-hover" style={{ ...card, marginBottom:0 }}>
+                  <div style={{ ...mono, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"#9aa0bc", marginBottom:12 }}>Setup Metriken</div>
+                  <div style={{ display:"grid", gridTemplateColumns:"repeat(2,minmax(0,1fr))", gap:10, marginBottom:12 }}>
+                      {[
+                      { label:"Entry Mitte", value:Number.isFinite(setupMetrics.entry) ? formatSelectedChartValue(setupMetrics.entry) : formattedBuyZone, color:"#1756c8" },
+                      { label:"CRV", value:selectedChartCoin.setup.crv, color:"#5b4fcf" },
+                      { label:"Risiko bis Stop", value:formatPercent(-Math.abs(setupMetrics.riskPct)), color:"#c0182a" },
+                      { label:"TP1 Potenzial", value:formatPercent(setupMetrics.rewardPct), color:"#00875a" },
+                    ].map((item) => (
+                      <div key={item.label} style={{ background:"#fff", border:"1px solid #e2e6f0", borderRadius:12, padding:"11px 12px" }}>
+                        <div style={{ ...mono, fontSize:9, color:"#9aa0bc", letterSpacing:1, marginBottom:4 }}>{item.label}</div>
+                        <div style={{ fontSize:15, fontWeight:800, color:item.color }}>{item.value}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ background:"#f7f8fc", border:"1px solid #e2e6f0", borderRadius:12, padding:"11px 12px", fontSize:11, color:"#5a6282", lineHeight:1.75 }}>
+                    Erstes Ziel liegt bei <strong style={{ color:"#1756c8" }}>{formattedTakeProfit[0]}</strong>, Stretch-Ziel bei <strong style={{ color:"#5b4fcf" }}>{formattedTakeProfit[1]}</strong>. Alternative Aktivierung: <strong style={{ color:"#1a1e2e" }}>{selectedChartCoin.setup.altEntry}</strong>.
+                  </div>
+                </div>
+
+                <div className="frost-card soft-hover" style={{ ...card, marginBottom:0 }}>
+                  <div style={{ ...mono, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"#9aa0bc", marginBottom:12 }}>Wahrscheinlichkeiten</div>
+                  {[
+                    { label:"Bullish", value:selectedChartCoin.probabilities.bull, color:"#00875a" },
+                    { label:"Neutral", value:selectedChartCoin.probabilities.neutral, color:"#b06a00" },
+                    { label:"Bearish", value:selectedChartCoin.probabilities.bear, color:"#c0182a" },
+                  ].map((item) => (
+                    <div key={item.label} style={{ marginBottom:10 }}>
+                      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:5 }}>
+                        <div style={{ fontSize:11, fontWeight:700, color:"#1a1e2e" }}>{item.label}</div>
+                        <div style={{ ...mono, fontSize:11, color:item.color }}>{item.value}%</div>
+                      </div>
+                      <div style={{ height:8, background:"#e2e6f0", borderRadius:999, overflow:"hidden" }}>
+                        <div style={{ width:`${item.value}%`, height:"100%", background:item.color, borderRadius:999 }} />
+                      </div>
+                    </div>
+                  ))}
+                  <div style={{ marginTop:6, padding:"9px 10px", background:"#f7f8fc", borderRadius:10, fontSize:11, color:"#5a6282", lineHeight:1.7 }}>
+                    Modell-Label aktuell: <strong style={{ color:selectedTradingSignalStyle.color }}>{getTradingSignalLabel(selectedChartCoin.score)}</strong>. Das ist eine technische Lesart fuer Einstieg und Struktur, getrennt vom fundamentalen Coin-Score.
+                  </div>
+                </div>
+
+                <div className="frost-card soft-hover" style={{ ...card, marginBottom:0 }}>
+                  <div style={{ ...mono, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"#9aa0bc", marginBottom:12 }}>Szenarien</div>
+                  {[
+                    { label:"Bullish", text:chartScenario.bullish, colors:getToneColors("bullish") },
+                    { label:"Neutral", text:chartScenario.neutral, colors:getToneColors("neutral") },
+                    { label:"Bearish", text:chartScenario.bearish, colors:getToneColors("bearish") },
+                  ].map((item) => (
+                    <div key={item.label} style={{ background:item.colors.bg, border:`1px solid ${item.colors.border}`, borderRadius:12, padding:"11px 12px", marginBottom:10 }}>
+                      <div style={{ ...mono, fontSize:9, color:item.colors.color, letterSpacing:1, marginBottom:5 }}>{item.label}</div>
+                      <div style={{ fontSize:11, color:"#5a6282", lineHeight:1.75 }}>{item.text}</div>
+                    </div>
+                  ))}
+                  <div style={{ fontSize:10, color:"#9aa0bc", lineHeight:1.7 }}>
+                    Stretch bis TP2: <strong style={{ color:"#1a1e2e" }}>{formatPercent(setupMetrics.stretchPct)}</strong> ab Setup-Mitte.
+                  </div>
+                </div>
+              </div>
+            </div>
+              </>
+            )}
           </div>
         )}
 
@@ -1598,6 +3689,3 @@ document.getElementById('loading').style.display = 'none';
 
 </body>
 </html>
-
-
-
