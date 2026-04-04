@@ -1,8 +1,7 @@
 # ════════════════════════════════════════════════════════════
 #  Crypto Signal System — Tägliche Daten-Aktualisierung
-#  Läuft 2x täglich: 09:00 + 14:00 Uhr Wien (UTC+2)
+#  Läuft 1x täglich: 09:00 Uhr Wien (UTC+2)
 #  09:00 Wien = 07:00 UTC
-#  14:00 Wien = 12:00 UTC
 # ════════════════════════════════════════════════════════════
 
 name: 📊 Crypto Daten Update
@@ -10,7 +9,6 @@ name: 📊 Crypto Daten Update
 on:
   schedule:
     - cron: '0 7 * * *'   # 09:00 Uhr Wien
-    - cron: '0 12 * * *'  # 14:00 Uhr Wien
 
   # Manueller Start jederzeit möglich (wichtig zum Testen!)
   workflow_dispatch:
@@ -19,6 +17,9 @@ on:
         description: 'Warum manuell gestartet?'
         required: false
         default: 'Manueller Test'
+
+permissions:
+  contents: write
 
 jobs:
   update:
