@@ -307,24 +307,26 @@ def update_paper_trades(coin_data, chart_setups, prices, date_str):
 
         current = prices[coin_id]["usd"]
         setup   = chart_setups.get(ticker, {})
-        entry   = setup.get("entry_chart") or current
+        # Entry is always the actual market price when the signal fires.
+        # The chart buy zone is stored as reference only.
+        entry   = round(current, 6)
         stop    = setup.get("stop")
         tp1     = setup.get("tp1")
 
-        # Fallback: -8% / +20%
+        # Fallback: -8% SL / +20% TP relative to actual entry
         if not stop: stop = round(entry * 0.92, 6)
         if not tp1:  tp1  = round(entry * 1.20, 6)
 
         trade = {
-            "id":            f"{ticker}-{date_str}",
-            "coin":          ticker,
-            "signal":        data["signal"],
-            "entry":         entry,
-            "entry_type":    "chart" if setup.get("entry_chart") else "market",
-            "stop_loss":     stop,
-            "take_profit":   tp1,
-            "opened":        date_str,
-            "price_at_open": round(current, 6),
+            "id":              f"{ticker}-{date_str}",
+            "coin":            ticker,
+            "signal":          data["signal"],
+            "entry":           entry,           # actual market price at signal time
+            "chart_buy_zone":  setup.get("entry_chart"),  # chart recommendation (info only)
+            "stop_loss":       stop,
+            "take_profit":     tp1,
+            "opened":          date_str,
+            "price_at_open":   entry,
         }
         trades["open"].append(trade)
         print(f"   📈 NEU  {ticker}: Entry={fmt_price(entry)}  SL={fmt_price(stop)}  TP={fmt_price(tp1)}")
