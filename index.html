@@ -2761,6 +2761,175 @@ function AnalysisOverlayChart({ coin, interval }) {
   );
 }
 
+// ── Formation Analysis helpers ──────────────────────────────────────────────
+function detectCandlePatterns(candles) {
+  const results = [];
+  if (candles.length < 3) return results;
+  const c  = candles[candles.length - 1];
+  const p  = candles[candles.length - 2];
+  const p2 = candles[candles.length - 3];
+  const totalRange = c.h - c.l;
+  const body       = Math.abs(c.c - c.o);
+  const upperWick  = c.h - Math.max(c.o, c.c);
+  const lowerWick  = Math.min(c.o, c.c) - c.l;
+  const bodyPct    = totalRange > 0 ? body / totalRange : 0;
+  const pBody      = Math.abs(p.c - p.o);
+
+  if (bodyPct < 0.10 && totalRange > 0)
+    results.push({ name:"Doji", type:"neutral", strength: Math.min(8, 3 + Math.round((0.10 - bodyPct)*50)), emoji:"⚖️", desc:"Unentschlossenheit — Trendumkehr möglich" });
+
+  if (lowerWick > body * 2 && upperWick < body * 0.5 && c.c >= c.o)
+    results.push({ name:"Hammer", type:"bullish", strength: Math.min(10, Math.round(5 + (lowerWick/(body||0.001) - 2)*1.5)), emoji:"🔨", desc:"Bullisches Umkehrmuster — starke Kaufzone" });
+
+  if (upperWick > body * 2 && lowerWick < body * 0.5 && c.c <= c.o)
+    results.push({ name:"Shooting Star", type:"bearish", strength: Math.min(10, Math.round(5 + (upperWick/(body||0.001) - 2)*1.5)), emoji:"🌠", desc:"Bearisches Umkehrmuster — Abgabedruck" });
+
+  if (p.c < p.o && c.c > c.o && c.o <= p.c && c.c >= p.o) {
+    const r = body / (pBody || 0.001);
+    results.push({ name:"Bullish Engulfing", type:"bullish", strength: Math.min(10, Math.round(5 + (r-1)*3)), emoji:"🟢", desc:"Starkes bullisches Umkehrsignal" });
+  }
+  if (p.c > p.o && c.c < c.o && c.o >= p.c && c.c <= p.o) {
+    const r = body / (pBody || 0.001);
+    results.push({ name:"Bearish Engulfing", type:"bearish", strength: Math.min(10, Math.round(5 + (r-1)*3)), emoji:"🔴", desc:"Starkes bearisches Umkehrsignal" });
+  }
+  if (bodyPct > 0.85) {
+    const type = c.c > c.o ? "bullish" : "bearish";
+    results.push({ name: type === "bullish" ? "Bullish Marubozu" : "Bearish Marubozu", type, strength: Math.min(10, 6 + Math.round(bodyPct*4)), emoji: type === "bullish" ? "📈" : "📉", desc:`Starke ${type === "bullish" ? "Kauf" : "Verkauf"}dominanz ohne Gegendruck` });
+  }
+  // Morning/Evening Star (3-candle)
+  if (p2.c < p2.o && Math.abs(p.c - p.o) < Math.abs(p2.c - p2.o)*0.4 && c.c > c.o && c.c > (p2.o + p2.c)/2)
+    results.push({ name:"Morning Star", type:"bullish", strength:8, emoji:"🌅", desc:"3-Kerzen Umkehrmuster — starkes Bodensignal" });
+  if (p2.c > p2.o && Math.abs(p.c - p.o) < Math.abs(p2.c - p2.o)*0.4 && c.c < c.o && c.c < (p2.o + p2.c)/2)
+    results.push({ name:"Evening Star", type:"bearish", strength:8, emoji:"🌇", desc:"3-Kerzen Umkehrmuster — starkes Topsignal" });
+
+  return results;
+}
+
+function countTouches(candles, price, tol) {
+  let n = 0;
+  for (const c of candles) {
+    if (Math.abs(c.h - price)/price < tol || Math.abs(c.l - price)/price < tol) n++;
+  }
+  return Math.max(1, n);
+}
+
+function detectSRLevels(candles) {
+  const levels = [];
+  const recent = candles.slice(-60);
+  for (let i = 2; i < recent.length - 2; i++) {
+    const c = recent[i];
+    // Pivot high → resistance
+    if (c.h > recent[i-1].h && c.h > recent[i-2].h && c.h > recent[i+1].h && c.h > recent[i+2].h) {
+      const touches = countTouches(recent, c.h, 0.007);
+      const recency = (recent.length - i) / recent.length;
+      const strength = Math.min(10, Math.round(touches * 1.8 + (1 - recency) * 3.5));
+      levels.push({ price: c.h, type:"resistance", touches, strength });
+    }
+    // Pivot low → support
+    if (c.l < recent[i-1].l && c.l < recent[i-2].l && c.l < recent[i+1].l && c.l < recent[i+2].l) {
+      const touches = countTouches(recent, c.l, 0.007);
+      const recency = (recent.length - i) / recent.length;
+      const strength = Math.min(10, Math.round(touches * 1.8 + (1 - recency) * 3.5));
+      levels.push({ price: c.l, type:"support", touches, strength });
+    }
+  }
+  // Deduplicate by proximity (1% threshold)
+  const deduped = [];
+  for (const lvl of levels) {
+    const ex = deduped.find(r => Math.abs(r.price - lvl.price)/lvl.price < 0.01 && r.type === lvl.type);
+    if (ex) { if (lvl.strength > ex.strength) deduped[deduped.indexOf(ex)] = lvl; }
+    else deduped.push(lvl);
+  }
+  return deduped.sort((a,b) => b.strength - a.strength).slice(0, 8);
+}
+
+function detectTrendLines(candles) {
+  const recent = candles.slice(-30);
+  if (recent.length < 6) return [];
+  let higherLows = 0, lowerHighs = 0;
+  for (let i = 1; i < recent.length; i++) {
+    if (recent[i].l > recent[i-1].l) higherLows++; else higherLows = Math.max(0, higherLows - 1);
+    if (recent[i].h < recent[i-1].h) lowerHighs++; else lowerHighs = Math.max(0, lowerHighs - 1);
+  }
+  const lines = [];
+  if (higherLows >= 4) lines.push({ type:"uptrend",   strength: Math.min(10, Math.round(higherLows * 1.4)), desc:`${higherLows} höhere Tiefs in Folge`, emoji:"📈" });
+  if (lowerHighs >= 4) lines.push({ type:"downtrend",  strength: Math.min(10, Math.round(lowerHighs * 1.4)), desc:`${lowerHighs} niedrigere Hochs in Folge`, emoji:"📉" });
+  return lines;
+}
+
+function useLiveFormationAnalysis(symbol, interval) {
+  const [state, setState] = useState({ status:"loading", candlePatterns:[], srLevels:[], trendLines:[] });
+  useEffect(() => {
+    let active = true;
+    const mSym = String(symbol || "").replace("BINANCE:", "");
+    const iv   = mapChartIntervalToKlineInterval(interval);
+    setState({ status:"loading", candlePatterns:[], srLevels:[], trendLines:[] });
+    fetch(`https://api.binance.com/api/v3/klines?symbol=${mSym}&interval=${iv}&limit=100`)
+      .then(r => r.json())
+      .then(rows => {
+        if (!active) return;
+        const candles = rows.map(r => ({ t:Number(r[0]), o:Number(r[1]), h:Number(r[2]), l:Number(r[3]), c:Number(r[4]), v:Number(r[5]) }));
+        setState({ status:"ready", candlePatterns: detectCandlePatterns(candles), srLevels: detectSRLevels(candles), trendLines: detectTrendLines(candles) });
+      })
+      .catch(() => { if (active) setState(prev => ({ ...prev, status:"error" })); });
+    return () => { active = false; };
+  }, [symbol, interval]);
+  return state;
+}
+
+// ── Score History Sparkline ─────────────────────────────────────────────────
+function ScoreSparkline({ data, color = "#1756c8", width = 120, height = 36, label = "" }) {
+  if (!data || data.length < 2) return <span style={{ color:"#9aa0bc", fontSize:10 }}>–</span>;
+  const vals  = data.map(d => typeof d === "number" ? d : d.market || 50);
+  const minV  = Math.min(...vals);
+  const maxV  = Math.max(...vals);
+  const range = maxV - minV || 1;
+  const pts   = vals.map((v, i) => {
+    const x = (i / (vals.length - 1)) * width;
+    const y = height - ((v - minV) / range) * (height - 4) - 2;
+    return `${x},${y}`;
+  }).join(" ");
+  const last  = vals[vals.length - 1];
+  const prev  = vals[vals.length - 2];
+  const trend = last > prev ? "▲" : last < prev ? "▼" : "–";
+  const tc    = last > prev ? "#00875a" : last < prev ? "#c0182a" : "#9aa0bc";
+  return (
+    <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+      <svg width={width} height={height} style={{ overflow:"visible" }}>
+        <polyline points={pts} fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" opacity=".8"/>
+        {(() => { const [lx,ly] = pts.split(" ").at(-1).split(","); return <circle cx={lx} cy={ly} r="3" fill={color}/>; })()}
+      </svg>
+      <div style={{ fontSize:11, fontWeight:700, color:tc }}>{trend} {last}</div>
+      {label && <div style={{ fontSize:9, color:"#9aa0bc" }}>{label}</div>}
+    </div>
+  );
+}
+
+// ── Coin Confidence Score ───────────────────────────────────────────────────
+function getCoinConfidence(subScores) {
+  if (!subScores || subScores.length < 2) return { level:"MITTEL", color:"#b06a00", bg:"#fff8e6" };
+  const vals = subScores.map(s => s.score);
+  const mean = vals.reduce((a,b) => a + b, 0) / vals.length;
+  const stddev = Math.sqrt(vals.reduce((a,b) => a + (b - mean)**2, 0) / vals.length);
+  if (stddev < 10) return { level:"HOCH", color:"#00875a", bg:"#e6f7f0" };
+  if (stddev < 20) return { level:"MITTEL", color:"#b06a00", bg:"#fff8e6" };
+  return { level:"NIEDRIG", color:"#c0182a", bg:"#ffeef0" };
+}
+
+// ── Strength Bar component ──────────────────────────────────────────────────
+function StrengthBar({ value, max = 10, color }) {
+  const pct = (value / max) * 100;
+  const c   = value >= 8 ? "#00875a" : value >= 5 ? "#b06a00" : "#c0182a";
+  return (
+    <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+      <div style={{ flex:1, height:5, background:"#e2e6f0", borderRadius:3, overflow:"hidden" }}>
+        <div style={{ width:`${pct}%`, height:"100%", background: color || c, borderRadius:3, transition:"width .4s" }}/>
+      </div>
+      <div style={{ ...{ fontFamily:"'DM Mono',monospace" }, fontSize:10, fontWeight:700, color: color || c, width:14, textAlign:"right" }}>{value}</div>
+    </div>
+  );
+}
+
 function App() {
   const [openCoins, setOpenCoins] = useState([]);
   const [openCoinSubScores, setOpenCoinSubScores] = useState({});
@@ -2768,10 +2937,12 @@ function App() {
   const [openWeight, setOpenWeight] = useState(null);     // expandable weight items
   const [openBreakdown, setOpenBreakdown] = useState(null); // expandable breakdown bars
   const [openChanceRiskDetails, setOpenChanceRiskDetails] = useState(false);
-  const [tab, setTab] = useState("coins"); // "coins" | "chart" | "market"
+  const [tab, setTab] = useState("coins"); // "coins" | "chart" | "market" | "performance"
   const [coinGridColumns, setCoinGridColumns] = useState(1);
   const [chartCoinIndex, setChartCoinIndex] = useState(0);
   const [chartInterval, setChartInterval] = useState("240");
+  const [paperTrades, setPaperTrades] = useState({ open:[], closed:[] });
+  const [scoreHistory, setScoreHistory] = useState([]);
   const coinGridRef = useRef(null);
 
   const mono  = { fontFamily:"'DM Mono',monospace" };
@@ -2787,6 +2958,7 @@ function App() {
   const col = vCol[MARKET_VERDICT] || "#888";
   const selectedChartCoin = CHART_ANALYSES[chartCoinIndex] || CHART_ANALYSES[0];
   const liveScore = useLiveChartScore(selectedChartCoin.symbol, chartInterval);
+  const formationAnalysis = useLiveFormationAnalysis(selectedChartCoin.symbol, chartInterval);
   const selectedTradingSignalStyle = getTradingSignalStyle(selectedChartCoin?.signal || "BEOBACHTEN");
   const topChartSetups = [...CHART_ANALYSES].sort((a,b) => b.score - a.score).slice(0, 5);
   const setupMetrics = getSetupMetrics(selectedChartCoin);
@@ -2833,6 +3005,12 @@ function App() {
     window.addEventListener("resize", updateCoinGridColumns);
 
     return () => window.removeEventListener("resize", updateCoinGridColumns);
+  }, []);
+
+  // Load paper trades and score history from JSON files
+  useEffect(() => {
+    fetch("paper-trades.json").then(r => r.json()).then(d => setPaperTrades(d)).catch(() => {});
+    fetch("score-history.json").then(r => r.json()).then(d => setScoreHistory(d)).catch(() => {});
   }, []);
 
   const toggleCoinRow = (index) => {
@@ -2931,7 +3109,7 @@ function App() {
 
         {/* TAB NAV */}
         <div className="fade-up" style={{ display:"flex", gap:10, marginBottom:18, animationDelay:".08s" }}>
-          {[["market","📊 Markt Signal"],["coins","🏆 Coin Analyse"],["chart","📈 Chart Analyse"]].map(([key,label])=>(
+          {[["market","📊 Markt Signal"],["coins","🏆 Coin Analyse"],["chart","📈 Chart Analyse"],["performance","🎯 Performance"]].map(([key,label])=>(
             <button key={key} className="tab-chip" onClick={()=>setTab(key)} style={{
               padding:"11px 22px", borderRadius:999, border:"1.5px solid",
               borderColor: tab===key?"#1756c8":"#e2e6f0",
@@ -2999,13 +3177,19 @@ function App() {
                           <div style={{ fontFamily:"Georgia,serif", fontSize:17, fontWeight:700, color:"#1a1e2e" }}>{c.name}</div>
                         </div>
 
-                        {/* Signal badge */}
-                        <span style={{
-                          fontSize:10, fontWeight:700, letterSpacing:1, padding:"3px 9px", borderRadius:5,
-                          background: sigBg[c.signal]||"#f0f0f0",
-                          color: sigCol[c.signal]||"#888",
-                          display:"inline-block", marginBottom:6
-                        }}>{c.signal}</span>
+                        {/* Signal badge + Konfidenz */}
+                        <div style={{ display:"flex", gap:6, alignItems:"center", marginBottom:6, flexWrap:"wrap" }}>
+                          <span style={{
+                            fontSize:10, fontWeight:700, letterSpacing:1, padding:"3px 9px", borderRadius:5,
+                            background: sigBg[c.signal]||"#f0f0f0",
+                            color: sigCol[c.signal]||"#888",
+                          }}>{c.signal}</span>
+                          {(() => { const conf = getCoinConfidence(c.subScores); return (
+                            <span style={{ fontSize:9, fontWeight:700, letterSpacing:1, padding:"2px 7px", borderRadius:4, background:conf.bg, color:conf.color }}>
+                              KONFIDENZ: {conf.level}
+                            </span>
+                          ); })()}
+                        </div>
 
                         {/* Price row */}
                         <div style={{ display:"flex", gap:10, alignItems:"baseline" }}>
@@ -3017,6 +3201,15 @@ function App() {
                         <div style={{ ...mono, fontSize:10, color:"#9aa0bc", marginTop:3 }}>
                           ATH: {c.ath} · {Math.round((1 - parseFloat(c.price.replace(/[^0-9.]/g,"")) / parseFloat(c.ath.replace(/[^0-9.]/g,"")))*100)||"—"}% darunter
                         </div>
+                        {/* Score Sparkline */}
+                        {scoreHistory.length >= 2 && (
+                          <div style={{ marginTop:4 }}>
+                            <ScoreSparkline
+                              data={scoreHistory.slice(-14).map(h => h.coins?.[c.ticker] || null).filter(v => v !== null)}
+                              color={c.color} width={80} height={18}
+                            />
+                          </div>
+                        )}
                       </div>
 
                       {/* Expand arrow */}
@@ -3690,6 +3883,12 @@ function App() {
             <div className="signal-panel" style={{ position:"sticky", top:14, alignSelf:"stretch", display:"flex", flexDirection:"column", gap:18, minHeight:"100%" }}>
               <div className="frost-card soft-hover fade-up" style={{ ...card, textAlign:"center", animationDelay:".16s" }}>
                 <div style={{ ...mono, fontSize:10, letterSpacing:3, textTransform:"uppercase", color:"#9aa0bc", marginBottom:10 }}>🎯 Markt Signal Score</div>
+                {scoreHistory.length >= 2 && (
+                  <div style={{ marginBottom:10, background:"#f7f8fc", borderRadius:8, padding:"8px 12px", border:"1px solid #e2e6f0" }}>
+                    <div style={{ ...mono, fontSize:8, letterSpacing:2, color:"#9aa0bc", textTransform:"uppercase", marginBottom:4 }}>30-Tage Verlauf</div>
+                    <ScoreSparkline data={scoreHistory.slice(-30).map(h => h.market)} color="#1756c8" width={140} height={32}/>
+                  </div>
+                )}
                 <Gauge score={MARKET_TOTAL_SCORE} color={col}/>
                 <div style={{ ...mono, fontSize:9, letterSpacing:2, color:"#9aa0bc", textTransform:"uppercase", marginBottom:8 }}>Gesamtsignal (0–100)</div>
                 <div style={{ fontFamily:"Georgia,serif", fontSize:19, fontWeight:700, marginBottom:5, color:col }}>
@@ -3824,6 +4023,224 @@ function App() {
                 })}
               </div>
             </div>
+
+            {/* ── LIVE FORMATION ANALYSE ──────────────────────────────── */}
+            <div className="frost-card soft-hover fade-up" style={{ ...card, marginTop:16 }}>
+              <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:14 }}>
+                <div style={{ flex:1 }}>
+                  <div style={{ ...mono, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"#9aa0bc" }}>🔍 Live Formation & Level Analyse</div>
+                  <div style={{ fontSize:11, color:"#5a6282", marginTop:3 }}>{selectedChartCoin.ticker} · {chartInterval === "60" ? "1H" : chartInterval === "240" ? "4H" : "1D"} · Live aus Binance</div>
+                </div>
+                {formationAnalysis.status === "loading" && <div style={{ ...mono, fontSize:10, color:"#9aa0bc" }}>Lade…</div>}
+                {formationAnalysis.status === "error"   && <div style={{ ...mono, fontSize:10, color:"#c0182a" }}>Binance offline</div>}
+              </div>
+
+              {formationAnalysis.status === "ready" && (
+                <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))", gap:12 }}>
+
+                  {/* Candlestick Patterns */}
+                  <div style={{ background:"#f7f8fc", borderRadius:10, padding:"12px 14px", border:"1px solid #e2e6f0" }}>
+                    <div style={{ ...mono, fontSize:9, letterSpacing:2, textTransform:"uppercase", color:"#5b4fcf", marginBottom:8 }}>🕯️ Kerzenformationen</div>
+                    {formationAnalysis.candlePatterns.length === 0
+                      ? <div style={{ fontSize:11, color:"#9aa0bc" }}>Keine dominante Formation erkannt</div>
+                      : formationAnalysis.candlePatterns.map((p, i) => (
+                        <div key={i} style={{ marginBottom:8 }}>
+                          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:3 }}>
+                            <div style={{ display:"flex", gap:5, alignItems:"center" }}>
+                              <span style={{ fontSize:13 }}>{p.emoji}</span>
+                              <span style={{ fontSize:11, fontWeight:700, color: p.type === "bullish" ? "#00875a" : p.type === "bearish" ? "#c0182a" : "#b06a00" }}>{p.name}</span>
+                            </div>
+                            <span style={{ ...mono, fontSize:10, fontWeight:700, color:"#1a1e2e" }}>{p.strength}/10</span>
+                          </div>
+                          <StrengthBar value={p.strength} color={ p.type === "bullish" ? "#00875a" : p.type === "bearish" ? "#c0182a" : "#b06a00" }/>
+                          <div style={{ fontSize:10, color:"#5a6282", marginTop:2 }}>{p.desc}</div>
+                        </div>
+                      ))
+                    }
+                  </div>
+
+                  {/* Support / Resistance Levels */}
+                  <div style={{ background:"#f7f8fc", borderRadius:10, padding:"12px 14px", border:"1px solid #e2e6f0" }}>
+                    <div style={{ ...mono, fontSize:9, letterSpacing:2, textTransform:"uppercase", color:"#1756c8", marginBottom:8 }}>📐 Support & Widerstand</div>
+                    {formationAnalysis.srLevels.length === 0
+                      ? <div style={{ fontSize:11, color:"#9aa0bc" }}>Keine klaren Levels erkannt</div>
+                      : formationAnalysis.srLevels.slice(0,6).map((lvl, i) => {
+                          const isRes = lvl.type === "resistance";
+                          const c = isRes ? "#c0182a" : "#00875a";
+                          const bg = isRes ? "#ffeef0" : "#e6f7f0";
+                          const fmt = lvl.price > 1000 ? lvl.price.toFixed(0) : lvl.price > 1 ? lvl.price.toFixed(2) : lvl.price.toFixed(4);
+                          return (
+                            <div key={i} style={{ marginBottom:7 }}>
+                              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:3 }}>
+                                <div style={{ display:"flex", gap:5, alignItems:"center" }}>
+                                  <span style={{ fontSize:10, fontWeight:700, padding:"1px 6px", borderRadius:3, background:bg, color:c }}>{isRes ? "R" : "S"}</span>
+                                  <span style={{ ...mono, fontSize:11, fontWeight:700, color:"#1a1e2e" }}>${fmt}</span>
+                                  <span style={{ fontSize:9, color:"#9aa0bc" }}>{lvl.touches}× getestet</span>
+                                </div>
+                                <span style={{ ...mono, fontSize:10, fontWeight:700, color:c }}>{lvl.strength}/10</span>
+                              </div>
+                              <StrengthBar value={lvl.strength} color={c}/>
+                            </div>
+                          );
+                        })
+                    }
+                  </div>
+
+                  {/* Trend Lines */}
+                  <div style={{ background:"#f7f8fc", borderRadius:10, padding:"12px 14px", border:"1px solid #e2e6f0" }}>
+                    <div style={{ ...mono, fontSize:9, letterSpacing:2, textTransform:"uppercase", color:"#00875a", marginBottom:8 }}>📏 Trendlinien</div>
+                    {formationAnalysis.trendLines.length === 0
+                      ? <div style={{ fontSize:11, color:"#9aa0bc" }}>Kein klarer Trend erkennbar — Seitwärtsbewegung</div>
+                      : formationAnalysis.trendLines.map((tl, i) => {
+                          const c = tl.type === "uptrend" ? "#00875a" : "#c0182a";
+                          return (
+                            <div key={i} style={{ marginBottom:8 }}>
+                              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:3 }}>
+                                <div style={{ display:"flex", gap:5, alignItems:"center" }}>
+                                  <span style={{ fontSize:13 }}>{tl.emoji}</span>
+                                  <span style={{ fontSize:11, fontWeight:700, color:c }}>{tl.type === "uptrend" ? "Aufwärtstrend" : "Abwärtstrend"}</span>
+                                </div>
+                                <span style={{ ...mono, fontSize:10, fontWeight:700, color:c }}>{tl.strength}/10</span>
+                              </div>
+                              <StrengthBar value={tl.strength} color={c}/>
+                              <div style={{ fontSize:10, color:"#5a6282", marginTop:2 }}>{tl.desc}</div>
+                            </div>
+                          );
+                        })
+                    }
+                  </div>
+
+                </div>
+              )}
+            </div>
+
+          </div>
+        )}
+
+        {/* ── PERFORMANCE TAB ──────────────────────────────────────────────────── */}
+        {tab === "performance" && (
+          <div className="fade-up" style={{ animationDelay:".12s" }}>
+
+            {/* Statistik-Kacheln */}
+            {(() => {
+              const all    = paperTrades.closed || [];
+              const open   = paperTrades.open   || [];
+              const wins   = all.filter(t => t.outcome === "WIN");
+              const losses = all.filter(t => t.outcome === "LOSS");
+              const winRate = all.length > 0 ? Math.round(wins.length / all.length * 100) : null;
+              const avgPnl  = all.length > 0 ? (all.reduce((s,t) => s + (t.pnl_pct || 0), 0) / all.length).toFixed(1) : null;
+              const bestCoin = (() => {
+                const byTicker = {};
+                for (const t of all) { if (!byTicker[t.coin]) byTicker[t.coin] = []; byTicker[t.coin].push(t.pnl_pct || 0); }
+                let best = null, bestAvg = -Infinity;
+                for (const [tn, pnls] of Object.entries(byTicker)) { const avg = pnls.reduce((a,b)=>a+b,0)/pnls.length; if (avg > bestAvg) { bestAvg = avg; best = tn; } }
+                return best;
+              })();
+
+              return (
+                <div>
+                  <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(180px,1fr))", gap:12, marginBottom:16 }}>
+                    {[
+                      { label:"Offene Positionen", value: open.length, icon:"📊", color:"#1756c8", bg:"#eef3ff" },
+                      { label:"Abgeschlossene Trades", value: all.length, icon:"📁", color:"#5b4fcf", bg:"#f0eeff" },
+                      { label:"Trefferquote", value: winRate !== null ? `${winRate}%` : "–", icon:"🎯", color: winRate >= 60 ? "#00875a" : winRate >= 40 ? "#b06a00" : "#c0182a", bg: winRate >= 60 ? "#e6f7f0" : winRate >= 40 ? "#fff8e6" : "#ffeef0" },
+                      { label:"Ø P&L pro Trade", value: avgPnl !== null ? `${avgPnl > 0 ? "+" : ""}${avgPnl}%` : "–", icon:"💹", color: parseFloat(avgPnl) >= 0 ? "#00875a" : "#c0182a", bg: parseFloat(avgPnl) >= 0 ? "#e6f7f0" : "#ffeef0" },
+                      { label:"Wins / Losses", value: `${wins.length} / ${losses.length}`, icon:"⚖️", color:"#b06a00", bg:"#fff8e6" },
+                      { label:"Bester Coin", value: bestCoin || "–", icon:"🏆", color:"#00875a", bg:"#e6f7f0" },
+                    ].map((kpi, i) => (
+                      <div key={i} className="frost-card soft-hover" style={{ ...card, padding:"14px 16px", background:kpi.bg, border:`1.5px solid ${kpi.color}22`, marginBottom:0, textAlign:"center" }}>
+                        <div style={{ fontSize:20, marginBottom:4 }}>{kpi.icon}</div>
+                        <div style={{ ...mono, fontSize:9, letterSpacing:2, textTransform:"uppercase", color:kpi.color, marginBottom:4 }}>{kpi.label}</div>
+                        <div style={{ fontFamily:"Georgia,serif", fontSize:20, fontWeight:700, color:kpi.color }}>{kpi.value}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Offene Positionen */}
+                  <div className="frost-card" style={{ ...card, marginBottom:16 }}>
+                    <div style={{ ...mono, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"#1756c8", marginBottom:12 }}>📊 Offene Positionen</div>
+                    {open.length === 0
+                      ? <div style={{ fontSize:12, color:"#9aa0bc" }}>Keine offenen Positionen</div>
+                      : open.map((t, i) => {
+                          const coinInfo = COINS.find(c => c.ticker === t.coin);
+                          const distToTp  = t.take_profit && t.price_at_open ? ((t.take_profit  - t.price_at_open) / t.price_at_open * 100).toFixed(1) : null;
+                          const distToSl  = t.stop_loss  && t.price_at_open ? ((t.price_at_open - t.stop_loss)  / t.price_at_open * 100).toFixed(1) : null;
+                          const cColor    = coinInfo?.color || "#1756c8";
+                          return (
+                            <div key={i} style={{ display:"flex", gap:12, alignItems:"center", padding:"10px 12px", borderRadius:10, border:`1px solid ${cColor}22`, background:"rgba(255,255,255,.6)", marginBottom:8, flexWrap:"wrap" }}>
+                              <div style={{ width:36, height:36, borderRadius:"50%", background: coinInfo?.bg || "#eef3ff", color:cColor, display:"flex", alignItems:"center", justifyContent:"center", ...mono, fontSize:9, fontWeight:700, flexShrink:0 }}>{t.coin}</div>
+                              <div style={{ flex:1, minWidth:120 }}>
+                                <div style={{ fontWeight:700, fontSize:13, color:"#1a1e2e" }}>{t.coin}</div>
+                                <div style={{ ...mono, fontSize:10, color:"#9aa0bc" }}>Entry: ${t.entry} · Eröffnet: {t.opened}</div>
+                              </div>
+                              <div style={{ textAlign:"right", flexShrink:0 }}>
+                                {distToTp  && <div style={{ fontSize:10, color:"#00875a", fontWeight:700 }}>+{distToTp}% bis TP</div>}
+                                {distToSl  && <div style={{ fontSize:10, color:"#c0182a" }}>−{distToSl}% bis SL</div>}
+                              </div>
+                              <div style={{ textAlign:"right", flexShrink:0 }}>
+                                <div style={{ ...mono, fontSize:10, fontWeight:700, color:"#b06a00" }}>SL: ${t.stop_loss}</div>
+                                <div style={{ ...mono, fontSize:10, fontWeight:700, color:"#00875a" }}>TP: ${t.take_profit}</div>
+                              </div>
+                            </div>
+                          );
+                        })
+                    }
+                  </div>
+
+                  {/* Geschlossene Trades */}
+                  <div className="frost-card" style={{ ...card }}>
+                    <div style={{ ...mono, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"#5b4fcf", marginBottom:12 }}>📁 Trade Historie</div>
+                    {all.length === 0
+                      ? <div style={{ fontSize:12, color:"#9aa0bc" }}>Noch keine abgeschlossenen Trades — die ersten Signale werden täglich simuliert.</div>
+                      : (
+                        <div>
+                          {/* P&L Verlauf Sparkline */}
+                          {all.length >= 2 && (
+                            <div style={{ marginBottom:12, background:"#f7f8fc", borderRadius:8, padding:"10px 14px", border:"1px solid #e2e6f0" }}>
+                              <div style={{ ...mono, fontSize:8, letterSpacing:2, textTransform:"uppercase", color:"#9aa0bc", marginBottom:6 }}>Kumulierter P&L Verlauf</div>
+                              <ScoreSparkline
+                                data={all.map((_, i) => { const sum = all.slice(0,i+1).reduce((s,t) => s + (t.pnl_pct||0), 0); return Math.round(sum*10)/10; })}
+                                color="#1756c8" width={200} height={40}
+                              />
+                            </div>
+                          )}
+                          {[...all].reverse().map((t, i) => {
+                            const isWin = t.outcome === "WIN";
+                            const isLoss = t.outcome === "LOSS";
+                            const pnlCol = isWin ? "#00875a" : "#c0182a";
+                            const pnlBg  = isWin ? "#e6f7f0" : "#ffeef0";
+                            const coinInfo = COINS.find(c => c.ticker === t.coin);
+                            const cColor = coinInfo?.color || "#1756c8";
+                            return (
+                              <div key={i} style={{ display:"flex", gap:10, alignItems:"center", padding:"8px 10px", borderRadius:8, border:`1px solid ${pnlBg}`, background:"rgba(255,255,255,.5)", marginBottom:6, flexWrap:"wrap" }}>
+                                <div style={{ width:32, height:32, borderRadius:"50%", background:coinInfo?.bg||"#eef3ff", color:cColor, display:"flex", alignItems:"center", justifyContent:"center", ...mono, fontSize:8, fontWeight:700, flexShrink:0 }}>{t.coin}</div>
+                                <div style={{ flex:1, minWidth:100 }}>
+                                  <div style={{ fontWeight:700, fontSize:12, color:"#1a1e2e" }}>{t.coin} · {t.signal}</div>
+                                  <div style={{ ...mono, fontSize:9, color:"#9aa0bc" }}>{t.opened} → {t.closed}</div>
+                                </div>
+                                <div style={{ ...mono, fontSize:9, color:"#9aa0bc", flexShrink:0 }}>
+                                  ${t.entry} → ${t.exit}
+                                </div>
+                                <div style={{ display:"flex", alignItems:"center", gap:8, flexShrink:0 }}>
+                                  <span style={{ fontSize:9, fontWeight:700, padding:"2px 7px", borderRadius:4, background:pnlBg, color:pnlCol }}>
+                                    {isWin ? "WIN" : "LOSS"}
+                                  </span>
+                                  <span style={{ ...mono, fontSize:13, fontWeight:900, color:pnlCol }}>
+                                    {t.pnl_pct > 0 ? "+" : ""}{t.pnl_pct}%
+                                  </span>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )
+                    }
+                  </div>
+
+                </div>
+              );
+            })()}
+
           </div>
         )}
 

@@ -52,7 +52,7 @@ jobs:
         run: |
           git config --global user.name  "Crypto-Bot"
           git config --global user.email "crypto-bot@signal.at"
-          git add index.html
+          git add index.html score-history.json paper-trades.json
           # Commit nur wenn sich wirklich etwas geändert hat
           git diff --staged --quiet || git commit -m "📊 Auto-Update $(TZ='Europe/Vienna' date +'%d.%m.%Y %H:%M') Uhr"
           git push
