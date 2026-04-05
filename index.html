@@ -3651,6 +3651,97 @@ function App() {
                 </div>
               </div>
             </div>
+
+            {/* ── LIVE FORMATION ANALYSE ──────────────────────────────── */}
+            <div className="frost-card soft-hover fade-up" style={{ ...card, marginTop:16 }}>
+              <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:14 }}>
+                <div style={{ flex:1 }}>
+                  <div style={{ ...mono, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"#9aa0bc" }}>🔍 Live Formation & Level Analyse</div>
+                  <div style={{ fontSize:11, color:"#5a6282", marginTop:3 }}>{selectedChartCoin.ticker} · {chartInterval === "60" ? "1H" : chartInterval === "240" ? "4H" : "1D"} · Live aus Binance</div>
+                </div>
+                {formationAnalysis.status === "loading" && <div style={{ ...mono, fontSize:10, color:"#9aa0bc" }}>Lade…</div>}
+                {formationAnalysis.status === "error"   && <div style={{ ...mono, fontSize:10, color:"#c0182a" }}>Binance offline</div>}
+              </div>
+
+              {formationAnalysis.status === "ready" && (
+                <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))", gap:12 }}>
+
+                  {/* Candlestick Patterns */}
+                  <div style={{ background:"#f7f8fc", borderRadius:10, padding:"12px 14px", border:"1px solid #e2e6f0" }}>
+                    <div style={{ ...mono, fontSize:9, letterSpacing:2, textTransform:"uppercase", color:"#5b4fcf", marginBottom:8 }}>🕯️ Kerzenformationen</div>
+                    {formationAnalysis.candlePatterns.length === 0
+                      ? <div style={{ fontSize:11, color:"#9aa0bc" }}>Keine dominante Formation erkannt</div>
+                      : formationAnalysis.candlePatterns.map((p, i) => (
+                        <div key={i} style={{ marginBottom:8 }}>
+                          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:3 }}>
+                            <div style={{ display:"flex", gap:5, alignItems:"center" }}>
+                              <span style={{ fontSize:13 }}>{p.emoji}</span>
+                              <span style={{ fontSize:11, fontWeight:700, color: p.type === "bullish" ? "#00875a" : p.type === "bearish" ? "#c0182a" : "#b06a00" }}>{p.name}</span>
+                            </div>
+                            <span style={{ ...mono, fontSize:10, fontWeight:700, color:"#1a1e2e" }}>{p.strength}/10</span>
+                          </div>
+                          <StrengthBar value={p.strength} color={ p.type === "bullish" ? "#00875a" : p.type === "bearish" ? "#c0182a" : "#b06a00" }/>
+                          <div style={{ fontSize:10, color:"#5a6282", marginTop:2 }}>{p.desc}</div>
+                        </div>
+                      ))
+                    }
+                  </div>
+
+                  {/* Support / Resistance Levels */}
+                  <div style={{ background:"#f7f8fc", borderRadius:10, padding:"12px 14px", border:"1px solid #e2e6f0" }}>
+                    <div style={{ ...mono, fontSize:9, letterSpacing:2, textTransform:"uppercase", color:"#1756c8", marginBottom:8 }}>📐 Support & Widerstand</div>
+                    {formationAnalysis.srLevels.length === 0
+                      ? <div style={{ fontSize:11, color:"#9aa0bc" }}>Keine klaren Levels erkannt</div>
+                      : formationAnalysis.srLevels.slice(0,6).map((lvl, i) => {
+                          const isRes = lvl.type === "resistance";
+                          const c = isRes ? "#c0182a" : "#00875a";
+                          const bg = isRes ? "#ffeef0" : "#e6f7f0";
+                          const fmt = lvl.price > 1000 ? lvl.price.toFixed(0) : lvl.price > 1 ? lvl.price.toFixed(2) : lvl.price.toFixed(4);
+                          return (
+                            <div key={i} style={{ marginBottom:7 }}>
+                              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:3 }}>
+                                <div style={{ display:"flex", gap:5, alignItems:"center" }}>
+                                  <span style={{ fontSize:10, fontWeight:700, padding:"1px 6px", borderRadius:3, background:bg, color:c }}>{isRes ? "R" : "S"}</span>
+                                  <span style={{ ...mono, fontSize:11, fontWeight:700, color:"#1a1e2e" }}>${fmt}</span>
+                                  <span style={{ fontSize:9, color:"#9aa0bc" }}>{lvl.touches}× getestet</span>
+                                </div>
+                                <span style={{ ...mono, fontSize:10, fontWeight:700, color:c }}>{lvl.strength}/10</span>
+                              </div>
+                              <StrengthBar value={lvl.strength} color={c}/>
+                            </div>
+                          );
+                        })
+                    }
+                  </div>
+
+                  {/* Trend Lines */}
+                  <div style={{ background:"#f7f8fc", borderRadius:10, padding:"12px 14px", border:"1px solid #e2e6f0" }}>
+                    <div style={{ ...mono, fontSize:9, letterSpacing:2, textTransform:"uppercase", color:"#00875a", marginBottom:8 }}>📏 Trendlinien</div>
+                    {formationAnalysis.trendLines.length === 0
+                      ? <div style={{ fontSize:11, color:"#9aa0bc" }}>Kein klarer Trend erkennbar — Seitwärtsbewegung</div>
+                      : formationAnalysis.trendLines.map((tl, i) => {
+                          const c = tl.type === "uptrend" ? "#00875a" : "#c0182a";
+                          return (
+                            <div key={i} style={{ marginBottom:8 }}>
+                              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:3 }}>
+                                <div style={{ display:"flex", gap:5, alignItems:"center" }}>
+                                  <span style={{ fontSize:13 }}>{tl.emoji}</span>
+                                  <span style={{ fontSize:11, fontWeight:700, color:c }}>{tl.type === "uptrend" ? "Aufwärtstrend" : "Abwärtstrend"}</span>
+                                </div>
+                                <span style={{ ...mono, fontSize:10, fontWeight:700, color:c }}>{tl.strength}/10</span>
+                              </div>
+                              <StrengthBar value={tl.strength} color={c}/>
+                              <div style={{ fontSize:10, color:"#5a6282", marginTop:2 }}>{tl.desc}</div>
+                            </div>
+                          );
+                        })
+                    }
+                  </div>
+
+                </div>
+              )}
+            </div>
+
           </div>
         )}
 
@@ -4022,96 +4113,6 @@ function App() {
                   );
                 })}
               </div>
-            </div>
-
-            {/* ── LIVE FORMATION ANALYSE ──────────────────────────────── */}
-            <div className="frost-card soft-hover fade-up" style={{ ...card, marginTop:16 }}>
-              <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:14 }}>
-                <div style={{ flex:1 }}>
-                  <div style={{ ...mono, fontSize:10, letterSpacing:2, textTransform:"uppercase", color:"#9aa0bc" }}>🔍 Live Formation & Level Analyse</div>
-                  <div style={{ fontSize:11, color:"#5a6282", marginTop:3 }}>{selectedChartCoin.ticker} · {chartInterval === "60" ? "1H" : chartInterval === "240" ? "4H" : "1D"} · Live aus Binance</div>
-                </div>
-                {formationAnalysis.status === "loading" && <div style={{ ...mono, fontSize:10, color:"#9aa0bc" }}>Lade…</div>}
-                {formationAnalysis.status === "error"   && <div style={{ ...mono, fontSize:10, color:"#c0182a" }}>Binance offline</div>}
-              </div>
-
-              {formationAnalysis.status === "ready" && (
-                <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))", gap:12 }}>
-
-                  {/* Candlestick Patterns */}
-                  <div style={{ background:"#f7f8fc", borderRadius:10, padding:"12px 14px", border:"1px solid #e2e6f0" }}>
-                    <div style={{ ...mono, fontSize:9, letterSpacing:2, textTransform:"uppercase", color:"#5b4fcf", marginBottom:8 }}>🕯️ Kerzenformationen</div>
-                    {formationAnalysis.candlePatterns.length === 0
-                      ? <div style={{ fontSize:11, color:"#9aa0bc" }}>Keine dominante Formation erkannt</div>
-                      : formationAnalysis.candlePatterns.map((p, i) => (
-                        <div key={i} style={{ marginBottom:8 }}>
-                          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:3 }}>
-                            <div style={{ display:"flex", gap:5, alignItems:"center" }}>
-                              <span style={{ fontSize:13 }}>{p.emoji}</span>
-                              <span style={{ fontSize:11, fontWeight:700, color: p.type === "bullish" ? "#00875a" : p.type === "bearish" ? "#c0182a" : "#b06a00" }}>{p.name}</span>
-                            </div>
-                            <span style={{ ...mono, fontSize:10, fontWeight:700, color:"#1a1e2e" }}>{p.strength}/10</span>
-                          </div>
-                          <StrengthBar value={p.strength} color={ p.type === "bullish" ? "#00875a" : p.type === "bearish" ? "#c0182a" : "#b06a00" }/>
-                          <div style={{ fontSize:10, color:"#5a6282", marginTop:2 }}>{p.desc}</div>
-                        </div>
-                      ))
-                    }
-                  </div>
-
-                  {/* Support / Resistance Levels */}
-                  <div style={{ background:"#f7f8fc", borderRadius:10, padding:"12px 14px", border:"1px solid #e2e6f0" }}>
-                    <div style={{ ...mono, fontSize:9, letterSpacing:2, textTransform:"uppercase", color:"#1756c8", marginBottom:8 }}>📐 Support & Widerstand</div>
-                    {formationAnalysis.srLevels.length === 0
-                      ? <div style={{ fontSize:11, color:"#9aa0bc" }}>Keine klaren Levels erkannt</div>
-                      : formationAnalysis.srLevels.slice(0,6).map((lvl, i) => {
-                          const isRes = lvl.type === "resistance";
-                          const c = isRes ? "#c0182a" : "#00875a";
-                          const bg = isRes ? "#ffeef0" : "#e6f7f0";
-                          const fmt = lvl.price > 1000 ? lvl.price.toFixed(0) : lvl.price > 1 ? lvl.price.toFixed(2) : lvl.price.toFixed(4);
-                          return (
-                            <div key={i} style={{ marginBottom:7 }}>
-                              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:3 }}>
-                                <div style={{ display:"flex", gap:5, alignItems:"center" }}>
-                                  <span style={{ fontSize:10, fontWeight:700, padding:"1px 6px", borderRadius:3, background:bg, color:c }}>{isRes ? "R" : "S"}</span>
-                                  <span style={{ ...mono, fontSize:11, fontWeight:700, color:"#1a1e2e" }}>${fmt}</span>
-                                  <span style={{ fontSize:9, color:"#9aa0bc" }}>{lvl.touches}× getestet</span>
-                                </div>
-                                <span style={{ ...mono, fontSize:10, fontWeight:700, color:c }}>{lvl.strength}/10</span>
-                              </div>
-                              <StrengthBar value={lvl.strength} color={c}/>
-                            </div>
-                          );
-                        })
-                    }
-                  </div>
-
-                  {/* Trend Lines */}
-                  <div style={{ background:"#f7f8fc", borderRadius:10, padding:"12px 14px", border:"1px solid #e2e6f0" }}>
-                    <div style={{ ...mono, fontSize:9, letterSpacing:2, textTransform:"uppercase", color:"#00875a", marginBottom:8 }}>📏 Trendlinien</div>
-                    {formationAnalysis.trendLines.length === 0
-                      ? <div style={{ fontSize:11, color:"#9aa0bc" }}>Kein klarer Trend erkennbar — Seitwärtsbewegung</div>
-                      : formationAnalysis.trendLines.map((tl, i) => {
-                          const c = tl.type === "uptrend" ? "#00875a" : "#c0182a";
-                          return (
-                            <div key={i} style={{ marginBottom:8 }}>
-                              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:3 }}>
-                                <div style={{ display:"flex", gap:5, alignItems:"center" }}>
-                                  <span style={{ fontSize:13 }}>{tl.emoji}</span>
-                                  <span style={{ fontSize:11, fontWeight:700, color:c }}>{tl.type === "uptrend" ? "Aufwärtstrend" : "Abwärtstrend"}</span>
-                                </div>
-                                <span style={{ ...mono, fontSize:10, fontWeight:700, color:c }}>{tl.strength}/10</span>
-                              </div>
-                              <StrengthBar value={tl.strength} color={c}/>
-                              <div style={{ fontSize:10, color:"#5a6282", marginTop:2 }}>{tl.desc}</div>
-                            </div>
-                          );
-                        })
-                    }
-                  </div>
-
-                </div>
-              )}
             </div>
 
           </div>
