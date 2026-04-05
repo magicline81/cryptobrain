@@ -34,6 +34,19 @@ COINS = {
 # Reverse lookup: ticker → coingecko id
 TICKER_TO_ID = {v: k for k, v in COINS.items()}
 
+# Binance symbol mapping for 09:00-Wien price fetching
+BINANCE_SYMBOLS = {
+    "SOL":  "SOLUSDT",
+    "XRP":  "XRPUSDT",
+    "ETH":  "ETHUSDT",
+    "ADA":  "ADAUSDT",
+    "LINK": "LINKUSDT",
+    "SUI":  "SUIUSDT",
+    "TAO":  "TAOUSDT",
+    "ONDO": "ONDOUSDT",
+    "IOTA": "IOTAUSDT",
+}
+
 # Signals that trigger paper trade opening
 BUY_SIGNALS = {"KAUFEN", "AKKUMULIEREN"}
 
@@ -88,6 +101,39 @@ def get_prices():
             c = data[cid].get("usd_24h_change", 0)
             print(f"   → {ticker:5s}: {fmt_price(p):10s}  {fmt_change(c)}")
     return data
+
+# ── Binance 09:00-Wien Kurs ────────────────────────────────────────
+def get_binance_9am_prices(day_offset):
+    """
+    Holt den Eröffnungskurs der 1H-Kerze um 07:00 UTC (= 09:00 Wien) via Binance.
+    day_offset=0 → heute 09:00, day_offset=-1 → gestern 09:00
+    """
+    UTC = timezone.utc
+    target = (datetime.now(UTC) + timedelta(days=day_offset)).replace(
+        hour=7, minute=0, second=0, microsecond=0
+    )
+    start_ms = int(target.timestamp() * 1000)
+    label    = "heute" if day_offset == 0 else "gestern"
+    print(f"\n🕘 Binance 09:00 Wien {label} ({target.strftime('%d.%m.%Y')})...")
+
+    prices = {}
+    for ticker, symbol in BINANCE_SYMBOLS.items():
+        try:
+            r    = requests.get(
+                f"https://api.binance.com/api/v3/klines"
+                f"?symbol={symbol}&interval=1h&startTime={start_ms}&limit=1",
+                timeout=TIMEOUT
+            )
+            data = r.json()
+            if data and isinstance(data, list) and len(data) > 0:
+                open_price     = float(data[0][1])  # index 1 = open
+                prices[ticker] = open_price
+                print(f"   → {ticker}: {fmt_price(open_price)}")
+            else:
+                print(f"   ⚠️  {ticker}: keine Kerze für diesen Zeitstempel")
+        except Exception as e:
+            print(f"   ⚠️  {ticker}: {e}")
+    return prices
 
 # ── HTML aktualisieren ─────────────────────────────────────────────
 def update_html(fear, btc_dom, prices):
@@ -250,11 +296,13 @@ def update_score_history(market_score, coin_data, date_str):
     print(f"   ✅ Score-History: {len(history)} Einträge ({date_str}: Markt={market_score})")
 
 # ── Paper-Trading aktualisieren ────────────────────────────────────
-def update_paper_trades(coin_data, chart_setups, prices, date_str):
-    """Prüft offene Trades auf TP/SL und öffnet neue bei Kaufsignalen."""
+def update_paper_trades(coin_data, chart_setups, prices_today_9am, prices_yesterday_9am, date_str):
+    """
+    Prüft offene Trades auf TP/SL (Kurs heute 09:00 Wien) und öffnet neue
+    Trades bei Kaufsignalen (Entry = Kurs gestern 09:00 Wien).
+    """
     print(f"\n📊 Aktualisiere {PAPER_TRADES_FILE}...")
 
-    # Datei laden
     trades = {"open": [], "closed": []}
     if os.path.exists(PAPER_TRADES_FILE):
         with open(PAPER_TRADES_FILE, "r", encoding="utf-8") as f:
@@ -265,34 +313,48 @@ def update_paper_trades(coin_data, chart_setups, prices, date_str):
     losses = 0
     still_open = []
 
-    # 1. Offene Trades auf TP/SL prüfen
+    # 1. Offene Trades auf TP/SL prüfen — Kurs von heute 09:00 Wien
     for trade in trades.get("open", []):
         ticker  = trade["coin"]
-        coin_id = TICKER_TO_ID.get(ticker)
-        if not coin_id or coin_id not in prices:
+        # Bevorzuge Binance 09:00-Kurs, Fallback auf CoinGecko-Kurs
+        coin_id   = TICKER_TO_ID.get(ticker)
+        cg_price  = prices_today_9am.get(ticker) or (
+            prices_today_9am.get(coin_id, {}).get("usd") if isinstance(prices_today_9am.get(coin_id), dict) else None
+        )
+        # prices_today_9am kommt von Binance (ticker → float)
+        today_price = prices_today_9am.get(ticker)
+        if today_price is None:
+            # Fallback: CoinGecko-Kurs (annähernd 09:00 Wien da Script dann läuft)
+            cg_id = TICKER_TO_ID.get(ticker)
+            today_price = None  # wird unten via fallback_prices behandelt
             still_open.append(trade)
             continue
 
-        current = prices[coin_id]["usd"]
-        tp      = trade.get("take_profit")
-        sl      = trade.get("stop_loss")
+        tp = trade.get("take_profit")
+        sl = trade.get("stop_loss")
 
-        if tp and current >= tp:
+        if tp and today_price >= tp:
             pnl = round((tp - trade["entry"]) / trade["entry"] * 100, 2)
-            trades["closed"].append({**trade, "outcome":"WIN",  "exit":tp,  "exit_price_actual":round(current,6), "closed":date_str, "pnl_pct":pnl})
-            print(f"   ✅ WIN  {ticker}: +{pnl:.1f}%  (Kurs {fmt_price(current)} ≥ TP {fmt_price(tp)})")
+            trades["closed"].append({
+                **trade, "outcome":"WIN", "exit":tp,
+                "exit_price_9am": round(today_price, 6), "closed": date_str, "pnl_pct": pnl
+            })
+            print(f"   ✅ WIN  {ticker}: +{pnl:.1f}%  (09:00 {fmt_price(today_price)} ≥ TP {fmt_price(tp)})")
             wins += 1
-        elif sl and current <= sl:
+        elif sl and today_price <= sl:
             pnl = round((sl - trade["entry"]) / trade["entry"] * 100, 2)
-            trades["closed"].append({**trade, "outcome":"LOSS", "exit":sl,  "exit_price_actual":round(current,6), "closed":date_str, "pnl_pct":pnl})
-            print(f"   ❌ LOSS {ticker}: {pnl:.1f}%  (Kurs {fmt_price(current)} ≤ SL {fmt_price(sl)})")
+            trades["closed"].append({
+                **trade, "outcome":"LOSS", "exit":sl,
+                "exit_price_9am": round(today_price, 6), "closed": date_str, "pnl_pct": pnl
+            })
+            print(f"   ❌ LOSS {ticker}: {pnl:.1f}%  (09:00 {fmt_price(today_price)} ≤ SL {fmt_price(sl)})")
             losses += 1
         else:
             still_open.append(trade)
 
     trades["open"] = still_open
 
-    # 2. Neue Trades für Kaufsignale öffnen
+    # 2. Neue Trades bei Kaufsignalen — Entry = Kurs gestern 09:00 Wien
     open_tickers = {t["coin"] for t in trades["open"]}
     new_trades   = 0
 
@@ -300,36 +362,39 @@ def update_paper_trades(coin_data, chart_setups, prices, date_str):
         if data["signal"] not in BUY_SIGNALS:
             continue
         if ticker in open_tickers:
-            continue  # bereits offen
-        coin_id = TICKER_TO_ID.get(ticker)
-        if not coin_id or coin_id not in prices:
             continue
 
-        current = prices[coin_id]["usd"]
-        setup   = chart_setups.get(ticker, {})
-        # Entry is always the actual market price when the signal fires.
-        # The chart buy zone is stored as reference only.
-        entry   = round(current, 6)
-        stop    = setup.get("stop")
-        tp1     = setup.get("tp1")
+        # Entry: Binance-Kurs gestern 09:00 Wien
+        entry = prices_yesterday_9am.get(ticker)
+        if entry is None:
+            print(f"   ⚠️  {ticker}: kein Binance-Kurs für gestern 09:00 — Trade übersprungen")
+            continue
 
-        # Fallback: -8% SL / +20% TP relative to actual entry
+        setup = chart_setups.get(ticker, {})
+        stop  = setup.get("stop")
+        tp1   = setup.get("tp1")
+
+        # Fallback: -8% SL / +20% TP
         if not stop: stop = round(entry * 0.92, 6)
         if not tp1:  tp1  = round(entry * 1.20, 6)
 
+        # Gestern 09:00 als Eröffnungsdatum
+        UTC  = timezone.utc
+        yesterday_str = (datetime.now(UTC) - timedelta(days=1)).strftime("%Y-%m-%d")
+
         trade = {
-            "id":              f"{ticker}-{date_str}",
-            "coin":            ticker,
-            "signal":          data["signal"],
-            "entry":           entry,           # actual market price at signal time
-            "chart_buy_zone":  setup.get("entry_chart"),  # chart recommendation (info only)
-            "stop_loss":       stop,
-            "take_profit":     tp1,
-            "opened":          date_str,
-            "price_at_open":   entry,
+            "id":             f"{ticker}-{yesterday_str}",
+            "coin":           ticker,
+            "signal":         data["signal"],
+            "entry":          round(entry, 6),       # Kurs gestern 09:00 Wien
+            "chart_buy_zone": setup.get("entry_chart"),
+            "stop_loss":      stop,
+            "take_profit":    tp1,
+            "opened":         yesterday_str,          # rückwirkend auf gestern
+            "entry_time":     "09:00 Wien",
         }
         trades["open"].append(trade)
-        print(f"   📈 NEU  {ticker}: Entry={fmt_price(entry)}  SL={fmt_price(stop)}  TP={fmt_price(tp1)}")
+        print(f"   📈 NEU  {ticker}: Entry {fmt_price(entry)} (gestern 09:00)  SL={fmt_price(stop)}  TP={fmt_price(tp1)}")
         new_trades += 1
 
     with open(PAPER_TRADES_FILE, "w", encoding="utf-8") as f:
@@ -368,9 +433,13 @@ def main():
         if market_score is not None and coin_data:
             update_score_history(market_score, coin_data, date_str)
 
+        # Binance 09:00-Wien Kurse: heute (TP/SL-Check) + gestern (Entry)
+        prices_today_9am     = get_binance_9am_prices(day_offset=0)
+        prices_yesterday_9am = get_binance_9am_prices(day_offset=-1)
+
         # Paper Trades prüfen / öffnen
-        if coin_data and prices:
-            update_paper_trades(coin_data, chart_setups, prices, date_str)
+        if coin_data:
+            update_paper_trades(coin_data, chart_setups, prices_today_9am, prices_yesterday_9am, date_str)
 
         print()
         print("=" * 56)
