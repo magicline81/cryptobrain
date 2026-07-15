@@ -243,7 +243,7 @@ const { useEffect, useRef, useState } = React;
 
 // ── DATEN ─────────────────────────────────────────────────────────────────────
 const META = {
-  date: "14. Juli 2026 · 10:59 Uhr",
+  date: "15. Juli 2026 · 11:04 Uhr",
   aiReasoning: "Der 3. April 2026 bringt den Doppelschock: Die Nachwirkungen des Liberation Day treffen auf einen neuen geopolitischen Schock — der IRGC erklärte 18 US-Tech- und KI-Konzerne (NVIDIA, Meta, Microsoft) zu 'legitimen Zielen', was Tech-Aktien und KI-Crypto abstürzen lässt. Gleichzeitig schoss Öl auf $113/Barrel (+14%), was die Fed zwischen Inflationsbekämpfung und Rezessionsabwehr gefangen hält. Bitcoin bei $66.868 (BTC-Dominanz: 55,92%), Gesamtmarkt -2,4% auf $2,38 Bio. Fear & Greed bleibt bei 9 — historisch einer der stärksten Langzeit-Kaufindikatoren. Gesamtscore 46 — ABWARTEN. Wichtigstes Positivsignal des Tages: Firedancer ist heute offiziell auf dem Solana Mainnet live geschaltet — 1 Million TPS in Produktion.",
   analystPunkte: [
     { emoji:"🛢️", typ:"bearish", titel:"Öl auf $113/Barrel: Fed im Dilemma zwischen Ölschock-Inflation und Zölle-Rezession", text:"Heute hat WTI-Öl mit +14% auf $113/Barrel den stärksten Tagesanstieg seit Monaten erlebt — getrieben durch Trumps Liberation Day Zölle und den Iran-Krieg (Straße von Hormuz-Risiko). Das stellt die Fed in ein unmögliches Dilemma: Sie müsste eigentlich die Zinsen senken (Rezessionsrisiko durch Handelszölle), aber der Ölpreis-Schock drückt die Inflation wieder hoch. Core PCE-Inflationsprognose wurde bereits auf 2,7% revidiert — die Fed projiziert nur noch 1 Zinssenkung für 2026. Powell sagte explizit: 'Wir haben einen Energie-Schock unbekannter Größe und Dauer.' Für Crypto: Zinsen bleiben länger oben, Staatsanleihen (4%+) attraktiver als Risiko-Assets." },
@@ -326,7 +326,7 @@ const MARKET_BREAKDOWN_GROUPS = {
 const COIN_MODELS = [
   {
     name:"SOLANA", ticker:"SOL", color:"#00875a", bg:"#e6f7f0",
-    price:"$75.08", change:"-2.1%", atl:"$8", ath:"$294", score:75, signal:"KAUFEN",
+    price:"$77.54", change:"+3.3%", atl:"$8", ath:"$294", score:75, signal:"KAUFEN",
     subScores:[
       { label:"Upgrade-Katalysator", score:95, note:"Firedancer offiziell auf Mainnet live — 1M TPS nach 100+ Tagen kontrolliertem Testen. Alpenglow 150ms Finality aktiv. SEC/CFTC: SOL = digitale Ware" },
       { label:"Institutionelle Flows",score:72, note:"Goldman Sachs $108M SOL ETF, CME Futures aktiv; Liberation Day + IRGC-Schock dämpfen kurzfristig" },
@@ -339,7 +339,7 @@ const COIN_MODELS = [
   },
   {
     name:"XRP", ticker:"XRP", color:"#1756c8", bg:"#eef3ff",
-    price:"$1.07", change:"-1.0%", atl:"$0.002", ath:"$3.40", score:72, signal:"KAUFEN",
+    price:"$1.11", change:"+3.7%", atl:"$0.002", ath:"$3.40", score:72, signal:"KAUFEN",
     subScores:[
       { label:"Upgrade-Katalysator", score:83, note:"Evernorth NASDAQ-Listing (XRPN): 473M XRP (~2,6% Umlauf) dauerhaft in Treasury gesperrt. 7 Spot-ETFs aktiv ($1,4 Mrd. AUM)" },
       { label:"Institutionelle Flows",score:78, note:"Starke regulatorische Basis (SEC/CFTC digitale Ware), Grayscale GXRP, Evernorth Treasury; Liberation Day dämpft kurzfristige Flows" },
@@ -352,7 +352,7 @@ const COIN_MODELS = [
   },
   {
     name:"CHAINLINK", ticker:"LINK", color:"#2c5fd4", bg:"#e8f0ff",
-    price:"$7.93", change:"-0.8%", atl:"$0.15", ath:"$52.70", score:72, signal:"KAUFEN",
+    price:"$8.37", change:"+5.6%", atl:"$0.15", ath:"$52.70", score:72, signal:"KAUFEN",
     subScores:[
       { label:"Upgrade-Katalysator", score:78, note:"GLNK ETF live, OnePay/Walmart LINK-Integration aktiv; CCIP bei $18 Mrd. Volumen; Liberation Day verlangsamt institutionelle Flows" },
       { label:"Institutionelle Flows",score:75, note:"Bloomberg Intelligence: LINK = Kern-Infrastruktur für RWA-Tokenisierung; Standard Chartered Ziel $25–45" },
@@ -365,7 +365,7 @@ const COIN_MODELS = [
   },
   {
     name:"CARDANO", ticker:"ADA", color:"#0097a0", bg:"#e0f7f7",
-    price:"$0.159", change:"-1.1%", atl:"$0.017", ath:"$3.10", score:62, signal:"HALTEN",
+    price:"$0.164", change:"+3.2%", atl:"$0.017", ath:"$3.10", score:62, signal:"HALTEN",
     subScores:[
       { label:"Upgrade-Katalysator", score:79, note:"Van Rossem Hard Fork Q2 2026 in Vorbereitung; Node 10.7.0 Pre-Release aktiv; Plutus-Verbesserungen kommen" },
       { label:"Institutionelle Flows",score:50, note:"Geringe institutionelle Adoption vs. SOL/ETH/XRP; Liberation Day + IRGC-Schock reduziert Risikobereitschaft für Mid-Caps" },
@@ -378,7 +378,7 @@ const COIN_MODELS = [
   },
   {
     name:"ETHEREUM", ticker:"ETH", color:"#5b4fcf", bg:"#eeebff",
-    price:"$1,784", change:"-0.2%", atl:"$0.43", ath:"$4.891", score:67, signal:"HALTEN",
+    price:"$1,879", change:"+5.3%", atl:"$0.43", ath:"$4.891", score:67, signal:"HALTEN",
     subScores:[
       { label:"Upgrade-Katalysator", score:72, note:"Glamsterdam-Upgrade weiterhin auf Kurs für Juni 2026: 10.000 TPS + 78% niedrigere Gas-Gebühren; Gas-Limit 60M → 200M/Block" },
       { label:"Institutionelle Flows",score:76, note:"Wall Street Liebling, Spot ETF aktiv, US Strategic Reserve weiterhin vorgesehen; Liberation Day dämpft Flows kurzfristig" },
@@ -391,7 +391,7 @@ const COIN_MODELS = [
   },
   {
     name:"SUI", ticker:"SUI", color:"#0066bb", bg:"#e0f0ff",
-    price:"$0.731", change:"-0.4%", atl:"$0.36", ath:"$5.35", score:50, signal:"BEOBACHTEN",
+    price:"$0.753", change:"+3.1%", atl:"$0.36", ath:"$5.35", score:50, signal:"BEOBACHTEN",
     subScores:[
       { label:"Upgrade-Katalysator", score:56, note:"Token-Unlock April 1 (42,9 Mio. SUI, ~$40 Mio.) ist abgeschlossen — Overhang abgebaut; aber kurzfristig kein starker Katalysator" },
       { label:"Institutionelle Flows",score:40, note:"Geringe institutionelle Adoption; Liberation Day + IRGC-Schock reduzieren Risikobereitschaft für Small-Caps stark" },
@@ -404,7 +404,7 @@ const COIN_MODELS = [
   },
   {
     name:"BITTENSOR", ticker:"TAO", color:"#7a5cf0", bg:"#f0eeff",
-    price:"$197.69", change:"-5.0%", atl:"$6.50", ath:"$754", score:59, signal:"BEOBACHTEN",
+    price:"$197.38", change:"-0.2%", atl:"$6.50", ath:"$754", score:59, signal:"BEOBACHTEN",
     subScores:[
       { label:"Upgrade-Katalysator", score:63, note:"IRGC designierte NVIDIA als 'legitimes Ziel' → KI-Hardware-Risiko für TAO; $620 Mio. gestaked in Subnetz-Tokens bleibt stark" },
       { label:"Institutionelle Flows",score:58, note:"Nvidia CEO Jensen Huang Endorsement (20.03.) bleibt; aber IRGC NVIDIA-Targeting dämpft KI-Investitionssentiment stark" },
@@ -417,7 +417,7 @@ const COIN_MODELS = [
   },
   {
     name:"ONDO", ticker:"ONDO", color:"#00875a", bg:"#e6f7f0",
-    price:"$0.309", change:"-3.5%", atl:"$0.08", ath:"$2.14", score:58, signal:"BEOBACHTEN",
+    price:"$0.320", change:"+3.6%", atl:"$0.08", ath:"$2.14", score:58, signal:"BEOBACHTEN",
     subScores:[
       { label:"Upgrade-Katalysator", score:73, note:"Franklin Templeton Partnership (26.03.) aktiv — 5 tokenisierte ETFs, 24/7 via Crypto-Wallet; Handelszölle bremsen grenzüberschreitende RWA-Flows" },
       { label:"Institutionelle Flows",score:68, note:"Franklin Templeton $1,7 Bio. AUM; Liberation Day und Handelszölle bremsen institutionelle RWA-Aktivität kurzfristig" },
@@ -430,7 +430,7 @@ const COIN_MODELS = [
   },
   {
     name:"IOTA", ticker:"IOTA", color:"#242938", bg:"#eef0f7",
-    price:"$0.036", change:"-3.1%", atl:"$0.055", ath:"$5.25", score:53, signal:"BEOBACHTEN",
+    price:"$0.036", change:"-0.2%", atl:"$0.055", ath:"$5.25", score:53, signal:"BEOBACHTEN",
     subScores:[
       { label:"Upgrade-Katalysator", score:73, note:"USDT0 live auf IOTA Rebased — verbindet USDT-Liquidität über LayerZero/Stargate (150+ Chains); starker Liquiditäts-Upgrade" },
       { label:"Institutionelle Flows",score:48, note:"BitGo Custody in USA, Uphold-Listing aktiv; Liberation Day + IRGC-Schock reduzieren Risikobereitschaft für Nischen-Assets" },
